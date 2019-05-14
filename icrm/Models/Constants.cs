@@ -31,6 +31,7 @@ namespace icrm.Models
         public static int lowescelationtime = 48;
         public static string Complaints = "Complaint";
         public static string OPERATIONS = "Operations";
+
         public static List<string> commentType = new List<string>(new string[] {"Hr","Department","User" });
     }
 }

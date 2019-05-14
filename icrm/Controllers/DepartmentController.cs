@@ -334,7 +334,7 @@ namespace icrm.Controllers
         public ActionResult openview(string id)
         {
 
-            ViewData["decide"]= feedInterface.getCOmments(id);
+                ViewData["decide"]= feedInterface.getCOmments(id);
             ViewData["commentList"] = feedInterface.getCOmments(id);
 
             

@@ -201,7 +201,7 @@ namespace icrm.Controllers
                                       Comments c = new Comments();
                                       c.text = Request.Form["responsee"];
                                       c.commentedById = user.Id;
-                                c.commentFor = Constants.commentType[1];
+                                          c.commentFor = Constants.commentType[1];
                                       c.feedbackId = feedback.id;
                                       db.comments.Add(c);
                                       db.SaveChanges();
@@ -248,7 +248,7 @@ namespace icrm.Controllers
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
-                            c.commentFor = Constants.commentType[2];
+                               c.commentFor = Constants.commentType[2];
                             db.comments.Add(c);
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Ticket has been Created Successfully";
@@ -342,7 +342,7 @@ namespace icrm.Controllers
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
-                            c.commentFor = Constants.commentType[2];
+                                c.commentFor = Constants.commentType[2];
                             db.comments.Add(c);
                             db.SaveChanges();
                         }
@@ -444,7 +444,7 @@ namespace icrm.Controllers
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
-                            c.commentFor = Constants.commentType[1];
+                               c.commentFor = Constants.commentType[1];
                             db.comments.Add(c);
                             db.SaveChanges();
                         }
@@ -485,7 +485,7 @@ namespace icrm.Controllers
                         c.text = Request.Form["responsee"];
                         c.commentedById = user.Id;
                         c.feedbackId = feedback.id;
-                        c.commentFor = Constants.commentType[2];
+                          c.commentFor = Constants.commentType[2];
                         db.comments.Add(c);
                         db.SaveChanges();
 
@@ -515,7 +515,7 @@ namespace icrm.Controllers
                         c.text = Request.Form["responsee"];
                         c.commentedById = user.Id;
                         c.feedbackId = feedback.id;
-                        c.commentFor = Constants.commentType[2];
+                          c.commentFor = Constants.commentType[2];
                         db.comments.Add(c);
                         db.SaveChanges();
                         TempData["MessageSuccess"] = "Ticket has been Rejected";
@@ -3981,7 +3981,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
-                            c.commentFor = Constants.commentType[1];
+                              c.commentFor = Constants.commentType[1];
                             db.comments.Add(c);
                             db.SaveChanges();
                         }
@@ -4022,7 +4022,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         c.text = Request.Form["responsee"];
                         c.commentedById = user.Id;
                         c.feedbackId = feedback.id;
-                        c.commentFor = Constants.commentType[2];
+                          c.commentFor = Constants.commentType[2];
                         db.comments.Add(c);
                         db.SaveChanges();
 
@@ -4053,7 +4053,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         c.text = Request.Form["responsee"];
                         c.commentedById = user.Id;
                         c.feedbackId = feedback.id;
-                        c.commentFor = Constants.commentType[2];
+                          c.commentFor = Constants.commentType[2];
                         db.comments.Add(c);
                         db.SaveChanges();
                         TempData["MessageSuccess"] = "Ticket has been Rejected";
