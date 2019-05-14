@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using icrm.Events;
 
 namespace icrm.WebApi
 {
@@ -21,6 +22,13 @@ namespace icrm.WebApi
 
 
         private ApplicationUserManager _userManager;
+        private EventService eventService;
+
+        public RegisterController()
+        {
+            eventService = new EventService();
+        }
+
 
         ApplicationDbContext db = new ApplicationDbContext();
         public ApplicationUserManager UserManager
@@ -70,10 +78,11 @@ namespace icrm.WebApi
             }
             else if (user.PasswordHash == null)
             {
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 user.UserName = Convert.ToString(model.EmployeeId);
                 user.PasswordHash = HashPassword(model.Password);
                 user.Email = user.bussinessEmail;
+                
                 user.LastPasswordChangedDate = DateTime.Now;
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
                 db.Users.Add(user);
@@ -84,7 +93,13 @@ namespace icrm.WebApi
                 ph.password = user.PasswordHash;
                 db.PasswordHistories.Add(ph);
                 db.SaveChanges();
-                UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
+                um.AddToRole(user.Id, roleManager.FindByName("User").Name);
+
+                 var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
+
+                eventService.sendConfirmEmail(user.Email,user.Id,code);
+
                 return Ok();
 
             }
