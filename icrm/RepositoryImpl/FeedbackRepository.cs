@@ -234,6 +234,17 @@ namespace icrm.RepositoryImpl
         }
 
 
+
+        public IEnumerable<Feedback> GetAllRespondedForDepart(string id)
+        {
+                                                                                                                      
+
+            return db.comments.OrderByDescending(m => m.feedback.createDate).Where(m => m.commentedById == id).Select(m=>m.feedback).ToList().Distinct();
+
+        }
+
+
+
         public IEnumerable<Feedback> GetAllRespondedMobile()
         {
 
