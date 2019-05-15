@@ -185,7 +185,7 @@ namespace icrm.Controllers
                 db.Entry(f).State = EntityState.Modified;
                  db.SaveChanges();
                    
-                ViewData["decide"] = feedInterface.getCOmments(feedback.id);
+                ViewData["decide"] = feedInterface.getDeptCOmments(feedback.id);
                 TempData["displayMsg"] = "Ticket has been Updated Successfully";
                 return RedirectToAction("DashBoard");           
             }
@@ -313,7 +313,7 @@ namespace icrm.Controllers
         {
             
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = feedInterface.getCOmments(id);
+            ViewData["commentList"] = feedInterface.getDeptCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
@@ -333,12 +333,12 @@ namespace icrm.Controllers
 
         public ActionResult openview(string id)
         {
-
-                ViewData["decide"]= feedInterface.getCOmments(id);
-            ViewData["commentList"] = feedInterface.getCOmments(id);
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["decide"]= feedInterface.getDeptCOmments(id);
+            ViewData["commentList"] = feedInterface.getDeptCOmments(id);
 
             
-            var user = UserManager.FindById(User.Identity.GetUserId());
+           
             ViewData["user"] = user;
             if (id == null)
             {
@@ -358,7 +358,7 @@ namespace icrm.Controllers
         {
            
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = feedInterface.getCOmments(id);
+            ViewData["commentList"] = feedInterface.getDeptCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
@@ -380,7 +380,7 @@ namespace icrm.Controllers
         {
             
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = feedInterface.getCOmments(id);
+            ViewData["commentList"] = feedInterface.getDeptCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
@@ -401,7 +401,7 @@ namespace icrm.Controllers
         {
 
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = feedInterface.getCOmments(id);
+            ViewData["commentList"] = feedInterface.getDeptCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
@@ -413,7 +413,7 @@ namespace icrm.Controllers
             {
                 getAttributeList();
                 Feedback f = feedInterface.Find(id);
-                ViewData["decide"] = feedInterface.getCOmments(id);
+                ViewData["decide"] = feedInterface.getDeptCOmments(id);
                 return View("view",f);
             }
         }
