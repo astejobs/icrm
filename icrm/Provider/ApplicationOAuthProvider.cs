@@ -33,6 +33,16 @@ namespace icrm.Provider
                 context.SetError("invalid_grant",
                 "The username or password is incorrect");
             }
+            else if (!user.EmailConfirmed)
+            {
+                context.SetError("invalid_grant",
+                    "Please activate your account by clicking on the link sent to your email at registration");
+            }
+            else if (user.EmployeeStatus.Equals("Terminated"))
+            {
+                context.SetError("invalid_grant",
+                    "This account has been disabled");
+            }
             else if (((DateTime)user.LastPasswordChangedDate).AddDays(90) < DateTime.Now) {
                 context.SetError("invalid_grant",
                "Your PassWord Has Expired , Please Change Your Password In Forgot Password Link");

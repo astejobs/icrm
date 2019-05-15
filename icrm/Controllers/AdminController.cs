@@ -243,7 +243,7 @@ namespace icrm.Controllers
             appuser.Vendor = null;
             appuser.bussinessPhoneNumber = user.bussinessPhoneNumber;
             appuser.bussinessEmail = user.bussinessEmail;
-
+            appuser.EmployeeStatus = user.EmployeeStatus;
             context.Entry(appuser).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
             TempData["Success"] = "User Updated Successfully";

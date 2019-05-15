@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 using icrm.Models;
 
@@ -78,6 +79,18 @@ namespace icrm.Events
             });
             return null;
         }
+
+        public Task sendConfirmEmail(String emailto, String userId, String code)
+        {
+
+            HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+            {
+                EmailSend.SendConfirmEmailAsync(emailto, userId,code);
+
+            });
+            return null;
+        }
+
 
         public Task NotifyHrAboutChat(Message message)
         {

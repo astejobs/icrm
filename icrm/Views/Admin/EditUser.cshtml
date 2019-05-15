@@ -263,7 +263,13 @@
 
                                 </div>
                             </div>
-
+                            <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">@Resources.Resource.Status <span class="tx-danger">*</span></label>
+                                @Html.RadioButtonFor(model => model.user.EmployeeStatus, "Active")Active
+                                @Html.RadioButtonFor(model => model.user.EmployeeStatus, "Terminated") Terminated
+                            </div>
+                             </div>
                         </div>
 
 

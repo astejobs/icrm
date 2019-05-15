@@ -12,6 +12,7 @@ using icrm.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Diagnostics;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace icrm.Controllers
@@ -103,9 +104,14 @@ namespace icrm.Controllers
             {
                 case SignInStatus.Success:
                     {
-
                         
                         IdentityUser user = UserManager.FindByName(model.Email);
+                        if (!user.EmailConfirmed)
+                        {
+                            ModelState.AddModelError("", "Account has not been activated.Please activate your account by clicking on the link sent to your mail at registration.");
+                            return View(model);
+                        }
+                        
                         var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
                         ApplicationUser appuser = UserManager.FindByName(model.Email);
@@ -117,6 +123,10 @@ namespace icrm.Controllers
                         if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name))
                         {
                             ModelState.AddModelError("", "Sorry User Need To Login Through The App Only.");
+                            return View(model);
+                        }else if (appuser.EmployeeStatus.Equals("Terminated"))
+                        {
+                            ModelState.AddModelError("", "This account has been disabled");
                             return View(model);
                         }
                         else if (UserManager.IsInRole(user.Id, roleManager.FindByName("Admin").Name))
@@ -245,8 +255,8 @@ namespace icrm.Controllers
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                  //  await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     
                         return RedirectToAction("DashBoard", "User");
                  }
@@ -266,7 +276,9 @@ namespace icrm.Controllers
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            code = code.Replace(" ", "+");
+            var result = await UserManager.ConfirmEmailAsync(userId,code);
+
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

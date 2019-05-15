@@ -74,7 +74,24 @@ namespace icrm.Models
 
         }
 
+        public static async Task SendConfirmEmailAsync(String emailto,String userId, String code)
+        {
+            MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
+            SmtpClient client = new SmtpClient();
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = false;
+            client.Host = "email.mcdonalds.com.sa";
+            mail.Subject = "Confirm Your Account";
+            string strBody3 = String.Format("<html><body><span>Your account has been successfully registered.Please confirm your account by clicking on the link </span><a href='http://icrm.mcdonalds.com.sa/Account/ConfirmEmail?userId={0}&code={1}' > here</ a ></ body ></html > ", userId, code);
+            mail.Body = strBody3;
+            mail.IsBodyHtml = true;
+            await client.SendMailAsync(mail);
 
+        }
+
+        
     }
     }
 
