@@ -1071,7 +1071,11 @@ namespace icrm.RepositoryImpl
             return feedlist.ToList();
         }
 
-
-
+        public List<Comments> getDeptCOmments(string id)
+        {
+            string deptComment = Constants.commentType[1];
+            string hrComment = Constants.commentType[0];
+            return db.comments.Where(m => m.feedbackId == id &&  (m.commentFor== deptComment || m.commentFor== hrComment)).ToList();
+        }
     }
 }

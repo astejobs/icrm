@@ -47,6 +47,7 @@ namespace icrm.RepositoryInterface
 
 
         List<Comments> getCOmments(string id);
+        List<Comments> getDeptCOmments(string id);
 
         List<Category> getCategories(Int32 deptId,Int32 type);
         List<SubCategory> getSubCategories(Int32 categoryId, Int32 typeId);
@@ -92,6 +93,6 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> chartsFeedbackSalaryIssuesReasons(string d1, string d2, string salaryissuesreasons);
         string[] chartsFeedbackMostFrequentLocations(string d1, string d2);
         IEnumerable<Feedback> chartsFeedbackRegion(string d1, string d2, string region);
-
+        
     }
 }
