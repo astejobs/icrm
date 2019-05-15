@@ -63,6 +63,8 @@ namespace icrm.WebApi
                 User.Email = "wajahatnabi90@gmail.com";
                 User.FirstName = "wajahat";
                 User.LastName = "Nabi";
+                User.EmployeeStatus = "Active";
+                User.EmailConfirmed = true;
                 User.LastPasswordChangedDate = DateTime.Now;
                 User.SecurityStamp = Guid.NewGuid().ToString("D");
                 db.Users.Add(User);
@@ -73,7 +75,7 @@ namespace icrm.WebApi
                 ph.password = User.PasswordHash;
                 db.PasswordHistories.Add(ph);
                 db.SaveChanges();
-                return Ok();
+                return Content((HttpStatusCode)310,"Apple User");
 
             }
             else if (user.PasswordHash == null)
