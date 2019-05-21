@@ -204,6 +204,10 @@ namespace icrm.Controllers
             ViewBag.EmployerTypeList = context.employerTypes.ToList();
             ViewBag.VendorList = context.vendors.ToList();
             ViewBag.JobTitleList = context.JobTitles.ToList();
+            ViewBag.GenderList = context.Genders.ToList();
+            ViewBag.EthincityList = context.Ethnicities.ToList();
+            ViewBag.ReligionList = context.Religions.ToList();
+            ViewBag.PayScaleTypeList = context.PayScaleTypes.ToList();
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -266,6 +270,10 @@ namespace icrm.Controllers
             ViewBag.EmployerTypeList = context.employerTypes.ToList();
             ViewBag.VendorList = context.vendors.ToList();
             ViewBag.JobTitleList = context.JobTitles.ToList();
+            ViewBag.GenderList = context.Genders.ToList();
+            ViewBag.EthincityList = context.Ethnicities.ToList();
+            ViewBag.ReligionList = context.Religions.ToList();
+            ViewBag.PayScaleTypeList = context.PayScaleTypes.ToList();
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
