@@ -1147,10 +1147,10 @@ namespace icrm.WebApi
                 db.SaveChanges();
                 /////////************** New changes (hr comments for user)******************////////////////////
                 Comments c = new Comments();
+                c.commentFor = Models.Constants.commentType[2];
                 c.date = DateTime.Now;
                 c.feedbackId = Id;
                 c.commentedById = user.Result.Id;
-                c.commentFor = Models.Constants.commentType[2];
                 c.text = feedback.checkStatus;
                 db.comments.Add(c);
                 db.SaveChanges();
@@ -1397,7 +1397,7 @@ namespace icrm.WebApi
                 Debug.Print(comm.commentedBy.Roles.FirstOrDefault() + "-------default");
             }
             comments.ForEach(c => Debug.Print(c.commentedBy.FirstName + "-------" + c.commentedBy.Roles.FirstOrDefault().RoleId));
-            List<Comments> quer = comments.Where(c => c.commentedBy.Roles.Any(r => r.RoleId == userRole.RoleId)).ToList();
+            List<Comments> quer = comments.Where(c => c.commentedBy.Roles.Any(r => r.RoleId == userRole.RoleId) && c.commentFor == Constants.commentType.ElementAt(2)).ToList();
             foreach (var item in quer)
             {
                 Debug.Print(item.commentedBy.FirstName + "---name");
