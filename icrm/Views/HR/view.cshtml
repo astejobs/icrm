@@ -8,7 +8,7 @@
 
 @{
     var data = (ApplicationUser)ViewData["user"];
-
+    var commentlist = (IList<Comments>)@ViewData["commentList"];
 
 
 }
@@ -300,8 +300,11 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.createDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
-                                    </div>
+                                        @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                        @Html.HiddenFor(model => model.createDate)
+                                       @* @Html.TextBoxFor(model => model.createDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                   *@
+                                           </div>
                                 </div>
                             }
                             else
@@ -576,6 +579,25 @@
                                 </div>
                             }
 
+                            @if (commentlist != null)
+                            {
+                                foreach (var res in commentlist)
+                                {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Comments</label>
+
+
+                                        @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+
+
+                                    </div>
+                                </div>
+                                }
+                            }
                             @if (Model.departmentID != null)
                             {
 
@@ -587,8 +609,8 @@
                                         @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @readonly = "readonly" })
 
                                         @*  @Html.HiddenFor(model => model.responseById, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
+                    @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
                                     </div>
                                 </div>
 

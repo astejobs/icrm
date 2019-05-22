@@ -112,6 +112,7 @@ namespace icrm.Controllers
         public ActionResult view(string id)
         {           
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["commentList"] = feedInterface.getCOmments(id);
             ViewData["user"] = user;
             if (id == null)
             {

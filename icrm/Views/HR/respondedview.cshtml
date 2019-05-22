@@ -293,7 +293,8 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.createDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                    @Html.TextBox("da","", new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                @Html.HiddenFor(model=>model.createDate)
                                 </div>
                             </div>
                             <!-- col-4 -->
