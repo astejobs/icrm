@@ -8,10 +8,11 @@ namespace icrm.Models
     public class Forwardmodel
     {
        
-        public int subcategoryId { get; set; }
-        public int categoryId { get; set; }
-        public int priorityId { get; set; }
-        public int departmentID { get; set; }
+        public string subcategoryId { get; set; }
+        public string categoryId { get; set; }
+        public string priorityId { get; set; }
+        public string departmentID { get; set; }
+        public string comment { get; set; }
         
 
 

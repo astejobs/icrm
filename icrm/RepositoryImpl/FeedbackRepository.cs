@@ -234,6 +234,17 @@ namespace icrm.RepositoryImpl
         }
 
 
+
+        public IEnumerable<Feedback> GetAllRespondedForDepart(string id)
+        {
+                                                                                                                      
+
+            return db.comments.OrderByDescending(m => m.feedback.createDate).Where(m => m.commentedById == id).Select(m=>m.feedback).ToList().Distinct();
+
+        }
+
+
+
         public IEnumerable<Feedback> GetAllRespondedMobile()
         {
 
@@ -1071,7 +1082,11 @@ namespace icrm.RepositoryImpl
             return feedlist.ToList();
         }
 
-
-
+        public List<Comments> getDeptCOmments(string id)
+        {
+            string deptComment = Constants.commentType[1];
+            string hrComment = Constants.commentType[0];
+            return db.comments.Where(m => m.feedbackId == id &&  (m.commentFor== deptComment || m.commentFor== hrComment)).ToList();
+        }
     }
 }

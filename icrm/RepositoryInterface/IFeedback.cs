@@ -32,6 +32,7 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllResolved();
         IEnumerable<Feedback> getAllResponded();
         IEnumerable<Feedback> GetAllResponded();
+        IEnumerable<Feedback> GetAllRespondedForDepart(string id);
         IEnumerable<Feedback> GetAllRespondedMobile();
         IEnumerable<Feedback> OpenWithoutDepart();
         IEnumerable<Feedback> GETAllClosed();
@@ -47,6 +48,7 @@ namespace icrm.RepositoryInterface
 
 
         List<Comments> getCOmments(string id);
+        List<Comments> getDeptCOmments(string id);
 
         List<Category> getCategories(Int32 deptId,Int32 type);
         List<SubCategory> getSubCategories(Int32 categoryId, Int32 typeId);
@@ -92,6 +94,6 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> chartsFeedbackSalaryIssuesReasons(string d1, string d2, string salaryissuesreasons);
         string[] chartsFeedbackMostFrequentLocations(string d1, string d2);
         IEnumerable<Feedback> chartsFeedbackRegion(string d1, string d2, string region);
-
+        
     }
 }

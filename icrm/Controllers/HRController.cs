@@ -112,6 +112,7 @@ namespace icrm.Controllers
         public ActionResult view(string id)
         {           
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["commentList"] = feedInterface.getCOmments(id);
             ViewData["user"] = user;
             if (id == null)
             {
@@ -172,7 +173,7 @@ namespace icrm.Controllers
                 switch (submitButton)
                 {
                     case "Forward/Create":
-                        if (feedback.departmentID != null)        // && Request.Form["responsee"] == ""
+                         if (feedback.departmentID != null)        // && Request.Form["responsee"] == ""
                     {
                         ApplicationUser deptUser;
                        Department dep = db.Departments.Find(feedback.departmentID);
@@ -4154,7 +4155,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
             else
             {
                 ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
-
+                getAttributeList();
                 TempData["displayMsgErr"] = "Please enter fields properly";
                 if (submitBtn == "Submit")
                 {
