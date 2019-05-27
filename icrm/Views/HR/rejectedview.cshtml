@@ -217,9 +217,16 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
-                                    @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
-
+                                    @if (Model.user.CostCenterId != null)
+                                    {
+                                        @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
+                                        @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control" })
+                                        @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                    }
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -574,7 +581,10 @@
     <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
     <script src="~/Content/js/slim.js"></script>
     <script>
-        
+        if ($("#costcentrId").val() == "") {
+            $('#deptId option:contains("Operations")').remove();
+
+        }
         if ($("#typeoffeedbacktext").val() == "Complaint") {
             $('#priordiv').show();
             $("#priorty").prop('required', true);

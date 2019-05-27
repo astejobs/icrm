@@ -267,9 +267,19 @@ namespace icrm.WebApi
 
             else if (db.Departments.Find(Convert.ToInt32(forward.departmentID)).name == Constants.OPERATIONS)
             {
-                ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
-                f.departUserId = user1.Id;
-                string email = user1.bussinessEmail;
+
+                if (f.user.CostCenterId != null)
+                {
+                    ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
+                    f.departUserId = user1.Id;
+                    string email = user1.bussinessEmail;
+
+                }
+                else
+                {
+                    return BadRequest("");
+                }
+               
 
             }
 
@@ -1404,7 +1414,7 @@ namespace icrm.WebApi
             }
 
             var f = db.Feedbacks.Find(id);
-
+                                                                                                                                                           
 
             if (f != null)
             {
