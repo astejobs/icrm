@@ -182,9 +182,16 @@ namespace icrm.Controllers
                        Department dep = db.Departments.Find(feedback.departmentID);
                         if (dep.name == Constants.OPERATIONS)
                         {
-                             
-                            deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
-                            
+                            try
+                            {
+                                deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+
+                            }
+                            catch (Exception e) {
+                                ViewData["user"] = user;
+                                TempData["Message"] = "Ticket cannot be forwarded,Escalation User is not assigned";
+                                return View("Create", feedback);
+                            }
                              
                         }
                         else
@@ -421,7 +428,16 @@ namespace icrm.Controllers
                         Department dep = db.Departments.Find(feedback.departmentID);
                         if (dep.name == Constants.OPERATIONS)
                         {
-                            deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                            try
+                            {
+                                deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                            }
+                            catch (Exception e)
+                            {
+                                TempData["Message"] = "Ticket cannot be forwarded,Escalation User is not assigned";
+
+                                return RedirectToAction("view", new { id = feedback.id });
+                            }
                         }
                         else
                         {
@@ -9579,7 +9595,14 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         Department dep = db.Departments.Find(feedback.departmentID);
                         if (dep.name == Constants.OPERATIONS)
                         {
-                               deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                            try
+                            {
+                                deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                            }
+                            catch (Exception e) {
+                                TempData["Message"] = "Ticket cannot be forwarded, Escalation User is not asssigned";
+                                return RedirectToAction("rejectedview", new { id = feedback.id });
+                            }
                            
                            
                         }
