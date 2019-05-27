@@ -270,9 +270,16 @@ namespace icrm.WebApi
 
                 if (f.user.CostCenterId != null)
                 {
-                    ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
-                    f.departUserId = user1.Id;
-                    string email = user1.bussinessEmail;
+                    try
+                    {
+                        ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
+                        f.departUserId = user1.Id;
+                        string email = user1.bussinessEmail;
+                    }
+                    catch (Exception e) {
+
+                        return BadRequest();
+                    }
 
                 }
                 else
