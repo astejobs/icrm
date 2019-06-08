@@ -109,6 +109,7 @@ namespace icrm.Controllers
 
                 }
                 user.LastPasswordChangedDate = DateTime.Now;
+                user.EmailConfirmed = true;
                 var result = UserManager.Update(user);
                 if (result.Succeeded)
                 {
