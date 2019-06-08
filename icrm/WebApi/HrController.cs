@@ -347,7 +347,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             var query = from f in feedInterface.GetAllAssigned()
 
-                        where f.departmentID == user.Result.DepartmentId
+                        where f.departUserId.Equals(user.Id)
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.type.name, f.user.EmployeeId, f.user.FirstName };
 
 
