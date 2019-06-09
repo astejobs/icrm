@@ -9765,7 +9765,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                     }
                     else if(feedback.status==Constants.CLOSED)
                     {
-                        f.closedDate = f.closedDate;
+                        f.closedDate = DateTime.Now;
                         f.checkStatus = Constants.CLOSED;
                     }
                     break;
