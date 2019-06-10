@@ -133,7 +133,10 @@
 
         var chat = ["HRChat"];
 
-        var reports = ["charts"];
+        var reports = ["charts", "chartsfeedbacktype", "chartsfeedbacksource", "chartsfeedbackdepartment",
+            "chartsfeedbackposition", "chartsfeedbacknationality", "chartsfeedbacksatisfaction",
+            "chartsfeedbackescalation", "chartsfeedbacklast12months", "chartsfeedbackmostfrequent", "chartsfeedbackmostfrequentlocations",
+            "chartsfeedbacksalaryissuesreasons", "chartsfeedbackregion"];
 
         var url = window.location.href;
         var page = new Array();
@@ -149,7 +152,7 @@
                 console.log("Inside menu");
                 console.log($(".nav").find('.active').eq(0));
                 $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
-                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item with-sub");
                 console.log($(".nav").find('.nav-item').eq(3));
                 $(".nav").find('.nav-item').eq(3).attr("class", "nav-item");
                 console.log($(".nav").find('.nav-item').eq(2).attr("class", "nav-item active with-sub"));
@@ -196,7 +199,7 @@
                 $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
                 $(".nav").find('.nav-item').eq(2).attr("class", "nav-item  with-sub");
                 $(".nav").find('.nav-item').eq(3).attr("class", "nav-item");
-                console.log($(".nav").find('.nav-item').eq(1).attr("class", "nav-item active "));
+                console.log($(".nav").find('.nav-item').eq(1).attr("class", "nav-item with-sub active "));
 
 
             }
