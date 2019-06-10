@@ -182,7 +182,6 @@ namespace icrm.Controllers
             {
                 user.UserName = Guid.NewGuid().ToString("n").Substring(0, 8) + "@gmail.com";
                 user.EmployeeStatus = "Active";
-                user.LastPasswordChangedDate = DateTime.Now;
                 context.Users.Add(user);
                 context.SaveChanges();
                 TempData["Success"] = "User Added Successfully";
