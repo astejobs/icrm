@@ -211,8 +211,16 @@
                                 <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
                                 @* @Html.TextBoxFor(model => model.closedDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("MM-dd-yyyy") })
                                 *@
-                                @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.closedDate.Value.ToString("dd-MM-yyyy") })
-                                @Html.HiddenFor(model => model.closedDate)
+                                @if (Model.closedDate != null)
+                                {
+                                    @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.closedDate.Value.ToString("dd-MM-yyyy") })
+                                    @Html.HiddenFor(model => model.closedDate)
+                                }
+                                @if (Model.resolvedDate != null)
+                                {
+                                    @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.resolvedDate.Value.ToString("dd-MM-yyyy") })
+                                    @Html.HiddenFor(model => model.resolvedDate)
+                                }
                             </div>
                         </div>
                         <!-- col-4 -->
@@ -328,6 +336,7 @@ new SelectList(ViewBag.Priorities,
 
                                             <option selected value="Closed">Closed</option>
                                         }
+
 
 
                                     </select>

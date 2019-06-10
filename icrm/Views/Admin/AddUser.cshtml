@@ -39,14 +39,45 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add  ICRM Agent</li>
-                </ol>
-                <h6 class="slim-pagetitle">Add ICRM Agent</h6>
-            </div><!-- slim-pageheader -->
 
+                    @if (@ViewBag.rolename == "HR")
+                    {
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Add ICRM Agent
+                            
+                        </li>
+                    }
+                        @if (@ViewBag.rolename == "Department")
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+
+                                Add Department User
+                                
+                                
+                            </li>
+                        }
+                        </ol>
+                @if (@ViewBag.rolename == "HR")
+                {
+                    <h6 class="slim-pagetitle">Add ICRM Agent</h6>
+                }
+                @if (@ViewBag.rolename == "Department")
+                {
+                    <h6 class="slim-pagetitle">Add Department User</h6>
+                }
+            </div><!-- slim-pageheader -->
+          
             <div class="section-wrapper">
-                <label class="section-title">Add ICRM Agent</label>
-                <span style="color:green;">@ViewBag.message</span> 
+                @if (@ViewBag.rolename == "Department")
+                {
+                <label class="section-title">Add Department user</label>
+                }
+                @if (@ViewBag.rolename == "HR")
+                {
+                    <label class="section-title">Add ICRM Agent</label>
+                }
+                
+                <span style="color:green;">@ViewBag.message</span>
 
                 @Html.ValidationSummary()
                 @using (Html.BeginForm("postUser", "Admin", FormMethod.Post, null))
@@ -54,7 +85,7 @@
 
                     @Html.AntiForgeryToken()
 
-                    <input type="hidden" name="rolename" value="@ViewBag.rolename"/>
+                    <input type="hidden" name="rolename" value="@ViewBag.rolename" />
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
@@ -90,7 +121,7 @@
                                     @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
                                 </div>
                             </div><!-- col-4 -->
-                           
+
 
 
                         </div><!-- row -->
@@ -103,7 +134,7 @@
                 }
 
 
-                </div><!-- container -->
+            </div><!-- container -->
         </div><!-- slim-mainpanel -->
 
         @Html.Partial("_AdminFooter")

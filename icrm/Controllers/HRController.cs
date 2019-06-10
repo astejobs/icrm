@@ -9729,15 +9729,16 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult updatestatus(Feedback feedback, string submitBtn)
-        {          
+        {         
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
-            f.satisfaction = feedback.satisfaction;
+           
+           f.satisfaction = feedback.satisfaction;
             f.status = feedback.status;
-            
-         
-            f.submittedById = user.Id;
+
+           
+                f.submittedById = user.Id;
 
             switch (submitBtn) {
                 case "Submit":
@@ -9788,9 +9789,9 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 f.assignedDate = null;
                 f.checkStatus = Constants.OPEN;
             }
+
             
-       
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
             {
 
                 db.Entry(f).State = EntityState.Modified;
@@ -9806,9 +9807,12 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 TempData["displayMsgErr"] = "Please enter fields properly";
                 if (submitBtn == "Submit")
                 {
+                    
+                   
                     return View("resolvedview", feedback);
                 }
                 else {
+                  
                     return View("closedview", feedback);
                 }
                 
