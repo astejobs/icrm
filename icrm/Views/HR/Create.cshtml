@@ -239,7 +239,7 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Badge_No <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpBatchNo","", new { @readonly = "readonly", @class = "form-control", id="EmpBatch" })
                             </div>
                         </div>
@@ -307,7 +307,7 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Source <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Source <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(model => model.mediumId,
   new SelectList(ViewBag.sourceList, "Id", "name"), "Choose", new { @class = "form-control select2",required="required" })
 
@@ -422,7 +422,7 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
                             <div class="row mg-b-25">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Choose Action</label>
+                                        <label class="form-control-label">@Resources.Resource.Choose_Action</label>
                                         @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
                                         <label class="text-danger" id="statuscheck"></label>
                                     </div>

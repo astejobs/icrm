@@ -73,11 +73,13 @@ namespace icrm.Controllers
                         c.EscalationUserId = escalationUser.Id;
                         db.Entry(c).State = EntityState.Modified;
                         db.SaveChanges();
+                        
 
                     }
+
                 }
-                   
-              
+
+                TempData["SuccessMsg"] = "Escalation User Added";
                 return RedirectToAction("Create");
             }
             ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
@@ -151,9 +153,11 @@ namespace icrm.Controllers
                         c.EscalationUserId = escalationUser.Id;
                         db.Entry(c).State = EntityState.Modified;
                         db.SaveChanges();
+                       
 
                     }
                 }
+                TempData["SuccessMsg"] = "Escalation User has been Updated";
                 return RedirectToAction("Create");
             }
 

@@ -196,7 +196,7 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Badge_No <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
@@ -275,7 +275,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Source <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Source <span class="tx-danger">*</span></label>
                                     @Html.TextBox("source", Model.medium.name, new { @readonly = "readonly", @class = "form-control", })
                                     @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
                                 </div>
@@ -461,7 +461,7 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Choose Action</label>
+                                    <label class="form-control-label">@Resources.Resource.Choose_Action</label>
                                     <select name="status" id="statusfield" class="form-control select2">
 
                                         @if (Model.status == "Open")

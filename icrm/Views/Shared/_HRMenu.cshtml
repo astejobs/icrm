@@ -55,7 +55,7 @@
         <!-- slim-header-left -->
         <div class="slim-header-right">
 
-            <a style="margin-bottom: 5px;">Available for Chat &nbsp; &nbsp; &nbsp;</a>
+            <a style="margin-bottom: 5px;">@Resources.Resource.Available_for_Chat &nbsp; &nbsp; &nbsp;</a>
 
             <div class="dropdown dropdown-a">
                 <a href="#" class="">
@@ -163,23 +163,23 @@
             <li class="nav-item with-sub ">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon ion-ios-gear-outline"></i>
-                    <span>Reports</span>
+                    <span>@Resources.Resource.Reports</span>
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li class="active"><a class="nav-link" href="/HR/charts">Report By Status</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacktype">Report By Feedback Type</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacksource">Report By Feedback Source</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackdepartment">Report By Department</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackposition">Report By Position</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacknationality">Report By Nationality</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacksatisfaction">Report By Satisfaction</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackescalation">Report By Escalation</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacklast12months">Report By Last 12 Months</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackmostfrequent">Report By Most Frequent Complaints</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackmostfrequentlocations">Report By Most Frequent Locations</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacksalaryissuesreasons">Report By Salary Issues Reasons</a></li>
-                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackregion">Report By Region</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/charts">@Resources.Resource.Report_by_status</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacktype">@Resources.Resource.Report_by_feedback_type</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacksource">@Resources.Resource.Report_by_feedback_source</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackdepartment">@Resources.Resource.Report_by_Department</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackposition">@Resources.Resource.Report_by_Position</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacknationality">@Resources.Resource.Report_by_Nationality</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacksatisfaction">@Resources.Resource.Report_by_Satisfaction</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackescalation">@Resources.Resource.Report_by_Escalation</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacklast12months">@Resources.Resource.Report_by_Last_12_Months</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackmostfrequent">@Resources.Resource.Report_by_Most_Frequent_Complaints</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackmostfrequentlocations">@Resources.Resource.Report_by_Most_Frequent_Locations</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbacksalaryissuesreasons">@Resources.Resource.Report_by_Salary_Issues_Reason</a></li>
+                        <li class="active"><a class="nav-link" href="/HR/chartsfeedbackregion">@Resources.Resource.Report_by_region</a></li>
 
                     </ul>
                 </div>
@@ -228,7 +228,7 @@
                         <li>@Html.ActionLink(Resources.Resource.Inquiries, "tickets", "HR", new { typeId = "Enquiry" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Suggestions, "tickets", "HR", new { typeId = "Suggestion" }, null)</li>
                         <li>@Html.ActionLink(@Resources.Resource.Complaints, "tickets", "HR", new { typeId = "Complaint" }, null)</li>
-                        <li>@Html.ActionLink("Appreciations", "tickets", "HR", new { typeId = "Appreciation" }, null)</li>
+                        <li>@Html.ActionLink(@Resources.Resource.Appreciations, "tickets", "HR", new { typeId = "Appreciation" }, null)</li>
                     </ul>
                 </div>
                 <!-- dropdown-menu -->

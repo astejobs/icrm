@@ -82,7 +82,7 @@
 
 
                 <h2 class="slim-logo text-center"><a href="#"><img src="~/Content/img/m_logo.png" width="70px"><span></span></a></h2>
-                <a href="@Url.Action("index","DownloadAPK")" class="nav-link text-center"><i class="icon ion-ios-bolt"></i> Download APK</a>
+                <a href="@Url.Action("index","DownloadAPK")" class="nav-link text-center"><i class="icon ion-ios-bolt"></i> @Resources.Resource.Download_APK</a>
                  @if (ViewBag.LogoutTime != null) {
                    <span style="color:red">Account Locked Temporarily , Please Try Again in @ViewBag.LogoutTime</span> 
                  }

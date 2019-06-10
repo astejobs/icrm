@@ -537,4 +537,274 @@
   <data name="Vendor" xml:space="preserve">
     <value>Vendor</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Add_department_user" xml:space="preserve">
+    <value>Add Department User</value>
+  </data>
+  <data name="add_religion" xml:space="preserve">
+    <value>Add Religion</value>
+  </data>
+  <data name="Add_Search_Update_user" xml:space="preserve">
+    <value>Add/Search/Update User</value>
+  </data>
+  <data name="Add_user" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="Admin_Category" xml:space="preserve">
+    <value>Admin/Category</value>
+  </data>
+  <data name="Appreciations" xml:space="preserve">
+    <value>Appreciations</value>
+  </data>
+  <data name="Available_for_Chat" xml:space="preserve">
+    <value>Available for Chat</value>
+  </data>
+  <data name="Badge_No" xml:space="preserve">
+    <value>Badge No</value>
+  </data>
+  <data name="Band_list" xml:space="preserve">
+    <value>Band List</value>
+  </data>
+  <data name="Business_phone_no" xml:space="preserve">
+    <value>Business Phone No</value>
+  </data>
+  <data name="Category_name" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="Choose_Action" xml:space="preserve">
+    <value>Choose Action</value>
+  </data>
+  <data name="Close_Chat" xml:space="preserve">
+    <value>Close Chat</value>
+  </data>
+  <data name="Cost_Center" xml:space="preserve">
+    <value>Cost Center</value>
+  </data>
+  <data name="Create_bands" xml:space="preserve">
+    <value>Create Bands</value>
+  </data>
+  <data name="Create_department" xml:space="preserve">
+    <value>Create Department</value>
+  </data>
+  <data name="Create_employee_class" xml:space="preserve">
+    <value>Create Employee Class</value>
+  </data>
+  <data name="Create_emplyer_type" xml:space="preserve">
+    <value>Create Employer Type</value>
+  </data>
+  <data name="Create_escalation_user" xml:space="preserve">
+    <value>Create Escalation Users</value>
+  </data>
+  <data name="Create_ethinicities" xml:space="preserve">
+    <value>Create Ethnicities</value>
+  </data>
+  <data name="Create_event_reasons" xml:space="preserve">
+    <value>Create Event Reasons</value>
+  </data>
+  <data name="Create_feedback_type" xml:space="preserve">
+    <value>Create Feedback Type</value>
+  </data>
+  <data name="Create_gender" xml:space="preserve">
+    <value>Create Gender</value>
+  </data>
+  <data name="create_job_title" xml:space="preserve">
+    <value>Create Job Title</value>
+  </data>
+  <data name="Create_locations" xml:space="preserve">
+    <value>Create Locations</value>
+  </data>
+  <data name="Create_nationality" xml:space="preserve">
+    <value>Create Nationality</value>
+  </data>
+  <data name="Create_position" xml:space="preserve">
+    <value>Create Position</value>
+  </data>
+  <data name="create_priorities" xml:space="preserve">
+    <value>Create Priorities</value>
+  </data>
+  <data name="Create_vendor" xml:space="preserve">
+    <value>Create Vendor</value>
+  </data>
+  <data name="Creating_religions" xml:space="preserve">
+    <value>Creating Religions</value>
+  </data>
+  <data name="Department_name" xml:space="preserve">
+    <value>Department Name</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="employee_class_list" xml:space="preserve">
+    <value>Employee Class List</value>
+  </data>
+  <data name="Employer_type_list" xml:space="preserve">
+    <value>Employer Type List</value>
+  </data>
+  <data name="Escalation_user_list" xml:space="preserve">
+    <value>Escalation User List</value>
+  </data>
+  <data name="ethnicities_list" xml:space="preserve">
+    <value>Ethnicities List</value>
+  </data>
+  <data name="Event_reasons" xml:space="preserve">
+    <value>Event Reasons</value>
+  </data>
+  <data name="Event_reason_list" xml:space="preserve">
+    <value>Event Reason List</value>
+  </data>
+  <data name="Feedback_types" xml:space="preserve">
+    <value>Feedback Types</value>
+  </data>
+  <data name="Filtered_By_employeeid" xml:space="preserve">
+    <value>Filtered By Employee Id</value>
+  </data>
+  <data name="first_escalation_user" xml:space="preserve">
+    <value>First Escalation User</value>
+  </data>
+  <data name="Gender_list" xml:space="preserve">
+    <value>Gender List</value>
+  </data>
+  <data name="Jobtitle" xml:space="preserve">
+    <value>Job Title</value>
+  </data>
+  <data name="Jobtitle_list" xml:space="preserve">
+    <value>Job Title List</value>
+  </data>
+  <data name="Last_name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Location_Group" xml:space="preserve">
+    <value>Location Group</value>
+  </data>
+  <data name="Location_list" xml:space="preserve">
+    <value>Location List</value>
+  </data>
+  <data name="Location_name" xml:space="preserve">
+    <value>Location Name</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="Middle_name" xml:space="preserve">
+    <value>Middle Name</value>
+  </data>
+  <data name="Nationality_list" xml:space="preserve">
+    <value>Nationality List</value>
+  </data>
+  <data name="No_result" xml:space="preserve">
+    <value>No Result</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="Payscale_Type" xml:space="preserve">
+    <value>PayScale Type</value>
+  </data>
+  <data name="Positions" xml:space="preserve">
+    <value>Positions</value>
+  </data>
+  <data name="Position_list" xml:space="preserve">
+    <value>Position List</value>
+  </data>
+  <data name="priority_list" xml:space="preserve">
+    <value>Priority List</value>
+  </data>
+  <data name="priority_name" xml:space="preserve">
+    <value>Priority Name</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Report_by_Department" xml:space="preserve">
+    <value>REPORT BY DEPARTMENT</value>
+  </data>
+  <data name="Report_by_Escalation" xml:space="preserve">
+    <value>REPORT BY ESCALATION</value>
+  </data>
+  <data name="Report_by_feedback_source" xml:space="preserve">
+    <value>REPORT BY FEEDBACK SOURCE</value>
+  </data>
+  <data name="Report_by_feedback_type" xml:space="preserve">
+    <value>REPORT BY FEEDBACK TYPE</value>
+  </data>
+  <data name="Report_by_Last_12_Months" xml:space="preserve">
+    <value>REPORT BY LAST 12 MONTHS</value>
+  </data>
+  <data name="Report_by_Most_Frequent_Complaints" xml:space="preserve">
+    <value>REPORT BY MOST FREQUENT COMPLAINTS</value>
+  </data>
+  <data name="Report_by_Most_Frequent_Locations" xml:space="preserve">
+    <value>REPORT BY MOST FREQUENT LOCATIONS</value>
+  </data>
+  <data name="Report_by_Nationality" xml:space="preserve">
+    <value>REPORT BY NATIONALITY</value>
+  </data>
+  <data name="Report_by_Position" xml:space="preserve">
+    <value>REPORT BY POSITION</value>
+  </data>
+  <data name="Report_by_region" xml:space="preserve">
+    <value>REPORT BY REGION</value>
+  </data>
+  <data name="Report_by_Salary_Issues_Reason" xml:space="preserve">
+    <value>REPORT BY SALARY ISSUES REASON</value>
+  </data>
+  <data name="Report_by_Satisfaction" xml:space="preserve">
+    <value>REPORT BY SATISFACTION</value>
+  </data>
+  <data name="Report_by_status" xml:space="preserve">
+    <value>REPORT BY STATUS</value>
+  </data>
+  <data name="Response_time" xml:space="preserve">
+    <value>Response Time(Hrs)</value>
+  </data>
+  <data name="Satisfaction" xml:space="preserve">
+    <value>Satisfaction</value>
+  </data>
+  <data name="second_escalation_user" xml:space="preserve">
+    <value>Second  Escalation User</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="Sublocation_list" xml:space="preserve">
+    <value>Sublocation List</value>
+  </data>
+  <data name="Sublocation_name" xml:space="preserve">
+    <value>Sublocation Name</value>
+  </data>
+  <data name="S_No" xml:space="preserve">
+    <value>S.No</value>
+  </data>
+  <data name="Terminated" xml:space="preserve">
+    <value>Terminated</value>
+  </data>
+  <data name="third_escalation_user" xml:space="preserve">
+    <value>Third Escalation User</value>
+  </data>
+  <data name="Translation" xml:space="preserve">
+    <value>Translation</value>
+  </data>
+  <data name="Type_name" xml:space="preserve">
+    <value>Type Name</value>
+  </data>
+  <data name="Typing_something" xml:space="preserve">
+    <value>Typing something</value>
+  </data>
+  <data name="Update_user" xml:space="preserve">
+    <value>Update User</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Vendor_list" xml:space="preserve">
+    <value>Vendor List</value>
+  </data>
 </root>

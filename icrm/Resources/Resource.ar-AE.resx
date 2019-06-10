@@ -537,4 +537,274 @@
   <data name="Vendor" xml:space="preserve">
     <value>البائع</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="Add_department_user" xml:space="preserve">
+    <value>اضافة مستخدم الادارة</value>
+  </data>
+  <data name="add_religion" xml:space="preserve">
+    <value>اضافة الديانة</value>
+  </data>
+  <data name="Add_Search_Update_user" xml:space="preserve">
+    <value>اضافة/بحث/تحديث المستخدم</value>
+  </data>
+  <data name="Add_user" xml:space="preserve">
+    <value>اضافة مستخدم</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>المشرف</value>
+  </data>
+  <data name="Admin_Category" xml:space="preserve">
+    <value>المشرف/الفئة</value>
+  </data>
+  <data name="Appreciations" xml:space="preserve">
+    <value>رسائل شكر</value>
+  </data>
+  <data name="Available_for_Chat" xml:space="preserve">
+    <value>متاح للدردشة، نسعد لخدمتكم</value>
+  </data>
+  <data name="Band_list" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Business_phone_no" xml:space="preserve">
+    <value>رقم الجوال</value>
+  </data>
+  <data name="Category_name" xml:space="preserve">
+    <value>اسم الفئة</value>
+  </data>
+  <data name="Choose_Action" xml:space="preserve">
+    <value>اختر الاجراء</value>
+  </data>
+  <data name="Close_Chat" xml:space="preserve">
+    <value>اغلاق المحادثة</value>
+  </data>
+  <data name="Cost_Center" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="Create_bands" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Create_department" xml:space="preserve">
+    <value>انشاء الادارة</value>
+  </data>
+  <data name="Create_employee_class" xml:space="preserve">
+    <value>انشاء فئة الموظف</value>
+  </data>
+  <data name="Create_emplyer_type" xml:space="preserve">
+    <value>انشاء نوع صاحب العمل</value>
+  </data>
+  <data name="Create_escalation_user" xml:space="preserve">
+    <value>انشاء مستخدمي التصعيد</value>
+  </data>
+  <data name="Create_ethinicities" xml:space="preserve">
+    <value>انشاء العرقية</value>
+  </data>
+  <data name="Create_event_reasons" xml:space="preserve">
+    <value>انشاء سبب الحدث</value>
+  </data>
+  <data name="Create_feedback_type" xml:space="preserve">
+    <value>انشاء نوع الملاحظات</value>
+  </data>
+  <data name="Create_gender" xml:space="preserve">
+    <value>انشاء النوع</value>
+  </data>
+  <data name="create_job_title" xml:space="preserve">
+    <value>انشاء المسمى الوظيفي</value>
+  </data>
+  <data name="Create_locations" xml:space="preserve">
+    <value>مواقع الفئات</value>
+  </data>
+  <data name="Create_nationality" xml:space="preserve">
+    <value>انشاء الجنسية</value>
+  </data>
+  <data name="Create_position" xml:space="preserve">
+    <value>انشاء المنصف الوظيفي</value>
+  </data>
+  <data name="create_priorities" xml:space="preserve">
+    <value>انشاء الاولويات</value>
+  </data>
+  <data name="Create_vendor" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Creating_religions" xml:space="preserve">
+    <value>اضافة الديانات</value>
+  </data>
+  <data name="Department_name" xml:space="preserve">
+    <value>اسم الادارة</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكتروني</value>
+  </data>
+  <data name="employee_class_list" xml:space="preserve">
+    <value>قائمة فئة الموظفين</value>
+  </data>
+  <data name="Employer_type_list" xml:space="preserve">
+    <value>قائمة صاحب العمل</value>
+  </data>
+  <data name="Escalation_user_list" xml:space="preserve">
+    <value>قائمة مستخدمي التصعيد</value>
+  </data>
+  <data name="ethnicities_list" xml:space="preserve">
+    <value>قائمة العرقيات</value>
+  </data>
+  <data name="Event_reasons" xml:space="preserve">
+    <value>اسباب الحدث</value>
+  </data>
+  <data name="Event_reason_list" xml:space="preserve">
+    <value>قائمة اسباب الحدث</value>
+  </data>
+  <data name="Feedback_types" xml:space="preserve">
+    <value>انواع الملاحظات</value>
+  </data>
+  <data name="Filtered_By_employeeid" xml:space="preserve">
+    <value>فلترة حسب رقم الموظف</value>
+  </data>
+  <data name="first_escalation_user" xml:space="preserve">
+    <value>اول تصعيد للمستخدم</value>
+  </data>
+  <data name="Gender_list" xml:space="preserve">
+    <value>قائمة النوع</value>
+  </data>
+  <data name="Jobtitle" xml:space="preserve">
+    <value>المسمى الوظيفي</value>
+  </data>
+  <data name="Jobtitle_list" xml:space="preserve">
+    <value>قائمة المسميات الوظيفية</value>
+  </data>
+  <data name="Last_name" xml:space="preserve">
+    <value>الاسم الاخير</value>
+  </data>
+  <data name="Location_Group" xml:space="preserve">
+    <value>مجموعة الموقع</value>
+  </data>
+  <data name="Location_list" xml:space="preserve">
+    <value>قائمة المواقع</value>
+  </data>
+  <data name="Location_name" xml:space="preserve">
+    <value>اسم الموقع</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>الرسائل</value>
+  </data>
+  <data name="Middle_name" xml:space="preserve">
+    <value>الاسم الاوسط</value>
+  </data>
+  <data name="Nationality_list" xml:space="preserve">
+    <value>قائمة الجنسيات</value>
+  </data>
+  <data name="No_result" xml:space="preserve">
+    <value>لا نتيجة</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>اغلاق</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>تشغيل</value>
+  </data>
+  <data name="Payscale_Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Positions" xml:space="preserve">
+    <value>المناصب الوظيفية</value>
+  </data>
+  <data name="Position_list" xml:space="preserve">
+    <value>قائمة المناصب الوظيفية</value>
+  </data>
+  <data name="priority_list" xml:space="preserve">
+    <value>قائمة الاولويات</value>
+  </data>
+  <data name="priority_name" xml:space="preserve">
+    <value>اسم الاولوية</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>التقارير</value>
+  </data>
+  <data name="Report_by_Department" xml:space="preserve">
+    <value>تقرير حسب الادارة</value>
+  </data>
+  <data name="Report_by_Escalation" xml:space="preserve">
+    <value>تقرير حسب تصعيد التذاكر</value>
+  </data>
+  <data name="Report_by_feedback_source" xml:space="preserve">
+    <value>تقرير عن نوع مصدر الملاحظة</value>
+  </data>
+  <data name="Report_by_feedback_type" xml:space="preserve">
+    <value>تقرير عن نوع الملاحظة</value>
+  </data>
+  <data name="Report_by_Last_12_Months" xml:space="preserve">
+    <value>تقرير اخر 12 شهر</value>
+  </data>
+  <data name="Report_by_Most_Frequent_Complaints" xml:space="preserve">
+    <value>تقرير عن اكثر الشكاوي تكرارا</value>
+  </data>
+  <data name="Report_by_Most_Frequent_Locations" xml:space="preserve">
+    <value>تقرير عن اكثر مصدر للشكاوي</value>
+  </data>
+  <data name="Report_by_Nationality" xml:space="preserve">
+    <value>تقرير حسب الجنسية</value>
+  </data>
+  <data name="Report_by_Position" xml:space="preserve">
+    <value>تقرير حسب المسمى الوظيفي</value>
+  </data>
+  <data name="Report_by_region" xml:space="preserve">
+    <value>تقرير حسب المنطقة</value>
+  </data>
+  <data name="Report_by_Salary_Issues_Reason" xml:space="preserve">
+    <value>تقرير عن اسباب الشكاوي المتعلقة بالرواتب</value>
+  </data>
+  <data name="Report_by_Satisfaction" xml:space="preserve">
+    <value>تقرير حسب نسبة الرضا</value>
+  </data>
+  <data name="Report_by_status" xml:space="preserve">
+    <value>تقرير عن الحالة</value>
+  </data>
+  <data name="Response_time" xml:space="preserve">
+    <value>زمن الاستجابة</value>
+  </data>
+  <data name="Satisfaction" xml:space="preserve">
+    <value>الرضا</value>
+  </data>
+  <data name="second_escalation_user" xml:space="preserve">
+    <value>ثاني تصعيد للمستخدم</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>المصدر</value>
+  </data>
+  <data name="Sublocation_list" xml:space="preserve">
+    <value>قائمة المواقع الفرعية</value>
+  </data>
+  <data name="Sublocation_name" xml:space="preserve">
+    <value>اسم الموقع الفرعي</value>
+  </data>
+  <data name="S_No" xml:space="preserve">
+    <value>الرقم المتسلسل</value>
+  </data>
+  <data name="Terminated" xml:space="preserve">
+    <value>مفصول</value>
+  </data>
+  <data name="third_escalation_user" xml:space="preserve">
+    <value>ثالث تصعيد للمستخدم</value>
+  </data>
+  <data name="Translation" xml:space="preserve">
+    <value>الترجمة</value>
+  </data>
+  <data name="Type_name" xml:space="preserve">
+    <value>اسم النوع</value>
+  </data>
+  <data name="Typing_something" xml:space="preserve">
+    <value>يكتب الان</value>
+  </data>
+  <data name="Update_user" xml:space="preserve">
+    <value>تحديث المستخدم</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>المستخدمون</value>
+  </data>
+  <data name="Vendor_list" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Badge_No" xml:space="preserve">
+    <value>الرقم الوظيفي</value>
+  </data>
 </root>
