@@ -38,8 +38,7 @@ namespace icrm.Models
 
                     var level1query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
-                                 f.priority.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
-                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime)*2
+                                 f.priority.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime
                                       select f;
 
                     foreach (Feedback f in level1query) {
@@ -60,8 +59,7 @@ namespace icrm.Models
 
                     var level2query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
-                                 f.priority.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime)*2 &&
-                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime) * 3
+                                 f.priority.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime)*2
                                       select f;
 
                     foreach (Feedback f in level2query)
@@ -69,7 +67,7 @@ namespace icrm.Models
                         f.escalationlevel = "level2";
                         if (f.department.name.Equals(Constants.OPERATIONS))
                         {
-                            sendEmailAsync(f, getOperationsEscalationUser(f.user.CostCenter.Id).secondEscalationUser.bussinessEmail);
+                            sendEmailAsync(f, getOperationsEscalationUser(f.user.CostCenter.Id).thirdEscalationUser.bussinessEmail);
                         }
                         else {
                             sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).thirdEscalationUserId).bussinessEmail);

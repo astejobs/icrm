@@ -30,7 +30,7 @@ namespace icrm.Models
         {
             try
             {
-                lock (_lock)
+                lock (_lock) 
                 {
                     if (_shuttingDown)
                         return;

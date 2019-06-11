@@ -34,11 +34,10 @@ namespace icrm.Models
                 {
                     if (_shuttingDown)
                         return;
- 
+  
                     var level1query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
-                                 f.priority.priorityId == 3 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.mediumescelationtime &&
-                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.mediumescelationtime) *2
+                                 f.priority.priorityId == 3 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.mediumescelationtime 
                                       select f;
 
                     foreach (Feedback f in level1query) {
@@ -60,8 +59,7 @@ namespace icrm.Models
 
                     var level2query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
-                                 f.priority.priorityId == 3 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.mediumescelationtime) *2 &&
-                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.mediumescelationtime) * 3
+                                 f.priority.priorityId == 3 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.mediumescelationtime) *2
                                       select f;
 
                     foreach (Feedback f in level2query)

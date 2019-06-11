@@ -55,7 +55,7 @@ namespace icrm.Models
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
 
-                    }
+                    } 
                     db.SaveChanges();
 
                     var level2query = from f in db.Feedbacks.ToList()
