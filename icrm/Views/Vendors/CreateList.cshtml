@@ -17,7 +17,7 @@
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
 
-    <title>Create Category</title>
+    <title>ICRM 2.0</title>
 
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -40,19 +40,37 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Vendor</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if (ViewBag.Status == "Add")
+                        {@Resources.Resource.Create_vendor}
+
+                                        @if (ViewBag.Status == "Update")
+                                        {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Vendor}
+                                    </li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Vendors</h6>
+                <h6 class="slim-pagetitle">
+                    @if (ViewBag.Status == "Add")
+                    {@Resources.Resource.Create_vendor}
+
+                                @if (ViewBag.Status == "Update")
+                                {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Vendor}
+                            </h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Vendor</label>
+                <label class="section-title">
+                    @if (ViewBag.Status == "Add")
+                    {@Resources.Resource.Create_vendor}
+
+                                @if (ViewBag.Status == "Update")
+                                {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Vendor}
+                            </label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
-                <label class="section-title">Admin / Vendors</label>
+                <label class="section-title">@Resources.Resource.Admin / @Resources.Resource.Vendor</label>
                 @using (Html.BeginForm())
                 {
 
@@ -69,7 +87,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Vendor: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Vendor: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.Vendor.name, new { @class = "form-control", placeholder = "Enter Vendor Name", Required = "true" })
 
                                 </div>
@@ -89,7 +107,16 @@
                         <!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">@ViewBag.Status</button>
+                            <button class="btn btn-primary bd-0">
+                                @if (ViewBag.Status == "Add")
+                                {
+                                    @Resources.Resource.Add
+                                }
+                                @if (ViewBag.Status == "Update")
+                                {
+                                    @Resources.Resource.Update
+                                }
+                            </button>
                             <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
@@ -102,16 +129,16 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Vendor List</h6>
+                            <h6 class="slim-card-title">@Resources.Resource.Vendor @Html.Raw("")@Resources.Resource.list</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
                             <table class="table mg-b-0 tx-13">
                                 <thead>
                                     <tr class="tx-10">
-                                        <th class="wd-10p pd-y-5">S.No</th>
+                                        <th class="wd-10p pd-y-5">@Resources.Resource.S_No</th>
                                         <th class="pd-y-5">@Resources.Resource.Name</th>
-                                        <th class="pd-y-5">Action</th>
+                                        <th class="pd-y-5">@Resources.Resource.Action</th>
 
                                     </tr>
                                 </thead>

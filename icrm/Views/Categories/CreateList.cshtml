@@ -21,7 +21,7 @@
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
 
-    <title>Create Category</title>
+    <title>ICRM 2.0</title>
 
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -45,15 +45,32 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Category</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if (ViewBag.Status == "Add")
+                        {@Resources.Resource.Create_Category}
+                        @if (ViewBag.Status == "Update")
+                        {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Category}
+
+                    </li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Category</h6>
+                <h6 class="slim-pagetitle">
+                    @if (ViewBag.Status == "Add")
+                    {@Resources.Resource.Create_Category}
+                    @if (ViewBag.Status == "Update")
+                    {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Category}
+
+                </h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Category</label>
+                <label class="section-title">
+                    @if (ViewBag.Status == "Add")
+                    {@Resources.Resource.Create_Category}
+                                @if (ViewBag.Status == "Update")
+                                {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Category}
+                            </label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
                 @if (TempData["Success"] != null)
                 {
@@ -74,7 +91,12 @@
                     </div>
                 }
 
-                <label class="section-title">Admin / Category</label>
+                    <label class="section-title">
+                        @Resources.Resource.Admin /@if (ViewBag.Status == "Add")
+                                        {@Resources.Resource.Create_Category}
+                        @if (ViewBag.Status == "Update")
+                        {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Category}
+                    </label>
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -90,7 +112,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Category <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.Category.name, new { @class = "form-control", placeholder = "Enter Category", Required = "true" })
                                     @Html.Hidden("pagee", TempData["page"], new { name = "pagee" })
 
@@ -99,7 +121,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Type Name <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Type_name<span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.Category.FeedBackTypeId,
                                         new SelectList(ViewBag.FeedBackTypeList,
                                         "Id", "name"), "Choose Type", new { @class = "form-control select2" })
@@ -110,7 +132,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Department Name <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Department_name <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.Category.DepartmentId,
                                         new SelectList(ViewBag.DepartmentList,
                                         "Id", "name"), "Choose Department", new { @class = "form-control select2" })
@@ -136,7 +158,15 @@
                         <!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">@ViewBag.Status</button>
+                            <button class="btn btn-primary bd-0">
+                                @if (ViewBag.Status == "Add")
+                                {
+                                    @Resources.Resource.Add
+                                }
+                                @if (ViewBag.Status == "Update")
+                                {@Resources.Resource.Update
+                                }
+                            </button>
                             <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
@@ -149,16 +179,16 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Category List</h6>
+                            <h6 class="slim-card-title">@Resources.Resource.Category_List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
                             <table class="table mg-b-0 tx-13">
                                 <thead>
                                     <tr class="tx-10">
-                                        <th class="wd-10p pd-y-5">S.No</th>
+                                        <th class="wd-10p pd-y-5">@Resources.Resource.S_No</th>
                                         <th class="pd-y-5">@Resources.Resource.Name</th>
-                                        <th class="pd-y-5">Action</th>
+                                        <th class="pd-y-5">@Resources.Resource.Action</th>
 
                                     </tr>
                                 </thead>

@@ -38,43 +38,43 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
 
                     @if (@ViewBag.rolename == "HR")
                     {
-                        <li class="breadcrumb-item active" aria-current="page">
-                            Add ICRM Agent
-                            
-                        </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @Resources.Resource.Add_Icrm_Agent
+
+                    </li>
                     }
                         @if (@ViewBag.rolename == "Department")
                         {
-                            <li class="breadcrumb-item active" aria-current="page">
+                    <li class="breadcrumb-item active" aria-current="page">
 
-                                Add Department User
-                                
-                                
-                            </li>
+                        @Resources.Resource.Add_department_user
+
+
+                    </li>
                         }
                         </ol>
                 @if (@ViewBag.rolename == "HR")
                 {
-                    <h6 class="slim-pagetitle">Add ICRM Agent</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Add_Icrm_Agent</h6>
                 }
                 @if (@ViewBag.rolename == "Department")
                 {
-                    <h6 class="slim-pagetitle">Add Department User</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Add_department_user</h6>
                 }
             </div><!-- slim-pageheader -->
           
             <div class="section-wrapper">
                 @if (@ViewBag.rolename == "Department")
                 {
-                <label class="section-title">Add Department user</label>
+                <label class="section-title">@Resources.Resource.Add_department_user</label>
                 }
                 @if (@ViewBag.rolename == "HR")
                 {
-                    <label class="section-title">Add ICRM Agent</label>
+                <label class="section-title">@Resources.Resource.Add_Icrm_Agent</label>
                 }
                 
                 <span style="color:green;">@ViewBag.message</span>
@@ -91,7 +91,7 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Salutation: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Salutation <span class="tx-danger">*</span></label>
                                     <select class="form-control select2" data-placeholder="Choose country">
                                         <option label="Choose"></option>
                                         <option value="">Mr</option>
@@ -111,13 +111,13 @@
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Password: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Password <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Confirm Password: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Confirm_Password <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
                                 </div>
                             </div><!-- col-4 -->
