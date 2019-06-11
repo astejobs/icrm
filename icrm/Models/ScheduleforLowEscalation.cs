@@ -157,7 +157,7 @@ namespace icrm.Models
 
         public EscalationUser getOperationsEscalationUser(int? costCenterId)
         {
-            EscalationUser escUser = db.EscalationUsers.Where(m => m.CostCenterId == costCenterId).FirstOrDefault();
+            EscalationUser escUser = db.EscalationUsers.Include("secondEscalationUser").Include("thirdEscalationUser").Where(m => m.CostCenterId == costCenterId).FirstOrDefault();
 
             return escUser;
         }

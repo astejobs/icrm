@@ -41,6 +41,7 @@ namespace icrm.Models
                                  f.priority.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime
                                       select f;
 
+                   
                     foreach (Feedback f in level1query) {
                         
                         f.escalationlevel = "level1";
@@ -57,10 +58,13 @@ namespace icrm.Models
                     }
                     db.SaveChanges();
 
-                    var level2query = from f in db.Feedbacks.ToList()
+                   var level2query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
                                  f.priority.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime)*2
                                       select f;
+
+                    
+
 
                     foreach (Feedback f in level2query)
                     {
@@ -154,7 +158,7 @@ namespace icrm.Models
 
         public EscalationUser getOperationsEscalationUser(int? costCenterId)
         {
-            EscalationUser escUser = db.EscalationUsers.Where(m => m.CostCenterId == costCenterId).FirstOrDefault();
+            EscalationUser escUser = db.EscalationUsers.Include("secondEscalationUser").Include("thirdEscalationUser").Where(m => m.CostCenterId == costCenterId).FirstOrDefault();
 
             return escUser;
         }
