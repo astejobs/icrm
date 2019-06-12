@@ -17,7 +17,7 @@
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
 
-    <title>Create Category</title>
+    <title>ICRM 2.0</title>
 
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -44,7 +44,14 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create @Resources.Resource.Escalation_Users</li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if (ViewBag.Status == "Add")
+                        {@Resources.Resource.Create_escalation_user}
+
+                        @if (ViewBag.Status == "Update")
+                        {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Escalation_Users}
+
+                    </li>
                 </ol>
                 <h6 class="slim-pagetitle">@Resources.Resource.Escalation_Users</h6>
                
@@ -137,7 +144,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">First @Resources.Resource.Escalation_Users <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.first_escalation_user <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.firstEscalationUserId,
                                        new SelectList(ViewBag.UserList,
                                           "Id", "EmployeeId"),"Choose First Escalation User", new { @class = "form-control select2 user", required= "required"})
@@ -148,7 +155,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Second @Resources.Resource.Escalation_Users <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.second_escalation_user <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.secondEscalationUserId,
                                        new SelectList(ViewBag.UserList,
                                           "Id", "EmployeeId"), "Choose Second Escalation User", new { @class = "form-control select2 user", required = "required" })
@@ -159,7 +166,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Third @Resources.Resource.Escalation_Users <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.third_escalation_user<span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.thirdEscalationUserId,
                                        new SelectList(ViewBag.UserList,
                                           "Id", "EmployeeId"), "Choose Third Escalation User", new { @class = "form-control select2 user", required = "required" })
@@ -189,7 +196,16 @@
                         <!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">@ViewBag.Status</button>
+                            <button class="btn btn-primary bd-0">
+                                @if (ViewBag.Status == "Add")
+                                {
+                                    @Resources.Resource.Add
+                                }
+                                @if (ViewBag.Status == "Update")
+                                {
+                                    @Resources.Resource.Update
+                                }
+                            </button>
                             <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
@@ -202,19 +218,19 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">@Resources.Resource.Escalation_Users List</h6>
+                            <h6 class="slim-card-title">@Resources.Resource.Escalation_user_list</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
                             <table class="table mg-b-0 tx-13">
                                 <thead>
                                     <tr class="tx-10">
-                                        <th class="wd-10p pd-y-5">S.No</th>
+                                        <th class="wd-10p pd-y-5">@Resources.Resource.S_No</th>
                                         <th class="pd-y-5">@Resources.Resource.Department</th>
-                                        <th class="pd-y-5">Cost Center Name</th>
-                                        <th class="pd-y-5">First @Resources.Resource.Escalation_Users</th>
-                                        <th class="pd-y-5">Second @Resources.Resource.Escalation_Users</th>
-                                        <th class="pd-y-5">Third @Resources.Resource.Escalation_Users</th>
+                                        <th class="pd-y-5">@Resources.Resource.Cost_Center</th>
+                                        <th class="pd-y-5">@Resources.Resource.first_escalation_user</th>
+                                        <th class="pd-y-5">@Resources.Resource.second_escalation_user</th>
+                                        <th class="pd-y-5">@Resources.Resource.third_escalation_user</th>
                                         <th class="pd-y-5">@Resources.Resource.Action</th>
 
                                     </tr>

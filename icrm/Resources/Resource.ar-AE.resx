@@ -807,4 +807,10 @@
   <data name="Badge_No" xml:space="preserve">
     <value>الرقم الوظيفي</value>
   </data>
+  <data name="Choose" xml:space="preserve">
+    <value>اختر </value>
+  </data>
+  <data name="list" xml:space="preserve">
+    <value>قائمة </value>
+  </data>
 </root>

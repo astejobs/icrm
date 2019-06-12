@@ -41,13 +41,32 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.Status User</li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if (@ViewBag.Status == "Add")
+                        {
+                            @Resources.Resource.Add_user
+                        }
+                        @if (@ViewBag.Status == "Update")
+                        {
+                            @Resources.Resource.Update_user
+                        }
+                        
+                    </li>
                 </ol>
-                <h6 class="slim-pagetitle">Update User</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Update_user</h6>
             </div><!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">@ViewBag.Status User</label>
+                <label class="section-title">
+                    @if (@ViewBag.Status == "Add")
+                    {
+                        @Resources.Resource.Add_user
+                    }
+                    @if (@ViewBag.Status == "Update")
+                    {
+                        @Resources.Resource.Update_user
+                    }
+                </label>
                 @if (TempData["Success"] != null)
                 {
                     <div class="alert alert-success" role="alert">
@@ -102,19 +121,19 @@
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Middle Name: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Middle_name <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.user.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Last Name: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.LastName<span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.user.LastName, new { @class = "form-control", placeholder = "Last Name" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Email <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.user.bussinessEmail, new { @class = "form-control", placeholder = "Email" })
                                 </div>
                             </div>
@@ -130,7 +149,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Cost Center <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Cost_Center<span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.user.CostCenterId,
                                         new SelectList(ViewBag.CostCenterList,
                                         "Id", "name"), "Choose Cost Center", new { @class = "form-control select2" })
@@ -160,7 +179,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Location Group <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Location_Group <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.user.LocationGroupId,
                                         new SelectList(ViewBag.LocationGroupList,
                                         "Id", "name"), "Choose Location Group", new { @class = "form-control select2" })
@@ -236,7 +255,7 @@
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">PayScale Type <span class="tx-danger">*</span></label>
+                                        <label class="form-control-label">@Resources.Resource.Payscale_Type<span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.user.PayScaleTypeId,
                                              new SelectList(ViewBag.PayScaleTypeList,
                                              "Id", "name"), "Choose PayScale Type", new { @class = "form-control select2" })
@@ -248,7 +267,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Bussiness Phone Number: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Business_phone_no <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.user.bussinessPhoneNumber, new { @class = "form-control", placeholder = "Bussiness Phone Number" })
                                 </div>
                             </div>
@@ -277,7 +296,16 @@
                     </div><!-- row -->
 
                     <div class="form-layout-footer">
-                        <button class="btn btn-primary bd-0">@ViewBag.Status</button>
+                        <button class="btn btn-primary bd-0">
+                            @if (ViewBag.Status == "Add")
+                            {
+                                @Resources.Resource.Add
+                            }
+                            @if (ViewBag.Status == "Update")
+                            {
+                                @Resources.Resource.Update
+                            }
+                        </button>
                         <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                     </div><!-- form-layout-footer -->
 
@@ -302,21 +330,21 @@
                                 <table class="table mg-b-0 tx-13">
                                     <thead>
                                         <tr class="tx-10">
-                                            <th class="wd-10p pd-y-5">S.No</th>
+                                            <th class="wd-10p pd-y-5">@Resources.Resource.S_No</th>
                                             <th class="pd-y-5">@Resources.Resource.Employee_Id</th>
                                             <th class="pd-y-5">@Resources.Resource.FirstName</th>
-                                            <th class="pd-y-5">Middle Name</th>
+                                            <th class="pd-y-5">@Resources.Resource.Middle_name</th>
                                             <th class="pd-y-5">@Resources.Resource.LastName</th>
                                             <th class="pd-y-5">@Resources.Resource.Email_Id</th>
                                             <th class="pd-y-5">@Resources.Resource.Department</th>
-                                            <th class="pd-y-5">Cost Center</th>
+                                            <th class="pd-y-5">@Resources.Resource.Cost_Center</th>
                                             <th class="pd-y-5">@Resources.Resource.Nationality</th>
                                             <th class="pd-y-5">@Resources.Resource.Location</th>
-                                            <th class="pd-y-5">Location Group</th>
-                                            <th class="pd-y-5">Employer Type</th>
-                                            <th class="pd-y-5">Vendor</th>
-                                            <th class="pd-y-5">Bussiness Phone Number</th>
-                                            <th class="pd-y-5">Job Title</th>
+                                            <th class="pd-y-5">@Resources.Resource.Location_Group</th>
+                                            <th class="pd-y-5">@Resources.Resource.Employer_Type</th>
+                                            <th class="pd-y-5">@Resources.Resource.Vendor</th>
+                                            <th class="pd-y-5">@Resources.Resource.Business_phone_no</th>
+                                            <th class="pd-y-5">@Resources.Resource.Jobtitle</th>
 
 
                                         </tr>
