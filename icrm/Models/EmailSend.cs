@@ -61,16 +61,27 @@ namespace icrm.Models
 
             message.IsBodyHtml = true;
 
-            using (var smtp = new SmtpClient())
-            {
-                smtp.Port = 25;
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.UseDefaultCredentials = true;
-                smtp.EnableSsl = false;
-                smtp.Host = "email.mcdonalds.com.sa";
-                await smtp.SendMailAsync(message);
+            /* using (var smtp = new SmtpClient())
+             {
+                 smtp.Port = 25;
+                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                 smtp.UseDefaultCredentials = true;
+                 smtp.EnableSsl = false;
+                 smtp.Host = "email.mcdonalds.com.sa";
+                 await smtp.SendMailAsync(message);
 
-            }
+             }*/
+            SmtpClient client = new SmtpClient();
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = false;
+            client.Host = "email.mcdonalds.com.sa";
+           
+          
+           
+          
+            await client.SendMailAsync(message);
 
         }
 
