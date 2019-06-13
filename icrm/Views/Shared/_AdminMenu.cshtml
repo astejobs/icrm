@@ -16,7 +16,7 @@
             <div class="dropdown dropdown-c">
 
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <span>@Resources.Resource.Translation</span>
+                    <span>Translation</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
 
@@ -45,14 +45,14 @@
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
                     <img src="~/Content/img/boss.png" alt="">
-                    <span>@Resources.Resource.Administrator</span>
+                    <span>Administrator</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
                         <!--    <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                         <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
-                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> @Resources.Resource.Download_APK</a>
+                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
 
                         <!--   <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->
 
@@ -143,6 +143,7 @@
                         <li>@Html.ActionLink(Resources.Resource.Sub_Category, "Create", "SubCategories")</a></li>
                         <li> @Html.ActionLink(Resources.Resource.Location, "Create", "Locations")</li>
                         <li>@Html.ActionLink(Resources.Resource.Sub_Location, "Create", "SubLocations")</li>
+                        <li>@Html.ActionLink("Forward CC", "Create", "ForwardEmail")</li>
                         <li>@Html.ActionLink(Resources.Resource.Nationality, "Create", "Nationalities")</li>
                         <li>@Html.ActionLink(Resources.Resource.Feedback_Type, "Create", "FeedbackTypes")</li>
                         <li>@Html.ActionLink(Resources.Resource.Position, "Create", "Positions")</li>
@@ -150,7 +151,7 @@
                         <li>@Html.ActionLink(@Resources.Resource.Job_Title, "Create", "JobTitles")</li>
                         <li>@Html.ActionLink(@Resources.Resource.Department, "Create", "Departments")</li>
                         <li>@Html.ActionLink(@Resources.Resource.Escalation_Users, "Create", "escalationUsers")</li>
-                       
+
                         <li>@Html.ActionLink(Resources.Resource.Religion, "Create", "Religions")</li>
                         <li>@Html.ActionLink(Resources.Resource.Event_Reason, "Create", "EventReasons")</li>
                         <li>@Html.ActionLink(Resources.Resource.Employee_Class, "Create", "EmployeeClasses")</li>
@@ -167,13 +168,13 @@
             <li class="nav-item with-sub ">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon ion-ios-person-outline"></i>
-                    <span>@Resources.Resource.Users</span>
+                    <span>Users</span>
                 </a>
                 <div class="sub-item">
                     <ul>
                         <li class="active">@Html.ActionLink(Resources.Resource.Add_Icrm_Agent, "AddUser", "Admin", new { id = "HR" }, null)</a></li>
                         <li>@Html.ActionLink(Resources.Resource.Add_Department, "AddUser", "Admin", new { id = "Department" }, null)</a></li>
-                        <li>@Html.ActionLink(Resources.Resource.Add_Search_Update_user, "UserList", "Admin")</li>
+                        <li>@Html.ActionLink("Add/Search/Update User", "UserList", "Admin")</li>
 
                     </ul>
                 </div>

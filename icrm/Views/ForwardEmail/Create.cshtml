@@ -1,0 +1,193 @@
+﻿
+@model  List<icrm.Models.ForwardEmailVM>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">f
+    <meta name="author" content="feedback">
+
+    <title>Add Email</title>
+
+    <!-- vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+    <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
+    <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
+    <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+
+    <!-- Feadback CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+
+</head>
+
+<body>
+    @Html.Partial("_AdminMenu")
+    <!-- slim-navbar -->
+
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add Forward Email CC</li>
+                </ol>
+                <h6 class="slim-pagetitle">Add Forward Email CC</h6>
+            </div>
+            <!-- slim-pageheader -->
+          
+            <div class="section-wrapper">
+                <label class="section-title">Adding Forward Email CC</label>
+                <p class="mg-b-20 mg-sm-b-40"></p>
+
+
+                <label class="section-title">Forward Email CC</label>
+                @using (Html.BeginForm())
+                {
+
+                    @Html.ValidationSummary()
+
+                    if(TempData["EmailMessage"] != null)
+                    {
+                        if (TempData["EmailMessage"] == "Error")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Invalid EmployeeId</strong>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-success mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@TempData["EmailMessage"]</strong>
+                            </div>
+                        }
+                    }
+
+                
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">EmployeeId: <span class="tx-danger">*</span></label>
+                                    <input type="text" name="EmployeeId" required value="" class="form-control" placeholder="Enter EmployeeId" />
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
+                        <!-- row -->
+                        <!-- form-layout-footer -->
+                    </div>
+
+
+
+
+                    <div class="form-layout">
+
+                        <!-- row -->
+
+                        <div class="form-layout-footer">
+                            <button type="submit" class="btn btn-primary bd-0">Add Email</button>
+
+                        </div>
+                        <!-- form-layout-footer -->
+                    </div>
+
+                }
+            </div>
+
+            <div class="row row-xs mg-t-10">
+                <div class="col-lg-12">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h6 class="slim-card-title">Forward Email CC List</h6>
+                        </div>
+                        <!-- card-header -->
+                        <div class="table-responsive">
+                            <table class="table mg-b-0 tx-13">
+                                <thead>
+                                    <tr class="tx-10">
+                                        <th class="wd-10p pd-y-5">S.No</th>
+                                        <th class="pd-y-5">Email</th>
+                                        <th class="pd-y-5">EmployeeId</th>
+                                        <th class="pd-y-5">Employee Name</th>
+                                        <th class="pd-y-5">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ 
+                                        var index = 1;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                       
+                                    <tr>
+                                        <td class="pd-l-20">
+                                            @index
+                                            @{ 
+                                                index = index + 1 ;
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Email</a>
+
+                                        </td>
+                                        <td>
+                                            <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.EmployeeId</a>
+
+                                        </td>
+                                        <td>
+                                            <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Name</a>
+
+                                        </td>
+                                        <td class="tx-12">
+
+                                            <a href="@Url.Action("RemoveEmail",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- table-responsive -->
+                        <!-- pagination-wrapper -->
+
+
+
+                    </div>
+                    <!-- card -->
+                </div>
+                <!-- col-6 -->
+
+            </div>
+            <!-- container -->
+        </div>
+        <!-- slim-mainpanel -->
+
+        @Html.Partial("_AdminFooter")
+</body>
+
+</html>
+
+

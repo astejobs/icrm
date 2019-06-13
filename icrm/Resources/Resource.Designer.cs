@@ -402,6 +402,7 @@ namespace Resources {
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
@@ -851,7 +852,14 @@ namespace Resources {
                 return ResourceManager.GetString("Enter_your_email", resourceCulture);
             }
         }
-        
+        public static string Add_Email
+        {
+            get
+            {
+                return ResourceManager.GetString("Add_Email", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Enter your password.
         /// </summary>
@@ -1004,7 +1012,14 @@ namespace Resources {
                 return ResourceManager.GetString("Forward_Create", resourceCulture);
             }
         }
-        
+        public static string Forward_Email_CC
+        {
+            get
+            {
+                return ResourceManager.GetString("Forward_Email_CC", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Forwarded.
         /// </summary>
