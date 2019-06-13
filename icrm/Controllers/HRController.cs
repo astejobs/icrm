@@ -137,6 +137,7 @@ namespace icrm.Controllers
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             if (roleManager.FindByName("User").Users.FirstOrDefault() != null)
             {
@@ -299,7 +300,7 @@ namespace icrm.Controllers
         [Route("update/")]
         public ActionResult update(Feedback feedback)
         {
-            
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             getAttributeList();
@@ -413,7 +414,7 @@ namespace icrm.Controllers
         [Route("assigndepartment/")]
         public ActionResult assign(string submitButton,Feedback feedback)
         {
-            
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             
@@ -9580,7 +9581,8 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
         [ValidateAntiForgeryToken]
         [Route("rejected/action/")]
         public ActionResult feedbackupdate(string submitButton, Feedback feedback)
-        {          
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             feedback.user = db.Users.Find(feedback.userId);
@@ -9729,7 +9731,9 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult updatestatus(Feedback feedback, string submitBtn)
-        {         
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
@@ -9791,7 +9795,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
             }
 
             
-                if (ModelState.IsValid)
+                if (feedback.status!=null)
             {
 
                 db.Entry(f).State = EntityState.Modified;
