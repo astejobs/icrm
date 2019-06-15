@@ -60,7 +60,7 @@ namespace icrm.Controllers
             ViewBag.rolename = id;
             if (Request.Cookies["sucess"] != null) {
                 Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
-                ViewBag.message = "User Saved Sucessfully";
+                ViewBag.messageSaved = "User Saved Sucessfully";
             }
             else if (Request.Cookies["fail"] != null)
             {
@@ -176,7 +176,7 @@ namespace icrm.Controllers
             ApplicationDbContext context = new ApplicationDbContext();
             if (context.Users.Where(m => m.EmployeeId == user.EmployeeId).SingleOrDefault() != null)
             {
-                TempData["Success"] = "Employee Id Already Exists";
+                TempData["Fail"] = "Employee Id Already Exists";
             }
             else
             {

@@ -70,14 +70,33 @@
             <div class="section-wrapper">
                 @if (@ViewBag.rolename == "Department")
                 {
-                <label class="section-title">@Resources.Resource.Add_department_user</label>
+                    <label class="section-title">@Resources.Resource.Add_department_user</label>
                 }
                 @if (@ViewBag.rolename == "HR")
                 {
-                <label class="section-title">@Resources.Resource.Add_Icrm_Agent</label>
+
+                    <label class="section-title">@Resources.Resource.Add_Icrm_Agent</label>
+                }
+
+                @if (@ViewBag.message != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @ViewBag.message</strong>
+                    </div>
+                }
+                @if (@ViewBag.messageSaved != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @ViewBag.messageSaved</strong>
+                    </div>
                 }
                 
-                <span style="color:green;">@ViewBag.message</span>
 
                 @Html.ValidationSummary()
                 @using (Html.BeginForm("postUser", "Admin", FormMethod.Post, null))
