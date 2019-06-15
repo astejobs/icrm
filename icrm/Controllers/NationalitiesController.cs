@@ -55,9 +55,11 @@ namespace icrm.Controllers
             {
                 db.Nationalities.Add(nationality);
                 db.SaveChanges();
+                TempData["Success"] = "Nationality has been created Successfully";
+
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             @ViewBag.Status = "Add";
             return View("CreateList", new NationalitiesViewModel { Nationalities = db.Nationalities.ToList() });
         }
@@ -89,8 +91,11 @@ namespace icrm.Controllers
             {
                 db.Entry(nationality).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Nationality has been Updated Successfully";
+
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             @ViewBag.Status = "Update";
             return View("CreateList", new NationalitiesViewModel { Nationalities = db.Nationalities.ToList() });
         }
@@ -119,6 +124,8 @@ namespace icrm.Controllers
             Nationality nationality = db.Nationalities.Find(id);
             db.Nationalities.Remove(nationality);
             db.SaveChanges();
+            TempData["Success"] = "Nationality is deleted Successfully";
+
             return RedirectToAction("Create");
         }
 

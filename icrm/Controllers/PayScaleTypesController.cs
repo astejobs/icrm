@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.PayScaleTypes.Add(payScaleType);
                 db.SaveChanges();
+                TempData["Success"] = "PayScaleType has been created Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new PayScaleTypeViewModel { PayScaleTypes = db.PayScaleTypes.ToList() });
         }
@@ -88,8 +89,11 @@ namespace icrm.Controllers
             {
                 db.Entry(payScaleType).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "PayScaleType has been Updated Successfully";
+
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new PayScaleTypeViewModel { PayScaleTypes = db.PayScaleTypes.ToList() });
         }
@@ -118,6 +122,7 @@ namespace icrm.Controllers
             PayScaleType payScaleType = db.PayScaleTypes.Find(id);
             db.PayScaleTypes.Remove(payScaleType);
             db.SaveChanges();
+            TempData["Success"] = "PayScaleType is deleted Successfully";
             return RedirectToAction("Create");
         }
 

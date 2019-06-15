@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.Positions.Add(position);
                 db.SaveChanges();
+                TempData["Success"] = "Position has been created Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new PositionsViewModel { Positions = db.Positions.ToList() });
         }
@@ -88,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(position).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Position has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new PositionsViewModel { Positions = db.Positions.ToList() });
         }
@@ -118,6 +121,7 @@ namespace icrm.Controllers
             Position position = db.Positions.Find(id);
             db.Positions.Remove(position);
             db.SaveChanges();
+            TempData["Success"] = "Position is deleted Successfully";
             return RedirectToAction("Create");
         }
 

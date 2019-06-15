@@ -77,6 +77,20 @@
                     </div>
                 }
 
+
+             
+
+                    @if (@TempData["Fail"] != null)
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong><strong> @TempData["Fail"]</strong></strong>
+                        </div>
+                    }
+
+
                 @Html.ValidationSummary()
                 @using (Html.BeginForm())
                 {
@@ -363,61 +377,59 @@
                                             </td>
 
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.EmployeeId</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.EmployeeId</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.FirstName</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.FirstName</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.MiddleName</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.MiddleName</a>
 
                                             </td>
 
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.LastName</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.LastName</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.bussinessEmail</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.bussinessEmail</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Department.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Department.name</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.CostCenter.name @item.Data.CostCenter.CostCenterCode</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.CostCenter.name @item.Data.CostCenter.CostCenterCode</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Nationality.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Nationality.name</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Location.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Location.name</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.LocationGroup.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.LocationGroup.name</a>
 
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.EmployerType.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.EmployerType.name</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Vendor.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Vendor.name</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.bussinessPhoneNumber</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.bussinessPhoneNumber</a>
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.JobTitle.name</a>
-
-                                            </td>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.JobTitle.name</a>
 
                                             </td>
 

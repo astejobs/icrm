@@ -61,13 +61,35 @@
                 <label class="section-title">
                     @if (ViewBag.Status == "Add")
                     {@Resources.Resource.Create_event_reasons}
-                                @if (ViewBag.Status == "Update")
-                                {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Event_reasons}
-                            </label>
+                    @if (ViewBag.Status == "Update")
+                    {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Event_reasons}
+                </label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
                 <label class="section-title">@Resources.Resource.Admin / @Resources.Resource.Event_reasons</label>
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+
+
+
+                @if (@TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong><strong> @TempData["Fail"]</strong></strong>
+                    </div>
+                }
                 @using (Html.BeginForm())
                 {
 
@@ -109,11 +131,11 @@
                                 {
                                     @Resources.Resource.Add
                                 }
-                                                        @if (ViewBag.Status == "Update")
-                                                        {
-                                                            @Resources.Resource.Update
-                                                        }
-                                                    </button>
+                                @if (ViewBag.Status == "Update")
+                                {
+                                    @Resources.Resource.Update
+                                }
+                            </button>
                             <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
@@ -148,7 +170,7 @@
                                                     @(item.Index+1)
                                                 </td>
                                                 <td>
-                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
                                                 </td>
                                                 <td class="tx-12">

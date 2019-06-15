@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.Genders.Add(gender);
                 db.SaveChanges();
+                TempData["Success"] = "Gender has been created Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new GenderViewModel { Genders = db.Genders.ToList() });
         }
@@ -88,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(gender).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Gender has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new GenderViewModel { Genders = db.Genders.ToList() });
         }
@@ -118,6 +121,7 @@ namespace icrm.Controllers
             Gender gender = db.Genders.Find(id);
             db.Genders.Remove(gender);
             db.SaveChanges();
+            TempData["Success"] = "Gender is deleted Successfully";
             return RedirectToAction("Create");
         }
 

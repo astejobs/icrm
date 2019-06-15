@@ -54,9 +54,11 @@ namespace icrm.Controllers
             {
                 db.Religions.Add(religion);
                 db.SaveChanges();
+                TempData["Success"] = "Religion has been added Successfully";
                 return RedirectToAction("Create");
             }
-
+          
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList() });
         }
@@ -88,8 +90,10 @@ namespace icrm.Controllers
             {
                 db.Entry(religion).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Religion has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Success"] = "Religion has been added Successfully";
             ViewBag.Status = "Update";
             return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList() });
         }
@@ -118,6 +122,7 @@ namespace icrm.Controllers
             Religion religion = db.Religions.Find(id);
             db.Religions.Remove(religion);
             db.SaveChanges();
+            TempData["Success"] = "Religion is deleted Successfully";
             return RedirectToAction("Create");
         }
 

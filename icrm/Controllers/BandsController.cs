@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.bands.Add(band);
                 db.SaveChanges();
+                TempData["Success"] = "Band has been Saved Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new BandViewModel { Bands = db.bands.ToList() });
         }
@@ -88,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(band).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Band has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new BandViewModel { Bands = db.bands.ToList() });
         }
@@ -118,6 +121,7 @@ namespace icrm.Controllers
             Band band = db.bands.Find(id);
             db.bands.Remove(band);
             db.SaveChanges();
+            TempData["Success"] = "Band is deleted Successfully";
             return RedirectToAction("Create");
         }
 

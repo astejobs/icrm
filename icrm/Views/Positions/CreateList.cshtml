@@ -62,13 +62,36 @@
                 <label class="section-title">
                     @if (ViewBag.Status == "Add")
                     {@Resources.Resource.Create_position}
-                                @if (ViewBag.Status == "Update")
-                                {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Position}
-                            </label>
+                    @if (ViewBag.Status == "Update")
+                    {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Position}
+                </label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
                 <label class="section-title">@Resources.Resource.Admin / @Resources.Resource.Positions</label>
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+
+
+
+                @if (@TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong><strong> @TempData["Fail"]</strong></strong>
+                    </div>
+                }
+
                 @using (Html.BeginForm())
                 {
                     if (ViewBag.Status == "Update")

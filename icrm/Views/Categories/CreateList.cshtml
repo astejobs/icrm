@@ -97,6 +97,7 @@
                         @if (ViewBag.Status == "Update")
                         {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Category}
                     </label>
+
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -205,7 +206,7 @@
 
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
                                             </td>
                                             <td class="tx-12">

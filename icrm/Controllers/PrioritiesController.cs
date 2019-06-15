@@ -54,8 +54,10 @@ namespace icrm.Controllers
             {
                 db.Priorities.Add(priority);
                 db.SaveChanges();
+                TempData["Success"] = "Priority has been created Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new PrioritiesViewModel { Priorities = db.Priorities.ToList() });
         }
@@ -87,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(priority).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Priority has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new PrioritiesViewModel { Priorities = db.Priorities.ToList() });
         }
@@ -117,6 +121,7 @@ namespace icrm.Controllers
             Priority priority = db.Priorities.Find(id);
             db.Priorities.Remove(priority);
             db.SaveChanges();
+            TempData["Success"] = "Priority is deleted Successfully";
             return RedirectToAction("Create");
         }
 

@@ -54,9 +54,11 @@ namespace icrm.Controllers
             {
                 db.vendors.Add(vendor);
                 db.SaveChanges();
+                TempData["Success"] = "Vendor has been created Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
+           
             ViewBag.Status = "Add";
             return View("CreateList", new VendorViewModel { Vendors = db.vendors.ToList() });
         }
@@ -88,8 +90,10 @@ namespace icrm.Controllers
             {
                 db.Entry(vendor).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Vendor has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new VendorViewModel { Vendors = db.vendors.ToList() });
         }
@@ -118,6 +122,7 @@ namespace icrm.Controllers
             Vendor vendor = db.vendors.Find(id);
             db.vendors.Remove(vendor);
             db.SaveChanges();
+            TempData["Success"] = "Vendor is deleted Successfully";
             return RedirectToAction("Create");
         }
 

@@ -57,8 +57,10 @@ namespace icrm.Controllers
                
                 db.SubLocations.Add(subLocation);
                 db.SaveChanges();
+                TempData["Success"] = "SubLocations has been created Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             @ViewBag.Status = "Add";
             ViewBag.Locationlist = db.Locations.ToList();
            return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList() });
@@ -92,8 +94,10 @@ namespace icrm.Controllers
             {
                 db.Entry(subLocation).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "SubLocations has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             ViewBag.Locationlist = db.Locations.ToList();
            return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList() });
@@ -124,6 +128,7 @@ namespace icrm.Controllers
             SubLocation subLocation = db.SubLocations.Find(id);
             db.SubLocations.Remove(subLocation);
             db.SaveChanges();
+            TempData["Success"] = "SubLocations is deleted Successfully";
             return RedirectToAction("Create");
         }
 

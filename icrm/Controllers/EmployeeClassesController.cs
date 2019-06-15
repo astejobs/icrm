@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.employeeClasses.Add(employeeClass);
                 db.SaveChanges();
+                TempData["Success"] = "Employee Class has been saved Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new EmployeeClassViewModel { employeeClasses = db.employeeClasses.ToList() });
         }
@@ -88,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(employeeClass).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Employee Class has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new EmployeeClassViewModel { employeeClasses = db.employeeClasses.ToList() });
         }
@@ -118,6 +121,7 @@ namespace icrm.Controllers
             EmployeeClass employeeClass = db.employeeClasses.Find(id);
             db.employeeClasses.Remove(employeeClass);
             db.SaveChanges();
+            TempData["Success"] = "Employee Class is deleted Successfully";
             return RedirectToAction("Create");
         }
 

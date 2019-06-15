@@ -71,10 +71,32 @@
 
                 <label class="section-title">
                     @Resources.Resource.Admin/  @if (ViewBag.Status == "Add")
-                                {@Resources.Resource.Sub_Category}
+                    {@Resources.Resource.Sub_Category}
                     @if (ViewBag.Status == "Update")
                     {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Sub_Category}
                 </label>
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+
+
+
+                @if (@TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong><strong> @TempData["Fail"]</strong></strong>
+                    </div>
+                }
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -91,13 +113,13 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Select_Department<span class="tx-danger">*</span></label>
-                                   
 
-                                        @Html.DropDownListFor(m => m.subCategory.DepartmentId,
-                                      new SelectList(ViewBag.DepartmentList,
-                                         "Id", "name"),"Choose Department", new { @class = "form-control select2", @id = "depid" })
-                                       
-                                    
+
+                                    @Html.DropDownListFor(m => m.subCategory.DepartmentId,
+                                  new SelectList(ViewBag.DepartmentList,
+                                     "Id", "name"),"Choose Department", new { @class = "form-control select2", @id = "depid" })
+
+
 
 
 
@@ -118,7 +140,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Category_name <span class="tx-danger">*</span></label>
-                                   
+
 
                                     <select name="subCategory.CategoryId" class="form-control select2" id="category">
                                         <option value="">Select Category</option>
@@ -233,12 +255,12 @@
                                                 @(item.Index + 1)
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
                                             </td>
 
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Category.name</a>
+                                                <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Category.name</a>
 
                                             </td>
                                             <td class="tx-12">

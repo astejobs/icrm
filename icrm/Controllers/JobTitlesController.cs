@@ -55,8 +55,10 @@ namespace icrm.Controllers
             {
                 db.JobTitles.Add(jobTitle);
                 db.SaveChanges();
+                TempData["Success"] = "Job Title has been created Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new JobTitlesViewModel { jobTitles = db.JobTitles.ToList() });
         }
@@ -88,8 +90,10 @@ namespace icrm.Controllers
             {
                 db.Entry(jobTitle).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Job Title has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new JobTitlesViewModel { jobTitles = db.JobTitles.ToList() });
         }
@@ -118,6 +122,7 @@ namespace icrm.Controllers
             JobTitle jobTitle = db.JobTitles.Find(id);
             db.JobTitles.Remove(jobTitle);
             db.SaveChanges();
+            TempData["Success"] = "Job Title is deleted Successfully";
             return RedirectToAction("Create");
         }
 

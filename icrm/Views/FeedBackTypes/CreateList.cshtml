@@ -75,6 +75,28 @@
                     @if (ViewBag.Status == "Update")
                     {@Resources.Resource.Update @Html.Raw("")<text>&nbsp;</text> @Resources.Resource.Feedback_Type}
                 </label>
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+
+
+
+                @if (@TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong><strong> @TempData["Fail"]</strong></strong>
+                    </div>
+                }
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -123,7 +145,8 @@
                                 @if (ViewBag.Status == "Add")
                                 {
                                     @Resources.Resource.Add}
-                                @if (ViewBag.Status == "Update") { 
+                                @if (ViewBag.Status == "Update")
+                                {
                                     @Resources.Resource.Update
                                 }
                             </button>
@@ -153,25 +176,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach (var item in Model.FeedBackTypes)
+                                    @foreach (var item in Model.FeedBackTypes.Select((x, i) => new { Data = x, Index = i }))
                                     {
-                                        <tr>
-                                            <td class="pd-l-20">
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
-                                            </td>
-                                            <td class="tx-12">
-                                                <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
-                                                <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+                                        
+                                            <tr>
+                                                <td class="pd-l-20">
+                                                    @(item.Index + 1)
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
+                                                </td>
+                                                <td class="tx-12">
+                                                    <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                    <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                             </table>
                         </div>
                         <!-- table-responsive -->

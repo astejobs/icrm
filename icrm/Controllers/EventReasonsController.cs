@@ -55,9 +55,10 @@ namespace icrm.Controllers
             {
                 db.EventReasons.Add(eventReason);
                 db.SaveChanges();
+                TempData["Success"] = "Event Reasons has been created Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new EventReasonViewModel { EventReasons = db.EventReasons.ToList() });
         }
@@ -89,8 +90,10 @@ namespace icrm.Controllers
             {
                 db.Entry(eventReason).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Event Reasons has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new EventReasonViewModel { EventReasons = db.EventReasons.ToList() });
         }
@@ -119,6 +122,7 @@ namespace icrm.Controllers
             EventReason eventReason = db.EventReasons.Find(id);
             db.EventReasons.Remove(eventReason);
             db.SaveChanges();
+            TempData["Success"] = "Event Reasons is deleted Successfully";
             return RedirectToAction("Create");
         }
 

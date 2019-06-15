@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.CostCenters.Add(costCenter);
                 db.SaveChanges();
+                TempData["Success"] = "CostCenter has been Saved Successfully";
                 return RedirectToAction("Index");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             return View(costCenter);
         }
 
@@ -86,8 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(costCenter).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "CostCenter has been Updated Successfully";
                 return RedirectToAction("Index");
             }
+            TempData["Fail"] = "Enter fields properly";
             return View(costCenter);
         }
 
@@ -114,6 +117,7 @@ namespace icrm.Controllers
             CostCenter costCenter = db.CostCenters.Find(id);
             db.CostCenters.Remove(costCenter);
             db.SaveChanges();
+            TempData["Success"] = "CostCenter is deleted Successfully";
             return RedirectToAction("Index");
         }
 

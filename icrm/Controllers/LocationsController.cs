@@ -54,8 +54,10 @@ namespace icrm.Controllers
             {
                 db.Locations.Add(location);
                 db.SaveChanges();
+                TempData["Success"] = "Location has been created Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList() });
         }
@@ -87,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(location).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Location has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList() });
         }
@@ -118,6 +122,7 @@ namespace icrm.Controllers
             Location location = db.Locations.Find(id);
             db.Locations.Remove(location);
             db.SaveChanges();
+            TempData["Success"] = "Location is deleted Successfully";
             return RedirectToAction("Create");
         }
 

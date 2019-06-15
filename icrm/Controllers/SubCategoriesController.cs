@@ -69,10 +69,11 @@ namespace icrm.Controllers
             {
                 db.SubCategories.Add(subCategory);
                 db.SaveChanges();
+                TempData["Success"] = "SubCategories has been created Successfully";
                 return RedirectToAction("Create");
             }
 
-           
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.CategoryList = db.Categories.ToList();
@@ -112,10 +113,11 @@ namespace icrm.Controllers
             {
                 db.Entry(subCategory).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "SubCategories has been Updated Successfully";
                 return RedirectToAction("Create");
             }
-           
-           
+
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.CategoryList = db.Categories.Where(m => m.DepartmentId == subCategory.DepartmentId && m.FeedBackTypeId == subCategory.FeedBackTypeId);
@@ -151,6 +153,7 @@ namespace icrm.Controllers
             SubCategory subCategory = db.SubCategories.Find(id);
             db.SubCategories.Remove(subCategory);
             db.SaveChanges();
+            TempData["Success"] = "SubCategories is deleted Successfully";
             return RedirectToAction("Create");
         }
 

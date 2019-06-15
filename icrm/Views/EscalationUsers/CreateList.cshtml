@@ -236,58 +236,61 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach (var item in Model.EscalationUsers)
+                                    @foreach (var item in Model.EscalationUsers.Select((x, i) => new { Data = x, Index = i }))
                                     {
-                                    <tr>
-                                        <td class="pd-l-20">
-                                            1
-                                        </td>
-                                        <td>
-                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Department.name</a>
 
-                                        </td>
+                                       
+                                            <tr>
+                                                <td class="pd-l-20">
+                                                    @(item.Index + 1)
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Department.name</a>
 
-                                        <td>
-                                            @if(@item.CostCenterId == null){
-                                              <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">Not Availible</a>
-                                            }
-                                            else{
-                                              <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.CostCenter.name</a>
-                                            }
-                                            
+                                                </td>
 
-                                        </td>
+                                                <td>
+                                                    @if (@item.Data.CostCenterId == null)
+                                                    {
+                                                        <a href="#" class="tx-inverse tx-14 tx-medium d-block">Not Availible</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.CostCenter.name</a>
+                                                    }
+
+
+                                                </td>
 
 
 
-                                        <td>
-                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">
-                                                @item.firstEscalationUser.FirstName
-                                            </a>
+                                                <td>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">
+                                                        @item.Data.firstEscalationUser.FirstName
+                                                    </a>
 
-                                        </td>
+                                                </td>
 
-                                        <td>
-                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">
-                                                @item.secondEscalationUser.FirstName
-                                            </a>
+                                                <td>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">
+                                                        @item.Data.secondEscalationUser.FirstName
+                                                    </a>
 
-                                        </td>
+                                                </td>
 
-                                        <td>
-                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">
-                                                @item.thirdEscalationUser.FirstName
-                                            </a>
+                                                <td>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">
+                                                        @item.Data.thirdEscalationUser.FirstName
+                                                    </a>
 
-                                        </td>
-                                        <td class="tx-12">
-                                            <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
-                                            <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+                                                </td>
+                                                <td class="tx-12">
+                                                    <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                    <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
 
-                                        </td>
-                                    </tr>
-                                            }
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                             </table>
                         </div>

@@ -53,9 +53,10 @@ namespace icrm.Controllers
             {
                 db.LocationGroups.Add(locationGroup);
                 db.SaveChanges();
+                TempData["Success"] = "Location Group has been created Successfully";
                 return RedirectToAction("Index");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             return View(locationGroup);
         }
 
@@ -85,8 +86,10 @@ namespace icrm.Controllers
             {
                 db.Entry(locationGroup).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Location Group has been Updated Successfully";
                 return RedirectToAction("Index");
             }
+            TempData["Fail"] = "Enter fields properly";
             return View(locationGroup);
         }
 
@@ -113,6 +116,7 @@ namespace icrm.Controllers
             LocationGroup locationGroup = db.LocationGroups.Find(id);
             db.LocationGroups.Remove(locationGroup);
             db.SaveChanges();
+            TempData["Success"] = "Location Group is deleted Successfully";
             return RedirectToAction("Index");
         }
 

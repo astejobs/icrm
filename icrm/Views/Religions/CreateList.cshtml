@@ -70,6 +70,28 @@
 
 
                 <label class="section-title">@Resources.Resource.Admin / @Resources.Resource.Religion</label>
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+
+
+
+                @if (@TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong><strong> @TempData["Fail"]</strong></strong>
+                    </div>
+                }
                 @using (Html.BeginForm())
                 {
                     if (ViewBag.Status == "Update")
@@ -149,7 +171,7 @@
                                                     @(item.Index+1)
                                                 </td>
                                                 <td>
-                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+                                                    <a href="#" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
                                                 </td>
                                                 <td class="tx-12">

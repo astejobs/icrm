@@ -55,9 +55,10 @@ namespace icrm.Controllers
             {
                 db.Ethnicities.Add(ethnicity);
                 db.SaveChanges();
+                TempData["Success"] = "Ethnicities has been Saved Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new EthnicitesViewModel { Ethnicities = db.Ethnicities.ToList() });
         }
@@ -89,8 +90,10 @@ namespace icrm.Controllers
             {
                 db.Entry(ethnicity).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Ethnicities has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new EthnicitesViewModel { Ethnicities = db.Ethnicities.ToList() });
         }
@@ -119,6 +122,7 @@ namespace icrm.Controllers
             Ethnicity ethnicity = db.Ethnicities.Find(id);
             db.Ethnicities.Remove(ethnicity);
             db.SaveChanges();
+            TempData["Success"] = "Ethnicities is deleted Successfully";
             return RedirectToAction("Create");
         }
 

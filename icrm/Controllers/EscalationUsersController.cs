@@ -213,6 +213,7 @@ namespace icrm.Controllers
             EscalationUser escalationUser = db.EscalationUsers.Find(id);
             db.EscalationUsers.Remove(escalationUser);
             db.SaveChanges();
+            TempData["SuccessMsg"] = "Escalation User is deleted Successfully";
             return RedirectToAction("Create");
         }
 

@@ -54,8 +54,10 @@ namespace icrm.Controllers
             {
                 db.employerTypes.Add(employerType);
                 db.SaveChanges();
+                TempData["Success"] = "EmployerType has been saved Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
 
             ViewBag.Status = "Add";
             return View("CreateList", new EmployerTypeViewModel { employerTypes = db.employerTypes.ToList() });
@@ -88,8 +90,10 @@ namespace icrm.Controllers
             {
                 db.Entry(employerType).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "EmployerType has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new EmployerTypeViewModel { employerTypes = db.employerTypes.ToList() });
         }
@@ -118,6 +122,7 @@ namespace icrm.Controllers
             EmployerType employerType = db.employerTypes.Find(id);
             db.employerTypes.Remove(employerType);
             db.SaveChanges();
+            TempData["Success"] = "EmployerType is deleted Successfully";
             return RedirectToAction("Create");
         }
 

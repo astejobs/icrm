@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.FeedbackTypes.Add(feedBackType);
                 db.SaveChanges();
+                TempData["Success"] = "FeedbackType has been Added Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new FeedBackTypeViewModel { FeedBackTypes = db.FeedbackTypes.ToList() });
         }
@@ -88,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(feedBackType).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Update");
+                TempData["Success"] = "FeedbackType has been Updated Successfully";
+                return RedirectToAction("Edit", new { id = feedBackType.Id });
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new FeedBackTypeViewModel { FeedBackTypes = db.FeedbackTypes.ToList() });
         }
@@ -118,6 +121,7 @@ namespace icrm.Controllers
             FeedBackType feedBackType = db.FeedbackTypes.Find(id);
             db.FeedbackTypes.Remove(feedBackType);
             db.SaveChanges();
+            TempData["Success"] = "FeedbackType is deleted Successfully";
             return RedirectToAction("Create");
         }
 

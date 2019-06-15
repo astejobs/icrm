@@ -54,9 +54,10 @@ namespace icrm.Controllers
             {
                 db.Departments.Add(department);
                 db.SaveChanges();
+                TempData["Success"] = "Department has been saved Successfully";
                 return RedirectToAction("Create");
             }
-
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Add";
             return View("CreateList", new DepartmentsViewModel { Departments = db.Departments.ToList() });
         }
@@ -88,8 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(department).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Success"] = "Department has been Updated Successfully";
                 return RedirectToAction("Create");
             }
+            TempData["Fail"] = "Enter fields properly";
             ViewBag.Status = "Update";
             return View("CreateList", new DepartmentsViewModel { Departments = db.Departments.ToList() });
         }
@@ -118,6 +121,7 @@ namespace icrm.Controllers
             Department department = db.Departments.Find(id);
             db.Departments.Remove(department);
             db.SaveChanges();
+            TempData["Success"] = "Department is deleted Successfully";
             return RedirectToAction("Create");
         }
 
