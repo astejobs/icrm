@@ -176,279 +176,310 @@
                             <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
                         </div>
                     }
+
+                        <div class="alert alert-danger mg-b-0" role="alert" id="searchEmpLbldiv">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong id="searchEmpLbl">
+                            </strong>
+
+                            <span class="tx-danger"></span>
+
+
+                        </div>
+                  
                     @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
 
 
 
                     <input type="hidden" id="hrdetail" value="@data.Id" />
-                    @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
+                    @*@Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })*@
                     @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
 
-                    @if (ViewBag.EmployeeList != null)
-                    {
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.userId,
-new SelectList(ViewBag.EmployeeList,
-"Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                        </div>
-                    }
-                    else
-                    {
 
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
 
-                                    @Html.DropDownList("parent",
-Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
-                                </div>
+                    <div class="row mg-b-25">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                @Html.TextBox("EmpIdValue", TempData["EmpIdValue"], new { @class = "form-control", id = "EmpIdValue", name = "EmpIdValue", required = "required" })
+                                @Html.HiddenFor(m => m.userId, new { @class = "form-control", id = "userIdValue", name = "userIdValue"})
                             </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                            <!-- col-4 -->
+
+
                         </div>
 
-                    }
+                       
 
+
+
+
+                    </div>
+                    @*@if (ViewBag.EmployeeList != null)
+                             {
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                            @Html.DropDownListFor(m => m.userId,
+                new SelectList(ViewBag.EmployeeList,
+                "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
+                                        </div>
+                                    </div>
+                                    <!-- col-4 -->
+                                    <!-- col-4 -->
+                                    <!-- col-4 -->
+                                </div>
+                            }
+                            else
+                            {
+
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+
+                                           @Html.DropDownList("parent",
+        Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
+                                        </div>
+                                    </div>
+                                    <!-- col-4 -->
+                                    <!-- col-4 -->
+                                    <!-- col-4 -->
+                                </div>
+
+                            }
+                    *@
                     <!-- row -->
                     <!-- form-layout-footer -->
 
                 </div>
 
 
-                <div id="OuterDiv" style="display:none;">
+                    <div id="OuterDiv" style="display:none;">
 
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpName","", new { @readonly = "readonly", @class = "form-control", id="EmpName"})
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpName", "", new { @readonly = "readonly", @class = "form-control", id = "EmpName" })
+                                </div>
                             </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Badge_No <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpBatchNo","", new { @readonly = "readonly", @class = "form-control", id="EmpBatch" })
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Badge_No <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpBatchNo", "", new { @readonly = "readonly", @class = "form-control", id = "EmpBatch" })
+                                </div>
                             </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpEmail","", new { @readonly = "readonly", @class = "form-control", id="EmpEmail" })
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpEmail", "", new { @readonly = "readonly", @class = "form-control", id = "EmpEmail" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpPNo","", new { @readonly = "readonly", @class = "form-control", id="EmpPNo" })
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpPNo", "", new { @readonly = "readonly", @class = "form-control", id = "EmpPNo" })
+                                </div>
                             </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Location:<span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpLocation" })
-                                @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Location:<span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpLocation" })
+                                    @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!--  <div class="col-lg-4">
+                  <div class="form-group">
+                      <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+                      @**   @Html.TextBox("EmpSubLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpSubLocation" })
+                      **@
+                  </div>
+              </div>-->
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpPosition", "", new { @readonly = "readonly", @class = "form-control", id = "EmpPosition" })
+
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpNationality", "", new { @readonly = "readonly", @class = "form-control", id = "EmpNationality" })
+
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
+
+                    </div>
+
+
+
+                    <label class="section-title">@Resources.Resource.Feedback_Complaint</label>
+
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Source <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(model => model.mediumId,
+      new SelectList(ViewBag.sourceList, "Id", "name"), "Choose", new { @class = "form-control select2",required="required" })
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(model => model.typeId,
+      new SelectList(ViewBag.typeList, "Id", "name"), "Choose", new { @class = "form-control select2", id="typeofFeedback",required="required" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Title<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
+                                    @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.departmentID,
+                          new SelectList(ViewBag.Departmn,
+                        "Id", "name"), "Choose Department", new { @class = "form-control select2",id="deptId" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
+                                    <select id="category" class="form-control select2" name="categoryId">
+                                        <option value="">Choose Category</option>
+
+                                    </select>
+                                    @** @Html.DropDownListFor(m => m.categoryId,
+                          new SelectList(ViewBag.Categories,
+                        "Id", "name"), "Choose Category", new { @class = "form-control select2",id="category" })*@
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Sub_Category <span class="tx-danger">*</span></label>
+                                    <select id="subcategory" class="form-control select2" name="subcategoryId">
+                                        <option value="">Choose Sub Category</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4" id="priordiv" style="display:none;">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.priorityId,
+                           new SelectList(ViewBag.Priorities,
+                         "Id", "name"), "Choose Priority", new { @class = "form-control select2",id="priorty"})
+                                </div>
+                            </div>
+
+
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
+                                    @Html.DropDownList("emailsss",
+                          new SelectList(ViewBag.Emails,
+                        "", ""), new { @class = "form-control select2", Multiple = "multiple",name="emailsss" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                        </div>
+                        <!-- row -->
+                        <!-- form-layout-footer -->
+                    </div>
+
+
+
+                    <label class="section-title">@Resources.Resource.Attachment</label>
+
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label"></label>
+
+                                    <input type="file" name="file">
+                                    @Html.ValidationMessageFor(model => model.attachment, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+
+
+                        </div>
+
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Choose_Action</label>
+                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
+                                    <label class="text-danger" id="statuscheck"></label>
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Comments</label>
+                                    @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
+
+
+                                </div>
                             </div>
                         </div>
-                        <!-- col-4 -->
-                      <!--  <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                @**   @Html.TextBox("EmpSubLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpSubLocation" })
-                                **@
-                            </div>
-                        </div>-->
 
-                        <!-- col-4 -->
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpPosition","", new { @readonly = "readonly", @class = "form-control", id= "EmpPosition" })
 
-                            </div>
+                        <!-- row -->
+                        <div class="form-layout-footer">
+                            <button class="btn btn-primary bd-0" name="submitButton" id="forward" value="Forward/Create">@Resources.Resource.Forward_Create</button>
+                            <button class="btn btn-primary bd-0" value="Submit" id="resolve" name="submitButton">@Resources.Resource.Submit </button>
+
                         </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpNationality","", new { @readonly = "readonly", @class = "form-control", id="EmpNationality" })
-
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <!-- col-4 -->
+                        <!-- form-layout-footer -->
                     </div>
 
                 </div>
-
-
-
-                <label class="section-title">@Resources.Resource.Feedback_Complaint</label>
-
-
-                <div class="form-layout">
-                    <div class="row mg-b-25">
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Source <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(model => model.mediumId,
-  new SelectList(ViewBag.sourceList, "Id", "name"), "Choose", new { @class = "form-control select2",required="required" })
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(model => model.typeId,
-  new SelectList(ViewBag.typeList, "Id", "name"), "Choose", new { @class = "form-control select2", id="typeofFeedback",required="required" })
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Title<span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
-                                @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.departmentID,
-                      new SelectList(ViewBag.Departmn,
-                    "Id", "name"), "Choose Department", new { @class = "form-control select2",id="deptId" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
-                                <select id="category" class="form-control select2" name="categoryId">
-                                    <option value="">Choose Category</option>
-
-                                </select>
-                                @** @Html.DropDownListFor(m => m.categoryId,
-                  new SelectList(ViewBag.Categories,
-                "Id", "name"), "Choose Category", new { @class = "form-control select2",id="category" })*@
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Sub_Category <span class="tx-danger">*</span></label>
-                                <select id="subcategory" class="form-control select2" name="subcategoryId">
-                                    <option value="">Choose Sub Category</option>
-
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4" id="priordiv" style="display:none;">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.priorityId,
-                       new SelectList(ViewBag.Priorities,
-                     "Id", "name"), "Choose Priority", new { @class = "form-control select2",id="priorty"})
-                            </div>
-                        </div>
-
-
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
-                                @Html.DropDownList("emailsss",
-                      new SelectList(ViewBag.Emails,
-                    "", ""), new { @class = "form-control select2", Multiple = "multiple",name="emailsss" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                    </div>
-                            <!-- row -->
-                            <!-- form-layout-footer -->
-                        </div>
-
-
-
-                <label class="section-title">@Resources.Resource.Attachment</label>
-
-
-                        <div class="form-layout">
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label"></label>
-
-                                        <input type="file" name="file">
-                                        @Html.ValidationMessageFor(model => model.attachment, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-
-
-                            </div>
-
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Choose_Action</label>
-                                        @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
-                                        <label class="text-danger" id="statuscheck"></label>
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Comments</label>
-                                        @Html.TextArea("responsee", new { @class = "form-control" ,name="responsee"})
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- row -->
-                            <div class="form-layout-footer">
-                                <button class="btn btn-primary bd-0" name="submitButton" id="forward" value="Forward/Create">@Resources.Resource.Forward_Create</button>
-                                <button class="btn btn-primary bd-0" value="Submit" id="resolve" name="submitButton">@Resources.Resource.Submit </button>
-
-                            </div>
-                            <!-- form-layout-footer -->
-                        </div>
-
-                    </div>
             }
             <!-- container -->
         </div>
@@ -474,9 +505,10 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
-            if ($('#empID').val() != "") {
-                id = $('#empID').val();
-                $('#OuterDiv').show();
+            $('#searchEmpLbldiv').hide();
+            if ($('#EmpIdValue').val() != "") {
+                id = $('#EmpIdValue').val();
+              
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -484,7 +516,9 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
-                          
+                            $('#searchEmpLbldiv').hide();
+                            $('#OuterDiv').show();
+                            $('#userIdValue').val(response.Id);
                             $('#EmpPosition').val(response.JobTitle.name);
                             $('#EmpNationality').val(response.Nationality.name);
                             $('#EmpName').val(response.UserName);
@@ -497,6 +531,12 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
 
                         },
                         error: function (response) {
+                            $('#searchEmpLbldiv').show();
+                            
+                            $('#searchEmpLbl').text("Employee not found,Enter valid Employee Id");
+                            $('#OuterDiv').hide();
+                            $('#userIdValue').val(null);
+                            $('#EmpIdValue').val("");
                             //alert(response.responseText)
                         }
 
@@ -521,14 +561,21 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
                     $("#priorty").prop('required', false);
                 }
             });
-            $('#empID').change(function () {
 
-                var id = this.value;
+            (function () {
+
+
+                     $(document).on('blur','#EmpIdValue',function () {
+               
+                var id = $('#EmpIdValue').val();
+
+               
                 if (id == "") {
                     $('#OuterDiv').hide();
+
                     return false;
                 } else {
-                    $('#OuterDiv').show();
+                    
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -536,7 +583,13 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
+                            console.log('---in success----')
+
+                            $('#searchEmpLbl').empty();
+                            $('#searchEmpLbldiv').hide();
                            
+                            $('#OuterDiv').show();
+                            $('#userIdValue').val(response.Id);
                             $('#EmpPosition').val(response.JobTitle.name);
                             $('#EmpNationality').val(response.Nationality.name);
                             $('#EmpName').val(response.UserName);
@@ -549,13 +602,27 @@ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-contr
 
                         },
                         error: function (response) {
-                            //alert(response.responseText)
+                            console.log('---in error----')
+
+                            $('#searchEmpLbl').empty();
+                            console.log($('#searchEmpLbldiv').show());
+                            $('#searchEmpLbl').text("Employee not found, Enter valid Employee Id");
+                            $('#OuterDiv').hide();
+                            $('#userIdValue').val(null);
+                            $('#EmpIdValue').val("");
+
+                           // alert(response.responseText)
                         }
 
                     })
                 }
 
             });
+
+
+            })();
+           
+       
 
 
             $('#forward').click(function () {

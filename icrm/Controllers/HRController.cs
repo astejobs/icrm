@@ -137,6 +137,10 @@ namespace icrm.Controllers
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
+           
+            TempData["userIdValue"] = feedback.userId;
+
+            TempData["EmpIdValue"] = Request.Form["EmpIdValue"];
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             if (roleManager.FindByName("User").Users.FirstOrDefault() != null)
@@ -1011,10 +1015,10 @@ namespace icrm.Controllers
 
         }
         [HttpPost]
-        public JsonResult getEmpDetails(string id)
+        public JsonResult getEmpDetails(int id)
         {
             ApplicationUser u = feedInterface.getEmpDetails(id);
-            System.Diagnostics.Debug.WriteLine(u.Nationality.name+"lllllllllllllllllllllllll"+u.NationalityId +"djdsj"+u.saudiNationalId);
+            System.Diagnostics.Debug.WriteLine(u.JobTitle.name+"lllllllllllllllllllllllll"+u.JobTitleId +"djdsj"+u.bussinessEmail);
             return Json(feedInterface.getEmpDetails(id));
         }
 

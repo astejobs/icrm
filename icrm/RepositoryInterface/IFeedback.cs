@@ -58,7 +58,7 @@ namespace icrm.RepositoryInterface
         List<Department> getDepartmentsOnType(string fORWARD);
         List<Priority> getPriorties();
         List<FeedBackType> getFeedbackTypes();
-        ApplicationUser getEmpDetails(string id);
+        ApplicationUser getEmpDetails(int id);
 
         IEnumerable<Feedback> GetListBasedOnType(string type);
 

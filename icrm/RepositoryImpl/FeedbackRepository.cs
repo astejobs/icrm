@@ -894,9 +894,9 @@ namespace icrm.RepositoryImpl
             return db.FeedbackTypes.OrderBy(m=>m.name).ToList();
         }
 
-        public ApplicationUser getEmpDetails(string id)
+        public ApplicationUser getEmpDetails(int id)
         {
-            return db.Users.Where(u => u.Id == id).FirstOrDefault();
+            return db.Users.Where(u => u.EmployeeId == id).FirstOrDefault();
         }
 
         public IEnumerable<Feedback> getAllByDept(string id)
