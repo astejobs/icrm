@@ -521,7 +521,7 @@
                             $('#userIdValue').val(response.Id);
                             $('#EmpPosition').val(response.JobTitle.name);
                             $('#EmpNationality').val(response.Nationality.name);
-                            $('#EmpName').val(response.UserName);
+                            $('#EmpName').val(response.FirstName + "  " + response.LastName);
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.bussinessPhoneNumber);
@@ -584,7 +584,7 @@
                         dataType: "json",
                         success: function (response) {
                             console.log('---in success----')
-
+                            
                             $('#searchEmpLbl').empty();
                             $('#searchEmpLbldiv').hide();
                            
@@ -592,7 +592,7 @@
                             $('#userIdValue').val(response.Id);
                             $('#EmpPosition').val(response.JobTitle.name);
                             $('#EmpNationality').val(response.Nationality.name);
-                            $('#EmpName').val(response.UserName);
+                            $('#EmpName').val(response.FirstName + "  "+ response.LastName);
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.bussinessPhoneNumber);
