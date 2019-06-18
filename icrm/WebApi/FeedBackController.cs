@@ -76,7 +76,13 @@ namespace icrm.WebApi
             }
             feedBack.checkStatus = Models.Constants.OPEN;
             feedInterface.Save(feedBack);
-            eventService.notifyFeedback(feedBack);
+            NotificationMessage notificationMessage = new NotificationMessage();
+            notificationMessage.Title = "Ticket Raised";
+            notificationMessage.Body = feedBack.title;
+            notificationMessage.For = Constants.ROLE_HR;
+            notificationMessage.Status = feedBack.checkStatus;
+            notificationMessage.FeedbackId = feedBack.id;
+            eventService.notifyFeedback(notificationMessage);
             return Ok(feedBack.id);
 
         }

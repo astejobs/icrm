@@ -9,25 +9,24 @@ namespace icrm.Events
 {
     public class FeedbackNotifyEventArgs : EventArgs
     {
-        public Feedback Feedback { get; set; }
-        // public List<String> Recievers { get; set; }
+        public NotificationMessage NotificationMessage { get; set; }
     }
     public class FeedbackNotifyEvent
     {
        
         public event EventHandler<FeedbackNotifyEventArgs> FeedbackNotified;
 
-        public void notify(Feedback Feedback)
+        public void notify(NotificationMessage message)
         {
             Debug.Print("----firing event--------");
-            OnFeedbackNotify(Feedback);
+            OnFeedbackNotify(message);
         }
 
-        protected virtual void OnFeedbackNotify(Feedback Feedback)
+        protected virtual void OnFeedbackNotify(NotificationMessage message)
         {
-            Debug.Print("----firing event-----again---" + Feedback);
-            if (Feedback != null)
-                FeedbackNotified(this, new FeedbackNotifyEventArgs() { Feedback = Feedback });
+            Debug.Print("----firing event-----again---" + message);
+            if (message != null)
+                FeedbackNotified(this, new FeedbackNotifyEventArgs() { NotificationMessage = message });
         }
     }
 }

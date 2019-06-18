@@ -6,6 +6,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using icrm.Models;
 using Newtonsoft.Json;
 
 namespace icrm.Events
@@ -14,21 +15,42 @@ namespace icrm.Events
     {
         public async void OnFeedbackNotified(object sender, FeedbackNotifyEventArgs args)
         {
-            Debug.Print("-----------in notificationbroadcasting message-------");
             string Google_App_ID = "AIzaSyBJG69jVZWgFt7ayf-FC3Wervecxfjm0Dg";
             string Sender_ID = "AIzaSyBJG69jVZWgFt7ayf-FC3Wervecxfjm0Dg";
-            string contentTitle = args.Feedback.title;
+            string contentTitle = args.NotificationMessage.Body;
+            string reciever = args.NotificationMessage.DeviceId;
+            string view;
+            if (args.NotificationMessage.For.Equals(Constants.ROLE_HR))
+            {
+                reciever = "/topics/HR";
+                view = args.NotificationMessage.Status.Equals(Constants.OPEN) ? Constants.OPEN : Constants.RESPONDED;
+            }
+            else if (args.NotificationMessage.For.Equals(Constants.ROLE_USER))
+                view = Constants.CLOSED;
+            else
+                view = Constants.ASSIGNED;
+           
+
             var postData = new
             {
-                to = "/topics/HR",
+                to = reciever,
                 priority = "high",
                 content_available = true,
                 notification = new
                 {
                     body = contentTitle,
-                    title = "Ticket Raised",
-                    badge = 1
+                    title = args.NotificationMessage.Title,
+                    badge = 1,
+                    //click_action = view
+                   
                 },
+                data = new
+                {
+                    showView =view,
+                    id = args.NotificationMessage.FeedbackId
+
+                }
+                
             };
 
             string postbody = JsonConvert.SerializeObject(postData).ToString();

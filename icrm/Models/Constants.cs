@@ -12,6 +12,8 @@ namespace icrm.Models
         public static string UN_SATISFIED = "UnSatisfied";
         public  static string PATH = @"E:\ICRMImages\" ;
         public static string ROLE_HR = "HR";
+        public static string ROLE_USER = "USER";
+        public static string ROLE_DEPARTMENT = "DEPARTMENT";
         public static string OPEN = "Open";
         public static string RESOLVED = "Resolved";
         public static string ASSIGNED = "Assigned";

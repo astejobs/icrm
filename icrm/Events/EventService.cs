@@ -43,13 +43,13 @@ namespace icrm.Events
             return null;
         }
 
-        public Task notifyFeedback(Feedback feedback)
+        public Task notifyFeedback(NotificationMessage message)
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
             {
                 feedbackNotifyEvent.FeedbackNotified += feedbackNotification.OnFeedbackNotified;
-                feedbackNotifyEvent.notify(feedback);
+                feedbackNotifyEvent.notify(message);
 
             });
             return null;
