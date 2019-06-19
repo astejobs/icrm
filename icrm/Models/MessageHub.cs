@@ -74,6 +74,14 @@ namespace icrm.Models
             messageHub.Clients.Client(connectionId).hrclosedchat(message);
         }
 
+        public void hrAvailable(Message message)
+        {
+            var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
+            // "You are now connected with our agent";
+            string connectionId = FindConnectionIdOnUsername(message.Sender.UserName);
+            messageHub.Clients.Client(connectionId).hravailable(message);
+        }
+
         public override Task OnConnected()
         {
             IRequest request = Context.Request;

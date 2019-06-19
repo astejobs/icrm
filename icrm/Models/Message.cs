@@ -32,5 +32,7 @@ namespace icrm.Models
         public int? ChatId { get; set; }
 
         public virtual Chat Chat { get; set; }
+
+        public string status { get; set; }
     }
 }

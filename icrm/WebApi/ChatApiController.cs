@@ -47,7 +47,10 @@ namespace icrm.WebApi
             ApplicationUser sender = user.Result;
             message.SenderId = sender.Id;
             ApplicationUser reciever;
-
+            if (string.IsNullOrEmpty(message.RecieverId) && this.chatService.IsActive(message.ChatId))
+            {
+                Debug.Print(message.RecieverId);
+            }
             Debug.Print(message.ChatId + "--------chat id by mudassir-----" + message.Text);
             if (message.ChatId == 0 || !this.chatService.IsActive(message.ChatId))
             {
@@ -84,27 +87,19 @@ namespace icrm.WebApi
         }
 
         [HttpGet]
-        [Route("api/chat/recieve")]
-        public IHttpActionResult recievemsg()
+        [Route("api/chat/receive/{id}")]
+        public IHttpActionResult receivemsg(int id)
         {
-            /*try
+            var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+            ApplicationUser receiver = user.Result;
+            List<Message> messages = messageService.GetMessagesOnStatusAndChatId(Constants.RECEIVED, id, receiver.Id);
+            if (messages.Count <1)
             {
-                var Name1 = User.Identity.Name;
-                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-                ApplicationUser reciever = user.Result;
-                Debug.Print("-----------recieber-----");
-                RabbitMQBll obj = new RabbitMQBll();
-                IConnection con = obj.GetConnection();
-                Message message = obj.receive(con, reciever.UserName);
-                return Ok(message);
+                Debug.Print("-----"+messages);
             }
-            catch (Exception e)
-            {
-                Debug.Print("======excepiton");
-                Debug.Print(e.StackTrace);
-                return null;
-            }*/
-            return null;
+
+            return Ok(messages);
         }
 
         [HttpGet]

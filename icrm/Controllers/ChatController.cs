@@ -180,6 +180,12 @@ namespace icrm.Controllers
 
                 eventService.hrClosedChat(userService.findUserOnId(activeUser).UserName);
             }
+            else
+            {
+                Chat chat =this.messageService.getLatestChatOfUser(user1.Id);
+                ApplicationUser user = chatService.GetUserFromChatIdOtherThanPassedUser(chat?.Id, user1.Id);
+                eventService.hrClosedChat(user.UserName);
+            }
 
             if (this.chatRequestService.ChatRequestsSize() > 0)
             {
@@ -196,7 +202,7 @@ namespace icrm.Controllers
         [Route("chat/nextrequest")]
         public void getNextChatRequestForHR()
         {
-            Thread.Sleep(2000);
+            
             this.AssignNextRequestInQueueToHr();
         }
 
@@ -339,6 +345,8 @@ namespace icrm.Controllers
                         this.eventService.NotifyHrAboutChat(msgWithId);
                     }
                 }
+
+                this.eventService.hrAvailable(messages.Last());
                 this.eventService.hrAvailableNotification(sender.DeviceCode);
             }
         }

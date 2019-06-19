@@ -138,6 +138,16 @@ namespace icrm.Events
             });
             return null;
         }
+        public Task hrAvailable(Message message)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+            {
+                Debug.Print("--------chat closed by hr notify----");
+                this.messageHub.hrAvailable(message);
+
+            });
+            return null;
+        }
     }
 
 }

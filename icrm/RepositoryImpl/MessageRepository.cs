@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -61,7 +62,7 @@ namespace icrm.RepositoryImpl
             using (var context = new ApplicationDbContext())
             {
                 Message message = context.Message.Include("Chat").FirstOrDefault(m => m.Id == id);
-
+                message.status = Constants.RECEIVED;
                 message.RecieveTime = DateTime.Now;
                 context.Entry(message).State = EntityState.Modified;
                 context.SaveChanges();
@@ -126,6 +127,25 @@ namespace icrm.RepositoryImpl
         {
             var messages = this.db.Message.Where(m => m.SenderId == id || m.RecieverId == id).Select(m => new { m.Text, m.Sender.EmployeeId }).ToList();
             return messages;
+        }
+
+        public List<Message> GetMessagesOnStatusAndChatId(string status, int id,string receiverId)
+        {
+            List<Message> messages =this.db.Message.Where(m => m.ChatId == id && m.status == status && m.RecieverId == receiverId).ToList();
+            messages.ForEach(m=>
+            {
+                m.status = Constants.DELIVERED;
+                db.Message.AddOrUpdate(m);
+            });
+            db.SaveChanges();
+            return messages;
+        }
+
+        public Chat getLatestChatOfUser(string id)
+        {
+          Message message =
+                this.db.Message.Where(m => m.RecieverId == id).OrderByDescending(m => m.RecieveTime).FirstOrDefault();
+            return message?.Chat;
         }
     }
 }

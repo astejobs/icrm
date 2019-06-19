@@ -17,5 +17,7 @@ namespace icrm.RepositoryInterface
         List<Message> GetMessagesOfChatRequestUser(string userId, string recieverId, int? chatId);
         Message updateMessage(Message message);
         dynamic GetMessagesOfUser(string id);
+        List<Message> GetMessagesOnStatusAndChatId(string status, int id,string receiverId);
+         Chat getLatestChatOfUser(string id);
     }
 } 
