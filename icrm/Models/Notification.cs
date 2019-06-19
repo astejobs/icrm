@@ -44,8 +44,12 @@ namespace icrm.Models
                     title = "Messages from HR",
                     badge = 1,
                     icon = "default",
-                    sound= "default"
+                    sound= "default",
                 },
+                data = new
+                {
+                    showView = "broadcast"
+                }
             };
 
             string postbody = JsonConvert.SerializeObject(postData).ToString();
