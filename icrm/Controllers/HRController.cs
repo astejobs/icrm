@@ -424,11 +424,11 @@ namespace icrm.Controllers
                         if (feedback.status != ff.status)
                         {
                             notificationMessage.Body = feedback.title;
-                            notificationMessage.For = Constants.ROLE_HR;
+                            notificationMessage.For = Constants.ROLE_USER;
                             notificationMessage.Status = feedback.status;
                             notificationMessage.FeedbackId = feedback.id;
 
-                            notificationMessage.DeviceId = user.DeviceCode;
+                            notificationMessage.DeviceId = feedbackUser.DeviceCode;
                             eventService.notifyFeedback(notificationMessage);
                         }
                         @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
@@ -10012,7 +10012,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 f.assignedBy = null;
                 f.assignedDate = null;
                 f.checkStatus = Constants.OPEN;
-                notificationMessage.Title = "Ticket Opened";
+                notificationMessage.Title = "Ticket Re-Opened";
             }
 
 

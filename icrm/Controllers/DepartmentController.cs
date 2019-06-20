@@ -190,10 +190,10 @@ namespace icrm.Controllers
 
                 NotificationMessage notificationMessage = new NotificationMessage();
                 notificationMessage.Title = "Ticket Responded";
-                notificationMessage.Body = feedback.title;
+                notificationMessage.Body = f.title;
                 notificationMessage.For = Constants.ROLE_HR;
-                notificationMessage.Status = feedback.status;
-                notificationMessage.FeedbackId = feedback.id;
+                notificationMessage.Status = f.status;
+                notificationMessage.FeedbackId = f.id;
                 //notificationMessage.DeviceId = deptUser.DeviceCode;
                 eventService.notifyFeedback(notificationMessage);
 
