@@ -139,7 +139,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllOpenMobile()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m => m.checkStatus == Models.Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Models.Constants.OPEN).ToList();
 
         }
 
