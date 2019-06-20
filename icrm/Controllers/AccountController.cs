@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using icrm.RepositoryImpl;
+using icrm.RepositoryInterface;
 
 namespace icrm.Controllers
 {
@@ -22,13 +24,15 @@ namespace icrm.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ChatInterface chatService;
 
 
-     
+
 
 
         public AccountController()
         {
+            chatService = new ChatRepository();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -115,6 +119,7 @@ namespace icrm.Controllers
                         var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
                         ApplicationUser appuser = UserManager.FindByName(model.Email);
+                        chatService.closeAllActiveChatsOfUser(appuser.Id);
                         appuser.status = true;
                         appuser.available = false;
                         UserManager.Update(appuser);

@@ -71,5 +71,12 @@ namespace icrm.RepositoryImpl
         {
             return db.Chat.Find(Id);
         }
+
+        public void closeAllActiveChatsOfUser(string id)
+        {
+             db.Chat.Where(c => (c.UserOneId == id || c.UserTwoId == id) && c.active == true).ToList()?.ForEach(
+                c => { c.active = false; });
+            db.SaveChanges();
+        }
     }
 }

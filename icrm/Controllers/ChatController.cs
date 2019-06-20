@@ -144,12 +144,10 @@ namespace icrm.Controllers
             }
             catch (Exception e)
             {
-                Debug.Print("======excepiton");
-                Debug.Print(e.StackTrace);
                 return null;
             }
 
-
+            
 
         }
 
@@ -164,26 +162,26 @@ namespace icrm.Controllers
         [Route("chat/close/{activeUser}")]
         public JsonResult CloseChat(string activeUser)
         {
-            Debug.Print(activeUser + "-----------active user");
             ApplicationUser user1 = (ApplicationUser)Session["user"];
-            ApplicationUser user2 = userService.findUserOnId(user1.Id);
+            ApplicationUser user2 = userService.findUserOnId(user1.Id);//get user from this db context
             if (!activeUser.IsNullOrWhiteSpace() && activeUser != "null")//2nd exp as it used to pass null as string like "null"
             {
-                Debug.Print(user2.Id+"----active user not null chat "+activeUser);
                 int? chatId = chatService.getChatIdOfUsers(activeUser, user2.Id);
-                Debug.Print("chat id is----"+chatId);
                 if (chatId != null)
                 {
 
                     chatService.changeActiveStatus(chatId, false);
                 }
-
+                chatService.closeAllActiveChatsOfUser(user1.Id);
                 eventService.hrClosedChat(userService.findUserOnId(activeUser).UserName);
+
             }
+
             else
             {
                 Chat chat =this.messageService.getLatestChatOfUser(user1.Id);
                 ApplicationUser user = chatService.GetUserFromChatIdOtherThanPassedUser(chat?.Id, user1.Id);
+                chatService.closeAllActiveChatsOfUser(user1.Id);
                 eventService.hrClosedChat(user.UserName);
             }
 
@@ -210,7 +208,6 @@ namespace icrm.Controllers
         [Route("chat/window/close")]
         public void HrLeftChatWindow()
         {
-            Debug.Print("disposing consumer----------here");
             Consumer consumer = (Consumer)Session["consumer"];
             consumer.Dispose();
         }
@@ -220,8 +217,8 @@ namespace icrm.Controllers
         public void changeHrAvailabilityStatus(bool value)
         {
             ApplicationUser hr = this.userService.findUserOnId(User.Identity.GetUserId());
-            Debug.Print(value + "---------value");
             hr.available = value;
+            chatService.closeAllActiveChatsOfUser(hr.Id);
             this.userService.Update(hr);
             if (value)
             {
@@ -243,18 +240,15 @@ namespace icrm.Controllers
         public void startConsumer()
         {
             ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
-            Debug.Print("starting consumer");
             Consumer consumer;
             if (Session["consumer"] == null)
             {
-                Debug.Print("new consumer");
                 consumer = new Consumer("messageexchange", ExchangeType.Direct);
                 Session["consumer"] = consumer;
 
             }
             else
             {
-                Debug.Print("existing consumer");
 
                 consumer = (Consumer)Session["consumer"];
             }
@@ -262,17 +256,8 @@ namespace icrm.Controllers
                 consumer.StartConsuming(user.UserName);
         }
 
-        [HttpGet]
-        [Route("test")]
-        public void testapp()
-        {
-            HttpContext.Application["date"] = DateTime.Now;
-            Debug.Print("sett the date in api---");
-        }
-
         public Message SendMessage(string text, int? chatId, ApplicationUser sender, ApplicationUser reciever)
         {
-            Debug.Print("sending message" + text + "---recirever---" + reciever.UserName + "---chatid------" + chatId);
             Producer producer = new Producer("messageexchange", ExchangeType.Direct);
             Message message = new Message();
             message.Text = text;
@@ -281,9 +266,7 @@ namespace icrm.Controllers
             message.SentTime = DateTime.Now;
             message.ChatId = chatId;
             Message msgWithId = messageService.Save(message);
-            // Debug.Print((msgWithId) + "----msgwitrhid");
-            // Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
-            if (producer.ConnectToRabbitMQ())
+             if (producer.ConnectToRabbitMQ())
                 producer.send(msgWithId);
             return msgWithId;
         }
@@ -292,11 +275,9 @@ namespace icrm.Controllers
         public void AssignNextRequestInQueueToHr()
         {
             HttpContext.Application["Time"] = DateTime.Now;
-            Debug.Print("in hr get next request---");
             ChatRequest chatRequest = this.chatRequestService.NextChatRequestInQueue();
             ApplicationUser reciever = UserManager.FindById(User.Identity.GetUserId());
             ApplicationUser sender = UserManager.FindById(chatRequest.UserId);
-            Debug.Print(chatRequest + "------cgat rwq");
             Producer producer = new Producer("messageexchange", ExchangeType.Direct);
 
             if (chatRequest != null)
@@ -305,11 +286,9 @@ namespace icrm.Controllers
                 this.chatRequestService.delete(chatRequest);
                 int? chatId2 = null;
                 chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
-                Debug.Print("Chat id is  " + chatId2);
                 List<Message> messages = new List<Message>();
                 if (chatId2 == null)
                 {
-                    Debug.Print("Chat id 2 is null but how--" + chatId2);
                     Chat chat = new Chat();
                     chat.UserOneId = sender.Id;
                     chat.UserTwoId = reciever.Id;
@@ -345,6 +324,7 @@ namespace icrm.Controllers
                         this.eventService.NotifyHrAboutChat(msgWithId);
                     }
                 }
+
 
                 this.eventService.hrAvailable(messages.Last());
                 this.eventService.hrAvailableNotification(sender.DeviceCode);

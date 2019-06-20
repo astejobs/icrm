@@ -94,11 +94,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             ApplicationUser receiver = user.Result;
             List<Message> messages = messageService.GetMessagesOnStatusAndChatId(Constants.RECEIVED, id, receiver.Id);
-            if (messages.Count <1)
-            {
-                Debug.Print("-----"+messages);
-            }
-
+            
             return Ok(messages);
         }
 
@@ -148,6 +144,7 @@ namespace icrm.WebApi
             //tell mudassir to send message with chatid and recieverid
             Debug.Print(message.Text + "-----user closes chat----" + message.RecieverId);
             ApplicationUser reciever = userService.findUserOnId(message.RecieverId);
+            chatService.closeAllActiveChatsOfUser(message.RecieverId);
             message.Reciever = reciever;
             if (reciever != null)
             {

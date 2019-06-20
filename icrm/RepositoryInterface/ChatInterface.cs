@@ -14,5 +14,6 @@ namespace icrm.RepositoryInterface
         void changeActiveStatus(int? chatId, bool value);
         Chat hasUserChatActive(string id);
         Chat findChatOnId(int? Id);
+        void closeAllActiveChatsOfUser(string id);
     }
 }

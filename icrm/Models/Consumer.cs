@@ -66,7 +66,6 @@ namespace icrm.Models
             while (isConsuming)
             {                
                 BasicDeliverEventArgs e= mSubscription.Next();
-                Debug.Print("checking e----" + e);
                 if (e != null) {
                     int messageId = (int)e.BasicProperties.Headers["msgId"];
                     Debug.Print("REcieved message----"+messageId);
