@@ -22,6 +22,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using icrm.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
+using icrm.Events;
 
 namespace icrm.WebApi
 {
@@ -39,6 +40,10 @@ namespace icrm.WebApi
         ApplicationDbContext db = new ApplicationDbContext();
 
         private ApplicationUserManager _userManager;
+        private object feedBack;
+        private EventService eventService;
+
+
 
         public ApplicationUserManager UserManager
         {
@@ -58,6 +63,7 @@ namespace icrm.WebApi
             emailsend = new EmailSend();
 
             feedInterface = new FeedbackRepository();
+            eventService = new EventService();
         }
 
         //1/ <summary>
@@ -171,6 +177,34 @@ namespace icrm.WebApi
                 c.text = feedback.response;
                 db.comments.Add(c);
                 db.SaveChanges();
+               
+                ////////////////////  new changes (Add Notification) /////////////////////////////////////////
+                if(feedback.status== "Resolved")
+                {
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Resolved";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
+                }
+                else
+                {
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Closed";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
+
+                }
+               
+
+
                 return Ok();
 
             }
@@ -326,10 +360,19 @@ namespace icrm.WebApi
                 c.text = forward.comment;
                 db.comments.Add(c);
                 db.SaveChanges();
+               
 
             }
 
-
+            ////////////////////  new changes (Add Notification) /////////////////////////////////////////
+            NotificationMessage notificationMessage = new NotificationMessage();
+            notificationMessage.Title = "Ticket Forwarded";
+            notificationMessage.Body = f.title;
+            notificationMessage.For = Constants.ROLE_DEPARTMENT;
+            notificationMessage.Status = f.checkStatus;
+            notificationMessage.DeviceId = db.Users.Find(f.departUserId).DeviceCode;
+            notificationMessage.FeedbackId = f.id;
+            eventService.notifyFeedback(notificationMessage);
             return Ok(f);
 
         }
@@ -347,7 +390,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             var query = from f in feedInterface.GetAllAssigned()
 
-                        where f.departUserId.Equals(user.Id)
+                        where f.departUserId.Equals(user.Result.Id)
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.type.name, f.user.EmployeeId, f.user.FirstName };
 
 
@@ -432,6 +475,16 @@ namespace icrm.WebApi
                 c.text = feedback.response;
                 db.comments.Add(c);
                 db.SaveChanges();
+                //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                NotificationMessage notificationMessage = new NotificationMessage();
+                notificationMessage.Title = "Ticket Responded";
+                notificationMessage.Body = f.title;
+                notificationMessage.For = Constants.ROLE_HR;
+                notificationMessage.Status = f.checkStatus;
+                notificationMessage.FeedbackId = f.id;
+                eventService.notifyFeedback(notificationMessage);
+
+
                 return Ok();
             }
         }
@@ -518,19 +571,45 @@ namespace icrm.WebApi
                 if (f.status == "Open")
                 {
                     f.checkStatus = Models.Constants.OPEN;
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Reopened";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
+
 
 
                 }
                 else if (f.status == "Resolved")
                 {
                     f.checkStatus = Models.Constants.RESOLVED;
-
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Resolved";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
 
                 }
                 else if (f.status == "Closed")
                 {
                     f.checkStatus = Models.Constants.CLOSED;
-
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Closed";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
 
                 }
                 if (feedback.satisfaction != null)
@@ -693,18 +772,45 @@ namespace icrm.WebApi
                 if (f.status == "Closed")
                 {
                     f.checkStatus = Models.Constants.CLOSED;
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Closed";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
 
                 }
                 else if (f.status == "Open")
                 {
 
                     f.checkStatus = Models.Constants.OPEN;
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Opned";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
 
                 }
 
                 else
                 {
                     f.checkStatus = Models.Constants.RESOLVED;
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Resolved";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    eventService.notifyFeedback(notificationMessage);
 
                 }
 
@@ -1139,7 +1245,7 @@ namespace icrm.WebApi
         }
 
         //34/ <summary>
-        /// /////////////////////////////////////*************Rejected By Id *****************/////////////////
+        /// /////////////////////////////////////************* here hr Rejected the ticket*****************/////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/Rejected/{id}")]
@@ -1171,6 +1277,17 @@ namespace icrm.WebApi
                 c.text = feedback.checkStatus;
                 db.comments.Add(c);
                 db.SaveChanges();
+
+                //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                NotificationMessage notificationMessage = new NotificationMessage();
+                notificationMessage.Title = "Ticket Rejected";
+                notificationMessage.Body = f.title;
+                notificationMessage.For = Constants.ROLE_USER;
+                notificationMessage.Status = f.checkStatus;
+                notificationMessage.DeviceId = f.user.DeviceCode;
+                notificationMessage.FeedbackId = f.id;
+                eventService.notifyFeedback(notificationMessage);
+
                 return Ok();
 
             }
@@ -1460,6 +1577,15 @@ namespace icrm.WebApi
                 {
 
                     f.checkStatus = Models.Constants.OPEN;
+                    //////////////////////////new changes (Add notifiactions )///////////////////////////////////
+                    NotificationMessage notificationMessage = new NotificationMessage();
+                    notificationMessage.Title = "Ticket Reopened";
+                    notificationMessage.Body = f.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.DeviceId = f.user.DeviceCode;
+                    notificationMessage.Status = f.checkStatus;
+                    notificationMessage.FeedbackId = f.id;
+                    eventService.notifyFeedback(notificationMessage);
 
                 }
                 if (f.satisfaction != null)
