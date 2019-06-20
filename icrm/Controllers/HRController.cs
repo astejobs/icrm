@@ -714,8 +714,10 @@ namespace icrm.Controllers
                     report.category = f.category == null ? "" : f.category.name;
                     report.name = f.user.FirstName;
                     report.batchNumber = f.user.EmployeeId;
-                    report.position = f.user.JobTitle.name;
-                    report.nationality = f.user.Nationality.name;
+                    report.position = f.user.JobTitle == null ? "" : f.user.JobTitle.name;
+
+                    report.nationality = f.user.Nationality == null ? "" : f.user.Nationality.name;
+                    
                     report.emailId = f.user.bussinessEmail;
                     report.phoneNumber = f.user.bussinessPhoneNumber;
                     report.createdDate = f.createDate;
@@ -733,8 +735,10 @@ namespace icrm.Controllers
                     var days = totalhours / 24;
                     var hours = totalhours % 24;
                     report.responseTime = String.Format("{0} days,{1} hours, {2} minutes, {3} seconds",
-                                          Math.Round(days),Math.Round(hours), Math.Round(minutes), Math.Round(sec)); 
-                    report.source = f.user.CostCenter.name;
+                                          Math.Round(days),Math.Round(hours), Math.Round(minutes), Math.Round(sec));
+                    report.source = f.medium == null ? "" : f.medium.name;
+
+                    
                     report.priority = f.priority == null ? "": f.priority.name;
                     report.owner = f.departUser == null? "": f.departUser.FirstName;
                     report.isescalated = f.escalationlevel == null ? "No" : "Yes";
