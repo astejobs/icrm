@@ -571,6 +571,22 @@ namespace icrm.WebApi
                 if (f.status == "Open")
                 {
                     f.checkStatus = Models.Constants.OPEN;
+
+                    feedback.departmentID = null;
+                    feedback.resolvedDate = null;
+                    feedback.closedDate = null;
+                    feedback.departUserId = null;
+                    feedback.satisfaction = null;
+                    feedback.priorityId = null;
+                    feedback.categoryId = null;
+                    feedback.subcategoryId = null;
+                    feedback.resolvedDate = null;
+                    feedback.timeHours = 0;
+                    feedback.assignedBy = null;
+                    feedback.assignedDate = null;
+                   
+
+
                     //////////////////////////new changes (Add notifiactions )///////////////////////////////////
                     NotificationMessage notificationMessage = new NotificationMessage();
                     notificationMessage.Title = "Ticket Reopened";
@@ -580,6 +596,7 @@ namespace icrm.WebApi
                     notificationMessage.Status = f.checkStatus;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
+
 
 
 
@@ -789,7 +806,7 @@ namespace icrm.WebApi
                     f.checkStatus = Models.Constants.OPEN;
                     //////////////////////////new changes (Add notifiactions )///////////////////////////////////
                     NotificationMessage notificationMessage = new NotificationMessage();
-                    notificationMessage.Title = "Ticket Opned";
+                    notificationMessage.Title = "Ticket Opened";
                     notificationMessage.Body = f.title;
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
