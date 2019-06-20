@@ -1,4 +1,5 @@
-﻿using icrm.Models;
+﻿using icrm.Events;
+using icrm.Models;
 using icrm.RepositoryImpl;
 using icrm.RepositoryInterface;
 using Microsoft.AspNet.Identity;
@@ -26,12 +27,13 @@ namespace icrm.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
         private IFeedback feedInterface;
-
+        private EventService eventService;
 
         public DepartmentController()
         {
             ViewBag.Status = Models.Constants.statusList;
             feedInterface = new FeedbackRepository();
+            eventService = new EventService();
 
         }
 
@@ -149,6 +151,7 @@ namespace icrm.Controllers
 
 
         /******** Response By Department User Post******/
+        /******** Response By Department User Post******/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -184,7 +187,16 @@ namespace icrm.Controllers
 
                 db.Entry(f).State = EntityState.Modified;
                  db.SaveChanges();
-                   
+
+                NotificationMessage notificationMessage = new NotificationMessage();
+                notificationMessage.Title = "Ticket Responded";
+                notificationMessage.Body = feedback.title;
+                notificationMessage.For = Constants.ROLE_HR;
+                notificationMessage.Status = feedback.status;
+                notificationMessage.FeedbackId = feedback.id;
+                //notificationMessage.DeviceId = deptUser.DeviceCode;
+                eventService.notifyFeedback(notificationMessage);
+
                 ViewData["decide"] = feedInterface.getDeptCOmments(feedback.id);
                 TempData["displayMsg"] = "Ticket has been Updated Successfully";
                 return RedirectToAction("DashBoard");           
