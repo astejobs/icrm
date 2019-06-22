@@ -13,5 +13,6 @@ namespace icrm.Models
         public string For { get; set; }
         public string Status { get; set; }
         public string FeedbackId { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }
