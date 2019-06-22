@@ -229,7 +229,7 @@ namespace icrm.Controllers
                             notificationMessage.For = Constants.ROLE_DEPARTMENT;
                             notificationMessage.Status = feedback.status;
                             notificationMessage.FeedbackId = feedback.id;
-                            
+                            notificationMessage.CreateDate = feedback.createDate;
                             notificationMessage.DeviceId = deptUser.DeviceCode;
                             eventService.notifyFeedback(notificationMessage);
                             TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
@@ -286,7 +286,7 @@ namespace icrm.Controllers
                             notificationMessage.For = Constants.ROLE_USER;
                             notificationMessage.Status = feedback.status;
                             notificationMessage.FeedbackId = feedback.id;
-
+                            notificationMessage.CreateDate = feedback.createDate;
                             notificationMessage.DeviceId = feedbackUser.DeviceCode;
                             eventService.notifyFeedback(notificationMessage);
                             TempData["MessageSuccess"] = "Ticket has been Created Successfully";
@@ -391,7 +391,7 @@ namespace icrm.Controllers
                             notificationMessage.For = Constants.ROLE_USER;
                             notificationMessage.Status = feedback.status;
                             notificationMessage.FeedbackId = feedback.id;
-
+                            notificationMessage.CreateDate = feedback.createDate;9588
                             notificationMessage.DeviceId = feedbackUser.DeviceCode;
                             eventService.notifyFeedback(notificationMessage);
                         }
@@ -427,7 +427,7 @@ namespace icrm.Controllers
                             notificationMessage.For = Constants.ROLE_USER;
                             notificationMessage.Status = feedback.status;
                             notificationMessage.FeedbackId = feedback.id;
-
+                            notificationMessage.CreateDate = feedback.createDate;
                             notificationMessage.DeviceId = feedbackUser.DeviceCode;
                             eventService.notifyFeedback(notificationMessage);
                         }
@@ -453,6 +453,7 @@ namespace icrm.Controllers
                         notificationMessage.FeedbackId = feedback.id;
                         var deptUser = UserManager.FindById(feedback.departUserId);
                         notificationMessage.DeviceId = deptUser.DeviceCode;
+                        notificationMessage.CreateDate = feedback.createDate;
                         eventService.notifyFeedback(notificationMessage);
                         @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
 
@@ -475,7 +476,7 @@ namespace icrm.Controllers
                         notificationMessage.For = Constants.ROLE_USER;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
-
+                        notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
                         @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
@@ -565,7 +566,7 @@ namespace icrm.Controllers
                         notificationMessage.For = Constants.ROLE_DEPARTMENT;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
-
+                        notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = deptUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
                         TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
@@ -612,7 +613,7 @@ namespace icrm.Controllers
                         notificationMessage.For = Constants.ROLE_USER;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
-
+                        notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
                         Comments c = new Comments();
@@ -650,7 +651,7 @@ namespace icrm.Controllers
                         notificationMessage.For = Constants.ROLE_USER;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
-
+                        notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
                         Comments c = new Comments();
@@ -9771,7 +9772,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         notificationMessage.For = Constants.ROLE_DEPARTMENT;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
-
+                        notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = deptUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
 
@@ -9842,6 +9843,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         notificationMessage.For = Constants.ROLE_USER;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
+                        notificationMessage.CreateDate = feedback.createDate;
 
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
@@ -9883,7 +9885,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         notificationMessage.For = Constants.ROLE_USER;
                         notificationMessage.Status = feedback.status;
                         notificationMessage.FeedbackId = feedback.id;
-
+                        notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
                         TempData["MessageSuccess"] = "Ticket has been Rejected";
@@ -10027,7 +10029,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.Status = feedback.status;
                     notificationMessage.FeedbackId = feedback.id;
-
+                    notificationMessage.CreateDate = feedback.createDate;
                     notificationMessage.DeviceId = feedbackUser.DeviceCode;
                     eventService.notifyFeedback(notificationMessage);
                 }

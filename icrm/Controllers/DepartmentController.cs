@@ -194,6 +194,7 @@ namespace icrm.Controllers
                 notificationMessage.For = Constants.ROLE_HR;
                 notificationMessage.Status = f.status;
                 notificationMessage.FeedbackId = f.id;
+                notificationMessage.CreateDate = f.createDate;
                 //notificationMessage.DeviceId = deptUser.DeviceCode;
                 eventService.notifyFeedback(notificationMessage);
 
