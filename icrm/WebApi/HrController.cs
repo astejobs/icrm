@@ -187,6 +187,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
                 }
@@ -198,7 +199,9 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
+                
                     eventService.notifyFeedback(notificationMessage);
 
                 }
@@ -372,6 +375,7 @@ namespace icrm.WebApi
             notificationMessage.Status = f.checkStatus;
             notificationMessage.DeviceId = db.Users.Find(f.departUserId).DeviceCode;
             notificationMessage.FeedbackId = f.id;
+            notificationMessage.CreateDate = f.createDate;
             eventService.notifyFeedback(notificationMessage);
             return Ok(f);
 
@@ -482,6 +486,7 @@ namespace icrm.WebApi
                 notificationMessage.For = Constants.ROLE_HR;
                 notificationMessage.Status = f.checkStatus;
                 notificationMessage.FeedbackId = f.id;
+                notificationMessage.CreateDate = f.createDate;
                 eventService.notifyFeedback(notificationMessage);
 
 
@@ -594,6 +599,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
 
@@ -611,6 +617,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
 
@@ -625,6 +632,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
 
@@ -796,6 +804,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
 
@@ -811,6 +820,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
 
@@ -826,6 +836,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.Status = f.checkStatus;
                     notificationMessage.FeedbackId = f.id;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     eventService.notifyFeedback(notificationMessage);
 
@@ -1302,6 +1313,7 @@ namespace icrm.WebApi
                 notificationMessage.For = Constants.ROLE_USER;
                 notificationMessage.Status = f.checkStatus;
                 notificationMessage.DeviceId = f.user.DeviceCode;
+                notificationMessage.CreateDate = f.createDate;
                 notificationMessage.FeedbackId = f.id;
                 eventService.notifyFeedback(notificationMessage);
 
@@ -1601,6 +1613,7 @@ namespace icrm.WebApi
                     notificationMessage.For = Constants.ROLE_USER;
                     notificationMessage.DeviceId = f.user.DeviceCode;
                     notificationMessage.Status = f.checkStatus;
+                    notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
                     eventService.notifyFeedback(notificationMessage);
 
