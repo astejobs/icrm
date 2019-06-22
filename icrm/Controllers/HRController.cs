@@ -391,7 +391,7 @@ namespace icrm.Controllers
                             notificationMessage.For = Constants.ROLE_USER;
                             notificationMessage.Status = feedback.status;
                             notificationMessage.FeedbackId = feedback.id;
-                            notificationMessage.CreateDate = feedback.createDate;9588
+                            notificationMessage.CreateDate = feedback.createDate;
                             notificationMessage.DeviceId = feedbackUser.DeviceCode;
                             eventService.notifyFeedback(notificationMessage);
                         }
