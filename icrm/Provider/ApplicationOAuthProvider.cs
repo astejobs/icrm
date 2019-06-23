@@ -79,19 +79,19 @@ namespace icrm.Provider
             foreach (IdentityUserRole r in user.Roles)
             {
 
-                if (context.AdditionalResponseParameters.ContainsKey("Roles"))
+                if (!context.AdditionalResponseParameters.ContainsKey("Roles"))
                 {
                     context.AdditionalResponseParameters.Add("Roles", roleManager.FindById(r.RoleId).Name);
                 }
 
-                if (context.AdditionalResponseParameters.ContainsKey("Roles"))
+                if (!context.AdditionalResponseParameters.ContainsKey("UserName"))
                 {
                     context.AdditionalResponseParameters.Add("UserName", user.FirstName);
 
                 }
 
 
-                if (context.AdditionalResponseParameters.ContainsKey("Roles")) {
+                if (!context.AdditionalResponseParameters.ContainsKey("EmployeeId")) {
                    context.AdditionalResponseParameters.Add("EmployeeId", user.UserName);
 
 
