@@ -82,6 +82,15 @@ namespace icrm.Models
             messageHub.Clients.Client(connectionId).hravailable(message);
         }
 
+        public void changeToggle(ApplicationUser user)
+        {
+            var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
+            messageHub.Clients.User(user.UserName).changetoggle(user.available);
+
+        }
+
+
+
         public override Task OnConnected()
         {
             IRequest request = Context.Request;

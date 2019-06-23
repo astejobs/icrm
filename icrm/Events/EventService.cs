@@ -142,8 +142,17 @@ namespace icrm.Events
         {
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
             {
-                Debug.Print("--------chat closed by hr notify----");
                 this.messageHub.hrAvailable(message);
+
+            });
+            return null;
+        }
+
+        public Task changeToggle(ApplicationUser user)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+            {
+                this.messageHub.changeToggle(user);
 
             });
             return null;

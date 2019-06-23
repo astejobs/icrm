@@ -26,6 +26,17 @@
         console.log('Notification hub started');
         console.log('connection started with id: ' + $.connection.hub.id);
     });
+
+    messageHub.client.changetoggle = function (data) {
+        var T = $('.toggle').data('toggles');
+        if (data) {
+            T.toggle(true);
+        } else {
+            T.toggle(false);
+
+        }
+    }
+
     messageHub.client.notification = function (message) {
         var c = $('#notifyCount').text();
          c = $('#notifyCount').text() != ''?Number(c):0;
@@ -39,6 +50,8 @@
             '</div>' +
             '</div>' +
             '</a>');
+
+      
 
         Noty.overrideDefaults({
       callbacks: {

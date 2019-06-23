@@ -64,6 +64,14 @@ namespace icrm.Controllers
             base.OnActionExecuting(filterContext);
         }
 
+        [HttpGet]
+        public void Test()
+        {
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            user.available = false;
+            eventService.changeToggle(user);
+        }
+
         // GET: Chat
         public ActionResult Index()
         {
@@ -193,6 +201,7 @@ namespace icrm.Controllers
             {
                 user2.available = true;
                 this.userService.Update(user2);
+                eventService.changeToggle(user2);
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
@@ -219,20 +228,27 @@ namespace icrm.Controllers
             ApplicationUser hr = this.userService.findUserOnId(User.Identity.GetUserId());
             hr.available = value;
             chatService.closeAllActiveChatsOfUser(hr.Id);
-            this.userService.Update(hr);
+            
             if (value)
             {
                 if (this.chatRequestService.ChatRequestsSize() > 0)
+                {
                     this.AssignNextRequestInQueueToHr();
+                    hr.available = false;
+
+                }
+
             }
+            this.userService.Update(hr);
+            eventService.changeToggle(hr);
         }
 
         [HttpGet]
         [Route("chat/hr/checkavailable")]
-        public bool checkHrAvailabilityStatus()
+        public bool? checkHrAvailabilityStatus()
         {
             ApplicationUser hr = this.userService.findUserOnId(User.Identity.GetUserId());
-            return (bool)hr.available;
+            return hr.available;
         }
 
         [HttpGet]

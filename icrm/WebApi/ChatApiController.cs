@@ -81,7 +81,7 @@ namespace icrm.WebApi
 
                 producer.send(msgWithId);
                 this.eventService.NotifyHrAboutChat(msgWithId);
-
+                this.eventService.changeToggle(reciever);
             }
             return Ok(msgWithId);
         }

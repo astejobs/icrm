@@ -47,8 +47,7 @@ namespace icrm.Events
                 data = new
                 {
                     showView =view,
-                    id = args.NotificationMessage.FeedbackId
-
+                    id = args.NotificationMessage.FeedbackId,
                 }
                 
             };

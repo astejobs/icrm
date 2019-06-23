@@ -221,7 +221,7 @@
                     <p class="mg-b-5">User has closed the current chat</p>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeChatBtn">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="userCloseChatBtn">OK</button>
                 </div>
             </div>
         </div><!-- modal-dialog -->
@@ -430,7 +430,15 @@
 
         }
 
+        messageHub.client.changetoggle = function (data) {
+            var T = $('.toggle').data('toggles');
+            if (data) {
+                T.toggle(true);
+            } else {
+                T.toggle(false);
 
+            }
+        }
         function send() {
             var message = $("#txtmsg").val();
             var newmsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
@@ -499,7 +507,11 @@
             $('#closechat').modal('show');
         });
 
-        $('#closeChatBtn').click(function() {
+        $('#userCloseChatBtn').click(function() {//when user closes chat button
+            closeChat();
+        });
+
+        $('#closeChatBtn').click(function () {
             closeChat();
         });
         const container = document.querySelector('.message-body');
