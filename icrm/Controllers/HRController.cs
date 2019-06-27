@@ -570,7 +570,7 @@ namespace icrm.Controllers
                         notificationMessage.DeviceId = deptUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
                         TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
-                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                        eventService.sendEmails(Request.Form["emailsss"] + "," + feedback.departUser.bussinessEmail, PopulateBody(feedback));
 
                     }
                     else
@@ -9777,7 +9777,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         eventService.notifyFeedback(notificationMessage);
 
 
-                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                        eventService.sendEmails(Request.Form["emailsss"] + "," + feedback.departUser.bussinessEmail, PopulateBody(feedback));
                         TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
 
                     }
