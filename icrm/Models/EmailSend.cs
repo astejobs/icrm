@@ -43,11 +43,11 @@ namespace icrm.Models
           //  EmailSend e = new EmailSend();
            // var message = new MailMessage();
 
-            MailMessage message = new MailMessage("employee.relation@mcdonalds.com.sa", "tufail.b.n@gmail.com");
-           
-           
+            MailMessage message = new MailMessage();
 
 
+
+            message.From = new MailAddress("employee.relation@mcdonalds.com.sa");
 
             foreach (string email in Multi)
             {
