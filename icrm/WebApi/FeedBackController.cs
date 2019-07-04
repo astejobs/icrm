@@ -45,7 +45,10 @@ namespace icrm.WebApi
         [HttpPost]
         public IHttpActionResult PostFeedback(FeedBackViewModel feedBackmodel)
         {
-
+            ApplicationDbContext db = new ApplicationDbContext();
+            string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
+            long index = Convert.ToInt64(lastId.Substring(2)) + 1;
+           string feedbackId = string.Format("IR{0}", index.ToString().PadLeft(5, '0'));
             Feedback feedBack = null;
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
@@ -57,7 +60,7 @@ namespace icrm.WebApi
             if (feedBackmodel.Attachment != null)
             {
                 String ext = GetFileExtension(feedBackmodel.Attachment);                
-                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid ,mediumId=11};
+                feedBack = new Feedback {id=feedbackId, title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid ,mediumId=11};
                 feedBack.attachment = feedBack.id + "." + ext;
                 string path = Constants.PATH + feedBack.attachment;
                 if (!File.Exists(path))
@@ -71,7 +74,7 @@ namespace icrm.WebApi
             
             else
             {
-                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid,mediumId=11};
+                feedBack = new Feedback { id = feedbackId, title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid,mediumId=11};
 
             }
             feedBack.checkStatus = Models.Constants.OPEN;

@@ -137,6 +137,9 @@ namespace icrm.Controllers
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
+            string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
+            long index = Convert.ToInt64(lastId.Substring(2)) + 1;
+            feedback.id = string.Format("IR{0}", index.ToString().PadLeft(5, '0'));
            
             TempData["userIdValue"] = feedback.userId;
 
@@ -205,7 +208,7 @@ namespace icrm.Controllers
                             deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
                             
                         }
-                        
+                    
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;
                         if (ModelState.IsValid)

@@ -7,14 +7,14 @@ namespace icrm.Models
 {
     public class Feedback
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+
+       
+       
         public Feedback() {
+
             createDate = DateTime.Now;
             status = "Open";
-            Random random = new Random();
-
-            int sequenceNumber = db.Feedbacks.Count()+1;
-            id = string.Format("IR{0}", sequenceNumber.ToString().PadLeft(5, '0'));
+           
 
 
         } 
