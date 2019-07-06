@@ -587,9 +587,12 @@
         }
         if ($("#typeoffeedbacktext").val() == "Complaint") {
             $('#priordiv').show();
+            $("#forward").attr("disabled", false);
+           
             $("#priorty").prop('required', true);
         } else {
             $('#priordiv').hide();
+            $("#forward").attr("disabled", true);
             $("#priorty").prop('required', false);
         }
         if ($('#statusfield').val() == "Resolved") {
@@ -633,8 +636,19 @@
 
         $('#resolve').click(function () {
             $("#dep").prop('required', false);
+            
+            if (($('#statusfield').val() == "Open" || $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") && ($('#typeoffeedbacktext').val() == "Inquiry" || $("#typeoffeedbacktext").val() == "Suggestion" ||
+                $("#typeoffeedbacktext").val() == "Appreciation")) {
+               
+                $("#emailsss").prop('required', false);
+                $("#deptId").prop('required', false);
+                $("#category").prop('required', false);
+                $("#subcategory").prop('required', false);
 
-            if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" ) {
+                return true;
+            }
+
+            else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeoffeedbacktext").val() == "Complaint" ) {
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#emailsss").prop('required', false);

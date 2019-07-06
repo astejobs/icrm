@@ -552,7 +552,7 @@
             $("#typeofFeedback").prop('required', true);
            // $('#priordiv').hide();
             $('#typeofFeedback').change(function () {
-               
+                $('#statuscheck').text("");
                 if ($(this).find(":selected").text() == "Complaint") {
                     $("#forward").attr("disabled", false);
                      $('#priordiv').show();
@@ -647,8 +647,21 @@
 
             $('#resolve').click(function () {
                 $('#statuscheck').text("");
-               
-                if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
+                alert($("#typeofFeedback").find(":selected").text());
+                alert($('#statusfield').val());
+                if (($('#statusfield').val() == "Open" ||  $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" ) && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
+                    $("#typeofFeedback").find(":selected").text() == "Appreciation")) {
+            alert('first')
+                    $("#emailsss").prop('required', false);
+                    $("#deptId").prop('required', false);
+                    $("#category").prop('required', false);
+                    $("#subcategory").prop('required', false);
+                  
+                    return true;
+                }
+                else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeofFeedback").find(":selected").text() == "Complaint") {
+                    
+
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false); 
                     $("#category").prop('required', false);
@@ -657,6 +670,7 @@
                 }
 
                 else {
+                    alert('last')
                     $('#statuscheck').text("Set status Resolved/Closed");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false); 
@@ -665,6 +679,9 @@
                     return false;
 
                 }
+
+
+               
 
             });
 

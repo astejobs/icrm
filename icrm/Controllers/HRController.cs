@@ -140,7 +140,7 @@ namespace icrm.Controllers
             string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
             long index = Convert.ToInt64(lastId.Substring(2)) + 1;
             feedback.id = string.Format("IR{0}", index.ToString().PadLeft(5, '0'));
-           
+            NotificationMessage notificationMessage = new NotificationMessage();
             TempData["userIdValue"] = feedback.userId;
 
             TempData["EmpIdValue"] = Request.Form["EmpIdValue"];
@@ -208,7 +208,7 @@ namespace icrm.Controllers
                             deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
                             
                         }
-                    
+                        
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;
                         if (ModelState.IsValid)
@@ -226,7 +226,7 @@ namespace icrm.Controllers
                                       db.comments.Add(c);
                                       db.SaveChanges();
                                     }
-                            NotificationMessage notificationMessage = new NotificationMessage();
+                            //NotificationMessage notificationMessage = new NotificationMessage();
                             notificationMessage.Title = "Ticket Forwared";
                             notificationMessage.Body = feedback.title;
                             notificationMessage.For = Constants.ROLE_DEPARTMENT;
@@ -256,35 +256,37 @@ namespace icrm.Controllers
                     case "Submit":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                        NotificationMessage notificationMessage = new NotificationMessage();
-                    
+                        // NotificationMessage notificationMessage = new NotificationMessage();
+
                         if (feedback.status == Constants.CLOSED)
                         {
                             notificationMessage.Title = "Ticket Closed";
                             feedback.closedDate = DateTime.Now;
                             feedback.checkStatus = Constants.CLOSED;
                         }
-                        else
+                        if (feedback.status == Constants.RESOLVED)
                         {
                             notificationMessage.Title = "Ticket Resolved";
                             feedback.resolvedDate = DateTime.Now;
                             feedback.checkStatus = Constants.RESOLVED;
                         }
 
+
                         if (ModelState.IsValid)
                         {
                             feedback.submittedById = user.Id;
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
+                            feedback.checkStatus = feedback.status;
                             feedInterface.Save(feedback);
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
-                               c.commentFor = Constants.commentType[2];
+                            c.commentFor = Constants.commentType[2];
                             db.comments.Add(c);
                             db.SaveChanges();
-                            
+
                             notificationMessage.Body = feedback.title;
                             notificationMessage.For = Constants.ROLE_USER;
                             notificationMessage.Status = feedback.status;
@@ -305,18 +307,56 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        if (feedback.departmentID != null)
+                        if (feedback.departmentID == null && Request.Form["responsee"] == "" && feedback.status == Constants.OPEN)
                         {
-                            TempData["Message"] = "Department should be empty";
+                            notificationMessage.Title = "Ticket Created";
+                            feedback.checkStatus = Constants.OPEN;
+                            if (ModelState.IsValid)
+                            {
+                                feedback.submittedById = user.Id;
+                                feedback.assignedBy = null;
+                                feedback.assignedDate = null;
+                                feedback.checkStatus = feedback.status;
+                                feedInterface.Save(feedback);
+
+
+                                notificationMessage.Body = feedback.title;
+                                notificationMessage.For = Constants.ROLE_USER;
+                                notificationMessage.Status = feedback.status;
+                                notificationMessage.FeedbackId = feedback.id;
+                                notificationMessage.CreateDate = feedback.createDate;
+                                notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                                eventService.notifyFeedback(notificationMessage);
+                                TempData["MessageSuccess"] = "Ticket has been Created Successfully";
+                                return RedirectToAction("DashBoard");
+                            }
+                            else
+                            {
+                                ViewData["user"] = user;
+                                TempData["Message"] = "Ticket details are not valid,Fill details properly";
+                                return View("Create", feedback);
+                            }
+
                         }
                         else
                         {
+                            if (feedback.departmentID != null)
+                            {
+                                TempData["Message"] = "Department should be empty";
+                            }
+                            else
+                            {
 
-                            TempData["Message"] = "Comment Field should not be empty";
+                                TempData["Message"] = "Comment Field should not be empty";
+                            }
+                            
+                          return View("Create", feedback);
                         }
-                        return View("Create", feedback);
 
                     }
+                      
+
+                    
                 default:
                         return RedirectToAction("Create");                    
                 }
@@ -505,7 +545,9 @@ namespace icrm.Controllers
         [Route("assigndepartment/")]
         public ActionResult assign(string submitButton,Feedback feedback)
         {
+            NotificationMessage notificationMessage = new NotificationMessage();
             var feedbackUser = UserManager.FindById(feedback.userId);
+            var f = feedInterface.Find(feedback.id);
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
@@ -563,7 +605,7 @@ namespace icrm.Controllers
                            
 
                         }
-                        NotificationMessage notificationMessage = new NotificationMessage();
+                       // NotificationMessage notificationMessage = new NotificationMessage();
                         notificationMessage.Title = "Ticket Forwared";
                         notificationMessage.Body = feedback.title;
                         notificationMessage.For = Constants.ROLE_DEPARTMENT;
@@ -586,10 +628,7 @@ namespace icrm.Controllers
                 case "Submit":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                        NotificationMessage notificationMessage = new NotificationMessage();
-                        
-                        
-
+                       
                         if (feedback.status == Constants.CLOSED)
                         {
                             notificationMessage.Title = "Ticket Closed";
@@ -597,17 +636,18 @@ namespace icrm.Controllers
                             feedback.checkStatus = Constants.CLOSED;
                             TempData["MessageSuccess"] = "Ticket has been Closed Successfully";
                         }
-                        else {
+                         if (feedback.status == Constants.RESOLVED)
+                        {
                             notificationMessage.Title = "Ticket Resolved";
                             feedback.resolvedDate = DateTime.Now;
                             feedback.checkStatus = Constants.RESOLVED;
                             TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
                         }
-
-                        
-                        
+                     
+                                            
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
+                      
                             feedback.submittedById = user.Id;
                             
                             db.Entry(feedback).State = EntityState.Modified;
@@ -631,20 +671,51 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        if (feedback.departmentID != null)
+                        if (feedback.departmentID == null && Request.Form["responsee"] == "" && feedback.status == Constants.OPEN)
                         {
-                            TempData["Message"] = "Department should be empty";
+                            notificationMessage.Title = "Ticket Created";
+                            feedback.checkStatus = Constants.OPEN;
+                            feedback.createDate = f.createDate;
+
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
+                            feedback.submittedById = user.Id;
+                            feedback.checkStatus = feedback.status;
+
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            if (feedback.status != f.status) { 
+                                notificationMessage.Body = feedback.title;
+                            notificationMessage.For = Constants.ROLE_USER;
+                            notificationMessage.Status = feedback.status;
+                            notificationMessage.FeedbackId = feedback.id;
+                            notificationMessage.CreateDate = feedback.createDate;
+                            notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                            eventService.notifyFeedback(notificationMessage);
+                        }
+                            TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
+                            return RedirectToAction("DashBoard");
+
                         }
                         else
                         {
 
-                            TempData["Message"] = "Comment Field should not be empty";
+                            if (feedback.departmentID != null)
+                            {
+                                TempData["Message"] = "Department should be empty";
+                            }
+                            else
+                            {
+
+                                TempData["Message"] = "Comment Field should not be empty";
+                            }
+                            
                         }
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                   case "Reject":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "") {
-                        NotificationMessage notificationMessage = new NotificationMessage();
+                      //  NotificationMessage notificationMessage = new NotificationMessage();
                         feedback.submittedById = user.Id;          
                             feedback.checkStatus = Constants.REJECTED;
                             db.Entry(feedback).State = EntityState.Modified;
@@ -9712,6 +9783,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
         [Route("rejected/action/")]
         public ActionResult feedbackupdate(string submitButton, Feedback feedback)
         {
+            NotificationMessage notificationMessage = new NotificationMessage();
             var ff = feedInterface.Find(feedback.id);
             var feedbackUser = UserManager.FindById(feedback.userId);
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -9769,7 +9841,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                             db.comments.Add(c);
                             db.SaveChanges();
                         }
-                        NotificationMessage notificationMessage = new NotificationMessage();
+                      //  NotificationMessage notificationMessage = new NotificationMessage();
                         notificationMessage.Title = "Ticket Forwared";
                         notificationMessage.Body = feedback.title;
                         notificationMessage.For = Constants.ROLE_DEPARTMENT;
@@ -9793,8 +9865,8 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 case "Submit":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                        NotificationMessage notificationMessage = new NotificationMessage();
-                        
+                      //  NotificationMessage notificationMessage = new NotificationMessage();
+
 
 
                         if (feedback.status == Constants.CLOSED)
@@ -9803,16 +9875,17 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                             {
                                 feedback.closedDate = ff.closedDate;
                             }
-                            else {
+                            else
+                            {
                                 feedback.closedDate = DateTime.Now;
                             }
 
                             notificationMessage.Title = "Ticket Closed";
-                            
+
                             feedback.checkStatus = Constants.CLOSED;
                             TempData["MessageSuccess"] = "Ticket has been Closed Successfully";
                         }
-                        else
+                        if (feedback.status == Constants.RESOLVED)
                         {
                             if (feedback.status == ff.status)
                             {
@@ -9824,21 +9897,21 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                             }
 
                             notificationMessage.Title = "Ticket Resolved";
-                            
+
                             feedback.checkStatus = Constants.RESOLVED;
                             TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
                         }
-                           
-                            feedback.assignedBy = null;
-                            feedback.assignedDate = null;
-                            feedback.submittedById = user.Id;
-                            db.Entry(feedback).State = EntityState.Modified;
-                            db.SaveChanges();
+
+                        feedback.assignedBy = null;
+                        feedback.assignedDate = null;
+                        feedback.submittedById = user.Id;
+                        db.Entry(feedback).State = EntityState.Modified;
+                        db.SaveChanges();
                         Comments c = new Comments();
                         c.text = Request.Form["responsee"];
                         c.commentedById = user.Id;
                         c.feedbackId = feedback.id;
-                          c.commentFor = Constants.commentType[2];
+                        c.commentFor = Constants.commentType[2];
                         db.comments.Add(c);
                         db.SaveChanges();
 
@@ -9851,21 +9924,53 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
 
-                        return RedirectToAction("DashBoard");                     
+                        return RedirectToAction("DashBoard");
                     }
                     else
                     {
-                        if (feedback.departmentID != null)
+                        if (feedback.departmentID == null && Request.Form["responsee"] == "" && feedback.status == Constants.OPEN)
                         {
-                            TempData["Message"] = "Department should be empty";
+                            notificationMessage.Title = "Ticket Created";
+
+                            feedback.checkStatus = Constants.OPEN;
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
+                            feedback.submittedById = user.Id;
+                            feedback.checkStatus = feedback.status;
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                            if (feedback.status != ff.status)
+                            {
+                                notificationMessage.Body = feedback.title;
+                                notificationMessage.For = Constants.ROLE_USER;
+                                notificationMessage.Status = feedback.status;
+                                notificationMessage.FeedbackId = feedback.id;
+                                notificationMessage.CreateDate = feedback.createDate;
+
+                                notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                                eventService.notifyFeedback(notificationMessage);
+                            }
+                            TempData["MessageSuccess"] = "Ticket has been Created Successfully";
+                            return RedirectToAction("DashBoard");
                         }
                         else
                         {
+                            if (feedback.departmentID != null)
+                            {
+                                TempData["Message"] = "Department should be empty";
+                            }
+                            else
+                            {
 
-                            TempData["Message"] = "Comment Field should not be empty";
+                                TempData["Message"] = "Comment Field should not be empty";
+                            }
                         }
+
+
                         return RedirectToAction("rejectedview", new { id = feedback.id });
                     }
+                    
                 case "Reject":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
@@ -9882,7 +9987,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                           c.commentFor = Constants.commentType[2];
                         db.comments.Add(c);
                         db.SaveChanges();
-                        NotificationMessage notificationMessage = new NotificationMessage();
+                      //  NotificationMessage notificationMessage = new NotificationMessage();
                         notificationMessage.Title = "Ticket Rejected";
                         notificationMessage.Body = feedback.title;
                         notificationMessage.For = Constants.ROLE_USER;

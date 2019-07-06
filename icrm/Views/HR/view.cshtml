@@ -178,10 +178,7 @@
                         @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
-
-
-
-
+                        
                         @Html.HiddenFor(model => model.submittedById, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
 
@@ -219,8 +216,8 @@
                                     <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
                                     @if (Model.user.CostCenterId != null)
                                     {
-                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
-                                    @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                        @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
+                                        @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
                                     }
                                     else
                                     {
@@ -690,12 +687,16 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
-          
+
+
+           
             
                 if ($("#typeoffeedbackname").val() == "Complaint") {
                     $('#priordiv').show();
+                    $("#forward").attr("disabled", false);
                     $("#priorty").prop('required', true);
                 } else {
+                    $("#forward").attr("disabled", true);
                     $('#priordiv').hide();
                     $("#priorty").prop('required', false);
                 }
@@ -746,10 +747,23 @@
                }
                
             });
-
+            
             $('#resolve').click(function () {
+                
                 $('#statuscheck').text("");
-                if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
+
+                if (($('#statusfield').val() == "Open" || $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") && ($('#typeoffeedbackname').val()  == "Inquiry" || $("#typeoffeedbackname").val() == "Suggestion" ||
+                    $("#typeoffeedbackname").val()== "Appreciation")) {
+               
+                    $("#emailsss").prop('required', false);
+                    $("#deptId").prop('required', false);
+                    $("#category").prop('required', false);
+                    $("#subcategory").prop('required', false);
+
+                    return true;
+                }
+                else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeoffeedbackname").val() == "Complaint") {
+                  
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     $("#emailsss").prop('required', false);
