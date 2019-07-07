@@ -463,7 +463,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Comments</label>
                                     @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
-
+                                    <label class="text-danger" id="responsecheck"></label>
 
                                 </div>
                             </div>
@@ -553,6 +553,7 @@
            // $('#priordiv').hide();
             $('#typeofFeedback').change(function () {
                 $('#statuscheck').text("");
+                $('#responsecheck').text("");
                 if ($(this).find(":selected").text() == "Complaint") {
                     $("#forward").attr("disabled", false);
                      $('#priordiv').show();
@@ -629,6 +630,7 @@
 
 
             $('#forward').click(function () {
+                $('#responsecheck').text("");
                 $('#statuscheck').text("");
                 $("#deptId").prop('required', true); 
                 $("#emailsss").prop('required', true); 
@@ -638,6 +640,7 @@
                     return true;
                 } else {
                     $('#statuscheck').text("Set status Open");
+                    $('#responsecheck').text("");
                     return false;
                 }               
                 
@@ -647,21 +650,25 @@
 
             $('#resolve').click(function () {
                 $('#statuscheck').text("");
-                alert($("#typeofFeedback").find(":selected").text());
-                alert($('#statusfield').val());
+               
+                if (($('#statusfield').val() == "Open") && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
+                    $("#typeofFeedback").find(":selected").text() == "Appreciation") && ($('#responsee').val() != "")) {
+                    $('#responsecheck').text("Comment should be empty");
+                    return false;
+                } else        
                 if (($('#statusfield').val() == "Open" ||  $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" ) && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
-                    $("#typeofFeedback").find(":selected").text() == "Appreciation")) {
-            alert('first')
+                    $("#typeofFeedback").find(":selected").text() == "Appreciation")) {  
+                    $('#responsecheck').text("");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false);
-                    $("#category").prop('required', false);
-                    $("#subcategory").prop('required', false);
-                  
+                    $("#category").prop('required', false);``
+                    $("#subcategory").prop('required', false);                
                     return true;
                 }
                 else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeofFeedback").find(":selected").text() == "Complaint") {
-                    
-
+                    $('#priordiv').show();
+                    $("#priorty").prop('required', true);
+                    $('#responsecheck').text("");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false); 
                     $("#category").prop('required', false);
@@ -670,7 +677,7 @@
                 }
 
                 else {
-                    alert('last')
+                  
                     $('#statuscheck').text("Set status Resolved/Closed");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false); 

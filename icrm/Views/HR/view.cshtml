@@ -628,7 +628,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label">@Resources.Resource.Comments</label>
                                         @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
-
+                                        <label class="text-danger" id="responsecheck"></label>
 
                                     </div>
                                 </div>
@@ -704,6 +704,7 @@
 
             $('#rejected').click(function () {
                 $('#statuscheck').text("");
+                $('#responsecheck').text("");
                 $("#emailsss").prop('required', false);
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
@@ -721,6 +722,7 @@
 
             $('#forward2').click(function () {
                 $('#statuscheck').text("");
+                $('#responsecheck').text("");
                 $("#deptId").prop('required', true);
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
@@ -735,7 +737,7 @@
             $('#forward').click(function () {
                 $('#statuscheck').text("");
                 $("#emailsss").prop('required', true);
-                
+                $('#responsecheck').text("");
                 $("#deptId").prop('required', true);
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
@@ -743,6 +745,7 @@
                     return true;
                 } else {
                     $('#statuscheck').text("Set status  Open");
+                    $('#responsecheck').text("");
                 return false;
                }
                
@@ -752,9 +755,14 @@
                 
                 $('#statuscheck').text("");
 
+                if (($('#statusfield').val() == "Open") && ($("#typeoffeedbackname").val() == "Inquiry" || $("#typeoffeedbackname").val() == "Suggestion" ||
+                    $("#typeoffeedbackname").val() == "Appreciation") && ($('#responsee').val() != "")) {
+                    $('#responsecheck').text("Comment should be empty");
+                    return false;
+                } else 
                 if (($('#statusfield').val() == "Open" || $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") && ($('#typeoffeedbackname').val()  == "Inquiry" || $("#typeoffeedbackname").val() == "Suggestion" ||
                     $("#typeoffeedbackname").val()== "Appreciation")) {
-               
+                    $('#responsecheck').text("");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false);
                     $("#category").prop('required', false);
@@ -763,7 +771,7 @@
                     return true;
                 }
                 else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeoffeedbackname").val() == "Complaint") {
-                  
+                    $('#responsecheck').text("");
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     $("#emailsss").prop('required', false);
@@ -772,6 +780,7 @@
                 }
 
                 else {
+                    $('#responsecheck').text("");
                     $("#deptId").prop('required', false);
                     $("#emailsss").prop('required', false);
                     $('#statuscheck').text("Set status Resolved/Closed");
