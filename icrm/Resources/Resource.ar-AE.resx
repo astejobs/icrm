@@ -813,4 +813,7 @@
   <data name="list" xml:space="preserve">
     <value>قائمة </value>
   </data>
+  <data name="Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned" xml:space="preserve">
+    <value>لا يمكن إعادة توجيه التذكرة، لم يتم تعيين مستخدم</value>
+  </data>
 </root>

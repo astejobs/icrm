@@ -42,7 +42,16 @@
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
 <body>
-    @Html.Partial("_HRMenu")
+
+
+    @if (@System.Web.HttpContext.Current.User.IsInRole("HR"))
+    {
+        @Html.Partial("_HRMenu")
+    }
+    @if (@System.Web.HttpContext.Current.User.IsInRole("Admin"))
+    {
+        @Html.Partial("_AdminMenu")
+    }
     <!-- slim-navbar -->
     <div class="slim-mainpanel">
         <div class="container">
@@ -59,123 +68,134 @@
             {
 
                 @Html.AntiForgeryToken()
-            <div class="section-wrapper">
-                <label class="section-title">@Resources.Resource.Creating_Tickets_by_Icrm_Agent</label>
-                <div class="form-layout">
-                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Created Successfully")
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @Resources.Resource.Ticket_has_been_created_Successfully</strong>
-                        </div>
-                    }
+                <div class="section-wrapper">
+                    <label class="section-title">@Resources.Resource.Creating_Tickets_by_Icrm_Agent</label>
+                    <div class="form-layout">
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Created Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_created_Successfully</strong>
+                            </div>
+                        }
 
-                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Updated Successfully")
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
-                        </div>
-                    }
-                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Forwarded Successfully")
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @TempData["MessageSuccess"] </strong>
-                        </div>
-                    }
-                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Closed Successfully")
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @Resources.Resource.Ticket_has_been_Closed_Successfully</strong>
-                        </div>
-                    }
-                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Resolved Successfully")
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @Resources.Resource.Ticket_has_been_Resolved_Successfully</strong>
-                        </div>
-                    }
-                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Rejected")
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @Resources.Resource.Ticket_has_been_Rejected</strong>
-                        </div>
-                    }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Updated Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Forwarded Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["MessageSuccess"] </strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Closed Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Closed_Successfully</strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Resolved Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Resolved_Successfully</strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Rejected")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Rejected</strong>
+                            </div>
+                        }
 
-                    @if (@TempData["Message"] != null && @TempData["Message"] == "Department should be empty")
-                    {
-                        <div class="alert alert-danger mg-b-0" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>@Resources.Resource.Department_should_be_Empty</strong>
-                        </div>
-                    }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Department should be empty")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Department_should_be_Empty</strong>
+                            </div>
+                        }
 
-                    @if (@TempData["Message"] != null && @TempData["Message"] == "Comment Field should not be empty")
-                    {
-                        <div class="alert alert-danger mg-b-0" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>@Resources.Resource.Comment_Field_Should_not_be_empty</strong>
-                        </div>
-                    }
-                    @if (@TempData["Message"] != null && @TempData["Message"] == "Please enter fields properly")
-                    {
-                        <div class="alert alert-danger mg-b-0" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
-                        </div>
-                    }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Comment Field should not be empty")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Comment_Field_Should_not_be_empty</strong>
+                            </div>
+                        }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Please enter fields properly")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                            </div>
+                        }
 
-                    @if (@TempData["Message"] != null && @TempData["Message"] == "Comment field should be empty")
-                    {
-                        <div class="alert alert-danger mg-b-0" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>@Resources.Resource.Comment_field_Should_be_empty</strong>
-                        </div>
-                    }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Comment field should be empty")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Comment_field_Should_be_empty</strong>
+                            </div>
+                        }
 
-                    @if (@TempData["Message"] != null && @TempData["Message"] == "File Size Limit Exceeds")
-                    {
-                        <div class="alert alert-danger mg-b-0" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>@TempData["Message"]</strong>
-                        </div>
-                    }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "File Size Limit Exceeds")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@TempData["Message"]</strong>
+                            </div>
+                        }
 
-                    @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket details are not valid,Fill details properly")
-                    {
-                        <div class="alert alert-danger mg-b-0" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
-                        </div>
-                    }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket details are not valid,Fill details properly")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                            </div>
+                        }
+
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket cannot be forwarded,Escalation User is not assigned")
+                                    {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned</strong>
+                            </div>
+                        }
 
                         <div class="alert alert-danger mg-b-0" role="alert" id="searchEmpLbldiv">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -188,37 +208,37 @@
 
 
                         </div>
-                  
-                    @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
+
+                        @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
 
 
 
-                    <input type="hidden" id="hrdetail" value="@data.Id" />
-                    @*@Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })*@
-                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+                        <input type="hidden" id="hrdetail" value="@data.Id" />
+                        @*@Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })*@
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
 
 
 
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpIdValue", TempData["EmpIdValue"], new { @class = "form-control", id = "EmpIdValue", name = "EmpIdValue", required = "required" })
-                                @Html.HiddenFor(m => m.userId, new { @class = "form-control", id = "userIdValue", name = "userIdValue"})
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("EmpIdValue", TempData["EmpIdValue"], new { @class = "form-control", id = "EmpIdValue", name = "EmpIdValue", required = "required" })
+                                    @Html.HiddenFor(m => m.userId, new { @class = "form-control", id = "userIdValue", name = "userIdValue" })
+                                </div>
+
+
                             </div>
 
 
+
+
+
+
                         </div>
-
-                       
-
-
-
-
-                    </div>
-                    @*@if (ViewBag.EmployeeList != null)
+                        @*@if (ViewBag.EmployeeList != null)
                              {
                                 <div class="row mg-b-25">
                                     <div class="col-lg-4">
@@ -252,11 +272,11 @@
                                 </div>
 
                             }
-                    *@
-                    <!-- row -->
-                    <!-- form-layout-footer -->
+                        *@
+                        <!-- row -->
+                        <!-- form-layout-footer -->
 
-                </div>
+                    </div>
 
 
                     <div id="OuterDiv" style="display:none;">
@@ -299,12 +319,12 @@
                             </div>
                             <!-- col-4 -->
                             <!--  <div class="col-lg-4">
-                  <div class="form-group">
-                      <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                      @**   @Html.TextBox("EmpSubLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpSubLocation" })
-                      **@
-                  </div>
-              </div>-->
+                                <div class="form-group">
+                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+                                    @**   @Html.TextBox("EmpSubLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpSubLocation" })
+                                    **@
+                                </div>
+                            </div>-->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">
@@ -386,8 +406,8 @@
 
                                     </select>
                                     @** @Html.DropDownListFor(m => m.categoryId,
-                          new SelectList(ViewBag.Categories,
-                        "Id", "name"), "Choose Category", new { @class = "form-control select2",id="category" })*@
+                                          new SelectList(ViewBag.Categories,
+                                        "Id", "name"), "Choose Category", new { @class = "form-control select2",id="category" })*@
                                 </div>
                             </div>
 
@@ -483,32 +503,32 @@
             }
             <!-- container -->
         </div>
+    </div>
+    <!-- slim-mainpanel -->
+    <div class="slim-footer">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved. </p>
         </div>
-        <!-- slim-mainpanel -->
-        <div class="slim-footer">
-            <div class="container">
-                <p>Copyright 2018 &copy; All Rights Reserved. </p>
-            </div>
-            <!-- container -->
-        </div>
-        <!-- slim-footer -->
-        <script src="~/Content/lib/jquery/js/jquery.js"></script>
-        <script src="~/Content/lib/popper.js/js/popper.js"></script>
-        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-        <script src="~/Content/lib/moment/js/moment.js"></script>
-        <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
-        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
-        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
-        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
-        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
-        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-        <script src="~/Content/js/slim.js"></script>
-        <script>
+        <!-- container -->
+    </div>
+    <!-- slim-footer -->
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/moment/js/moment.js"></script>
+    <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
+    <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+    <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+    <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+    <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+    <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+    <script src="~/Content/js/slim.js"></script>
+    <script>
             $('#searchEmpLbldiv').hide();
             if ($('#EmpIdValue').val() != "") {
                 id = $('#EmpIdValue').val();
-              
+
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -527,24 +547,24 @@
                             $('#EmpPNo').val(response.bussinessPhoneNumber);
                             $('#EmpLocation').val(response.CostCenter.costCenterDisplay);
                             $('#costcentrId').val(response.CostCenter.Id);
-                            
 
+                            return true;
                         },
                         error: function (response) {
                             $('#searchEmpLbldiv').show();
-                            
+
                             $('#searchEmpLbl').text("Employee not found,Enter valid Employee Id");
                             $('#OuterDiv').hide();
                             $('#userIdValue').val(null);
                             $('#EmpIdValue').val("");
-                            //alert(response.responseText)
+                            return false;
                         }
 
                     })
 
 
             }
-            
+
             if ($("#typeofFeedback").find(":selected").text() == "Complaint") {
                 $('#priordiv').show();
                 $("#priorty").prop('required', true);
@@ -559,7 +579,7 @@
                      $('#priordiv').show();
                     $("#priorty").prop('required', true);
                 } else {
-                    
+
                     $("#forward").attr("disabled", true); $('#priordiv').show();
                     $('#priordiv').hide();
                     $("#priorty").prop('required', false);
@@ -568,18 +588,18 @@
 
             (function () {
 
-
-                     $(document).on('blur','#EmpIdValue',function () {
                
+                     $(document).on('blur','#EmpIdValue',function () {
+             
                 var id = $('#EmpIdValue').val();
 
-               
+
                 if (id == "") {
                     $('#OuterDiv').hide();
 
-                    return false;
+                   return false;
                 } else {
-                    
+
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -588,10 +608,10 @@
                         dataType: "json",
                         success: function (response) {
                             console.log('---in success----')
-                            
+
                             $('#searchEmpLbl').empty();
                             $('#searchEmpLbldiv').hide();
-                           
+
                             $('#OuterDiv').show();
                             $('#userIdValue').val(response.Id);
                             $('#EmpPosition').val(response.JobTitle.name);
@@ -602,7 +622,7 @@
                             $('#EmpPNo').val(response.bussinessPhoneNumber);
                             $('#EmpLocation').val(response.CostCenter.costCenterDisplay);
                             $('#costcentrId').val(response.CostCenter.Id);
-                            
+
 
                         },
                         error: function (response) {
@@ -614,7 +634,7 @@
                             $('#OuterDiv').hide();
                             $('#userIdValue').val(null);
                             $('#EmpIdValue').val("");
-
+                         //   return false;
                            // alert(response.responseText)
                         }
 
@@ -625,15 +645,15 @@
 
 
             })();
-           
-       
+
+
 
 
             $('#forward').click(function () {
                 $('#responsecheck').text("");
                 $('#statuscheck').text("");
-                $("#deptId").prop('required', true); 
-                $("#emailsss").prop('required', true); 
+                $("#deptId").prop('required', true);
+                $("#emailsss").prop('required', true);
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
                 if ($('#statusfield').val() == "Open") {
@@ -642,27 +662,27 @@
                     $('#statuscheck').text("Set status Open");
                     $('#responsecheck').text("");
                     return false;
-                }               
-                
-                
+                }
+
+
 
             });
 
             $('#resolve').click(function () {
                 $('#statuscheck').text("");
-               
+
                 if (($('#statusfield').val() == "Open") && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
                     $("#typeofFeedback").find(":selected").text() == "Appreciation") && ($('#responsee').val() != "")) {
                     $('#responsecheck').text("Comment should be empty");
                     return false;
-                } else        
+                } else
                 if (($('#statusfield').val() == "Open" ||  $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" ) && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
-                    $("#typeofFeedback").find(":selected").text() == "Appreciation")) {  
+                    $("#typeofFeedback").find(":selected").text() == "Appreciation")) {
                     $('#responsecheck').text("");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false);
                     $("#category").prop('required', false);``
-                    $("#subcategory").prop('required', false);                
+                    $("#subcategory").prop('required', false);
                     return true;
                 }
                 else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeofFeedback").find(":selected").text() == "Complaint") {
@@ -670,17 +690,17 @@
                     $("#priorty").prop('required', true);
                     $('#responsecheck').text("");
                     $("#emailsss").prop('required', false);
-                    $("#deptId").prop('required', false); 
+                    $("#deptId").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     return true;
                 }
 
                 else {
-                  
+
                     $('#statuscheck').text("Set status Resolved/Closed");
                     $("#emailsss").prop('required', false);
-                    $("#deptId").prop('required', false); 
+                    $("#deptId").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     return false;
@@ -688,7 +708,7 @@
                 }
 
 
-               
+
 
             });
 
@@ -779,13 +799,13 @@
 
             $("#deptId").change(function () {
 
-                
+
                     $("#category option").remove();
 
                     $('#category').append('<option value="">' + "Choose Category" + '</option>');
 
                     $("#subcategory option").remove();
-                
+
                 $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
                 if ($("#deptId").val() != "" && $("#typeofFeedback").val() != "" ) {
                     $.ajax({
@@ -806,14 +826,14 @@
                         }
                     });
                 }
-                
+
             });
 
 
 
             $("#category").change(function () {
 
-             
+
 
                 $("#subcategory option").remove();
 
@@ -839,10 +859,10 @@
                 });
             }
             });
-            
+
 
             $("#typeofFeedback").change(function () {
-             
+
                 $("#deptId").val("");
                // window.location.reload(true);
                 $("#category option").remove();
@@ -852,11 +872,11 @@
                 $("#subcategory option").remove();
 
                 $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
-                
-            });
-           
 
-        </script>
-@Html.Partial("_HRFooter")
+            });
+
+
+    </script>
+    @Html.Partial("_HRFooter")
 </body>
 </html>
