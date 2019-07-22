@@ -1,6 +1,4 @@
-﻿
-
-<div class="slim-header">
+﻿<div class="slim-header">
     <link href="~/Content/css/footable.standalone.css" rel="stylesheet">
     <div class="container">
         <div class="slim-header-left">
@@ -138,30 +136,39 @@
                     <span>@Resources.Resource.Menu</span>
                 </a>
                 <div class="sub-item">
-                    <ul>
-                        <li class="active">@Html.ActionLink(Resources.Resource.Category, "Create", "Categories")</a></li>
-                        <li>@Html.ActionLink(Resources.Resource.Sub_Category, "Create", "SubCategories")</a></li>
-                        <li> @Html.ActionLink(Resources.Resource.Location, "Create", "Locations")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Sub_Location, "Create", "SubLocations")</li>
-                        <li>@Html.ActionLink("Forward CC", "Create", "ForwardEmail")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Nationality, "Create", "Nationalities")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Feedback_Type, "Create", "FeedbackTypes")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Position, "Create", "Positions")</li>
-                        <li>@Html.ActionLink(@Resources.Resource.Priority, "Create", "Priorities")</li>
-                        <li>@Html.ActionLink(@Resources.Resource.Job_Title, "Create", "JobTitles")</li>
-                        <li>@Html.ActionLink(@Resources.Resource.Department, "Create", "Departments")</li>
-                        <li>@Html.ActionLink(@Resources.Resource.Escalation_Users, "Create", "escalationUsers")</li>
-
-                        <li>@Html.ActionLink(Resources.Resource.Religion, "Create", "Religions")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Event_Reason, "Create", "EventReasons")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Employee_Class, "Create", "EmployeeClasses")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Ethnicities, "Create", "Ethnicities")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Gender, "Create", "Genders")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Employer_Type, "Create", "EmployerTypes")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Vendor, "Create", "Vendors")</li>
-                        <li>@Html.ActionLink(Resources.Resource.Bands, "Create", "Bands")</li>
-
-                    </ul>
+                    <div class="row">
+                        <div class="col-lg">
+                            <ul>
+                                <li class="active">@Html.ActionLink(Resources.Resource.Category, "Create", "Categories")</a></li>
+                                <li>@Html.ActionLink(Resources.Resource.Sub_Category, "Create", "SubCategories")</a></li>
+                                <li> @Html.ActionLink(Resources.Resource.Location, "Create", "Locations")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Sub_Location, "Create", "SubLocations")</li>
+                                <li>@Html.ActionLink("Forward CC", "Create", "ForwardEmail")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Nationality, "Create", "Nationalities")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Feedback_Type, "Create", "FeedbackTypes")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Position, "Create", "Positions")</li>
+                                <li>@Html.ActionLink(@Resources.Resource.Priority, "Create", "Priorities")</li>
+                                <li>@Html.ActionLink(@Resources.Resource.Job_Title, "Create", "JobTitles")</li>
+                                <li>@Html.ActionLink(@Resources.Resource.Department, "Create", "Departments")</li>
+                                
+                            </ul>
+                        </div>
+                        <div class="col-lg">
+                            <ul>
+                                <li>@Html.ActionLink(@Resources.Resource.Escalation_Users, "Create", "escalationUsers")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Religion, "Create", "Religions")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Event_Reason, "Create", "EventReasons")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Employee_Class, "Create", "EmployeeClasses")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Ethnicities, "Create", "Ethnicities")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Gender, "Create", "Genders")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Employer_Type, "Create", "EmployerTypes")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Vendor, "Create", "Vendors")</li>
+                                <li>@Html.ActionLink(Resources.Resource.Bands, "Create", "Bands")</li>
+                                <li>@Html.ActionLink("User File Upload", "Index", "ExcelFile")</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
                 </div>
                 <!-- dropdown-menu -->
             </li>

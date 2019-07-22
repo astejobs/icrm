@@ -3,28 +3,152 @@
 
 
 @{
-    ViewBag.Title = "Upload Excel File";
+    Layout = null;
 }
-<h2>Upload an Excel File</h2>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+
+    <title>Upload Excel</title>
 
 
+    <!-- vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+    <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
+    <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
+    <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary("", new { @class = "text-danger" });
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExcelFile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ExcelFile, new { type = "file", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ExcelFile, "", new { @class = "text-danger" })
+    <!-- Feadback CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+</head>
+<body>
+    @Html.Partial("_AdminMenu")
+
+     <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                          Upload File          
+                    </li>
+                </ol>
+                <h6 class="slim-pagetitle">
+                   Upload User Data File
+                </h6>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" />
+            <!-- slim-pageheader -->
+
+            <div class="section-wrapper">
+
+                <label class="section-title">
+                    Upload File
+                </label>
+                <div>
+                    <ul style="color:red">
+                        <li>Only .xlsx and .xls files are allowed</li>
+                        <li>The file should be in the below given format otherwise it will result in inconsistent data</li>
+                    </ul>
+                </div>
+                <div style="overflow-x: auto">
+
+                    <img src="~/Content/img/excelfiless.png"/>
+                </div>
+                <p class="mg-b-20 mg-sm-b-40"></p>
+                <label class="section-title">@Resources.Resource.Admin / Upload File</label>
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                @*@if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+
+
+
+                @if (@TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong><strong> @TempData["Fail"]</strong></strong>
+                    </div>
+                }*@
+                @using (Html.BeginForm(null, null, FormMethod.Post, new {enctype = "multipart/form-data"}))
+                {
+
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Choose File<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.ExcelFile, new {type = "file", @class = "form-control",@required="true"})
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
+                        <!-- row -->                        <!-- form-layout-footer -->
+                    </div>
+
+
+
+
+                    <div class="form-layout">
+
+                        <!-- row -->
+
+                        <div class="form-layout-footer">
+                            <div class="row mg-b-25">
+                                <button class="btn btn-primary bd-0" onclick="showLoader()">
+                                Upload File
+                            </button>
+                                <div class="col-lg-4" id="loader" style="display: none">
+                                    Uploading File
+                                    <img src="~/Content/img/loading2.gif"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- form-layout-footer -->
+                    </div>
+
+                }
+
+
+
             </div>
+
+            
+            <!-- container -->
         </div>
-    </div>
-}
+
+</div>
+
+    @Html.Partial("_AdminFooter")
+<script>
+    function showLoader() {
+        if (document.getElementById('ExcelFile').value) {
+            document.getElementById('loader').style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
