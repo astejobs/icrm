@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using ClosedXML.Excel;
 using icrm.Models;
+using RazorEngine.Compilation.ImpromptuInterface;
 
 namespace icrm.Controllers
 {
@@ -92,8 +93,8 @@ namespace icrm.Controllers
                                 user.FirstName = row.Cell(2).Value.ToString();
                                 user.MiddleName = row.Cell(3).IsEmpty() ? null : row.Cell(3).Value.ToString();
                                 user.LastName = row.Cell(4).Value.ToString();
-                                user.UserName = "user" + x + "@gmail.com";
-
+                                user.UserName = "user" + user.EmployeeId + "0000@gmail.com";
+                                    
                                 var departmentname = row.Cell(5).Value.ToString().Contains("Operations")
                                     ? "Operations"
                                     : row.Cell(5).Value.ToString();
@@ -430,7 +431,7 @@ namespace icrm.Controllers
                             }
                             catch (Exception e)
                             {
-                                Debug.Print("File row issue");
+                                Debug.Print(e.InnerException+"File row issue"+e.StackTrace);
                                 ModelState.AddModelError(String.Empty, "Something went wrong while processing row "+(Convert.ToInt32(x)+1)+".Employees data till that row has been stored.");
                                 return View();
                             }
@@ -452,6 +453,8 @@ namespace icrm.Controllers
                     return View();
                 }
             }
+
+            TempData["success"]="File uploaded successfully";
             return View();
         }
 
