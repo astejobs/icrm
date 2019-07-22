@@ -819,4 +819,7 @@
   <data name="Add_Email" xml:space="preserve">
     <value>Add Email</value>
   </data>
+  <data name="Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned" xml:space="preserve">
+    <value>Ticket cannot be forwarded,Escalation User is not assigned</value>
+  </data>
 </root>

@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Email.
+        /// </summary>
+        public static string Add_Email {
+            get {
+                return ResourceManager.GetString("Add_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Icrm Agent.
         /// </summary>
         public static string Add_Icrm_Agent {
@@ -402,7 +411,6 @@ namespace Resources {
             }
         }
         
-
         /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
@@ -852,14 +860,7 @@ namespace Resources {
                 return ResourceManager.GetString("Enter_your_email", resourceCulture);
             }
         }
-        public static string Add_Email
-        {
-            get
-            {
-                return ResourceManager.GetString("Add_Email", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enter your password.
         /// </summary>
@@ -1012,14 +1013,16 @@ namespace Resources {
                 return ResourceManager.GetString("Forward_Create", resourceCulture);
             }
         }
-        public static string Forward_Email_CC
-        {
-            get
-            {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forward Email CC.
+        /// </summary>
+        public static string Forward_Email_CC {
+            get {
                 return ResourceManager.GetString("Forward_Email_CC", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Forwarded.
         /// </summary>
@@ -1926,6 +1929,15 @@ namespace Resources {
         public static string Ticket {
             get {
                 return ResourceManager.GetString("Ticket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ticket cannot be forwarded,Escalation User is not assigned.
+        /// </summary>
+        public static string Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned {
+            get {
+                return ResourceManager.GetString("Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned", resourceCulture);
             }
         }
         
