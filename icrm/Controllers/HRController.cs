@@ -213,8 +213,17 @@ namespace icrm.Controllers
                         }
                         else
                         {
-                            deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
-                            
+                            try
+                            {
+                                deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                            }
+                            catch (Exception e)
+                            {
+                                ViewData["user"] = user;
+                                TempData["Message"] = "Ticket cannot be forwarded,Escalation User is not assigned";
+                                return View("Create", feedback);
+                            }
+
                         }
                         
                         feedback.departUserId = deptUser.Id;
@@ -643,7 +652,16 @@ namespace icrm.Controllers
                         }
                         else
                         {
-                            deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                            try
+                            {
+                                deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                            }
+                            catch (Exception e)
+                            {
+                                ViewData["user"] = user;
+                                TempData["Message"] = "Ticket cannot be forwarded,Escalation User is not assigned";
+                                return View("Create", feedback);
+                            }
                         }
                         deptUser=  db.Users.Find(deptUser.Id);
                         feedback.departUserId = deptUser.Id;
@@ -9940,7 +9958,15 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         }
                         else
                         {
-                            deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                            try
+                            {
+                                deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                            }
+                            catch (Exception e)
+                            {
+                                TempData["Message"] = "Ticket cannot be forwarded, Escalation User is not asssigned";
+                                return RedirectToAction("rejectedview", new { id = feedback.id });
+                            }
                         }
 
                         deptUser = db.Users.Find(deptUser.Id);

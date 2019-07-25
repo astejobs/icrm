@@ -180,6 +180,16 @@
                                 <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
                             </div>
                         }
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket cannot be forwarded,Escalation User is not assigned")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned</strong>
+                            </div>
+                        }
                         @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
@@ -239,12 +249,12 @@
                             </div>
                             <!-- col-4 -->
                             <!-- <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                 @*   @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+            <div class="form-group">
+                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+             @*   @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
 
-                                </div>
-                            </div>-->
+            </div>
+        </div>-->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">
