@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using icrm.RepositoryInterface;
+using icrm.RepositoryImpl;
+
 namespace icrm.Models
 {
     public class Feedback
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-       
-       
+        private IFeedback feedInterface;
+
+
         public Feedback() {
+            feedInterface = new FeedbackRepository();
+            // string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
+           /* var lastk = feedInterface.getAll();
+
+            string lastId = lastk.LastOrDefault().id;
+            long index = Convert.ToInt64(lastId.Substring(2)) + 1;
+            id = string.Format("IR{0}", index.ToString().PadLeft(5, '0'));*/
 
             createDate = DateTime.Now;
             status = "Open";

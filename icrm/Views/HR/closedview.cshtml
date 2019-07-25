@@ -41,7 +41,15 @@
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
 <body>
-    @Html.Partial("_HRMenu")
+
+    @if (@System.Web.HttpContext.Current.User.IsInRole("HR"))
+    {
+        @Html.Partial("_HRMenu")
+    }
+    @if (@System.Web.HttpContext.Current.User.IsInRole("Admin"))
+    {
+        @Html.Partial("_AdminMenu")
+    }
     <!-- slim-navbar -->
     <div class="slim-mainpanel">
         <div class="container">
@@ -76,235 +84,235 @@
             {
 
                 @Html.AntiForgeryToken()
-            <div class="section-wrapper">
-                <label class="section-title">@Resources.Resource.View_Ticket</label>
+                <div class="section-wrapper">
+                    <label class="section-title">@Resources.Resource.View_Ticket</label>
 
-                <p class="mg-b-20 mg-sm-b-40"></p>
-                <div class="form-layout">
-                    <span class="tx-success">@TempData["Message"]</span>
-                    @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.id, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
-                   
-                    @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Ticket_Id <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Badge_No <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.EmployeeId, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.bussinessPhoneNumber, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
-                                @if (Model.user.CostCenterId != null)
-                                {
-                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
-                                    @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
-                                }
-                                else
-                                {
-                                    @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control" })
-                                    @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
-                                }
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <!-- <div class="col-lg-4">
-                <div class="form-group">
-                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                  @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+                    <p class="mg-b-20 mg-sm-b-40"></p>
+                    <div class="form-layout">
+                        <span class="tx-success">@TempData["Message"]</span>
+                        @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.id, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
 
-                </div>
-            </div>-->
-                        <!-- col-4 -->
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
+                        @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
 
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
-
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <!-- col-4 -->
-                    </div>
-                    <!-- row -->
-                    <!-- form-layout-footer -->
-
-                </div>
-
-                <label class="section-title">@Resources.Resource.Feedback_Complaint</label>
-
-
-                <div class="form-layout">
-                    <div class="row mg-b-25">
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Source<span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.medium.name, new { @readonly = "readonly", @class = "form-control", })
-                                @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Title <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
-                                @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
-                                @* @Html.TextBoxFor(model => model.closedDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("MM-dd-yyyy") })
-                                *@
-                                @if (Model.closedDate != null)
-                                {
-                                    @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.closedDate.Value.ToString("dd-MM-yyyy") })
-                                    @Html.HiddenFor(model => model.closedDate)
-                                }
-                                @if (Model.resolvedDate != null)
-                                {
-                                    @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.resolvedDate.Value.ToString("dd-MM-yyyy") })
-                                    @Html.HiddenFor(model => model.resolvedDate)
-                                }
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.departmentID,
-new SelectList(ViewBag.Departmn,
-"Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(m => m.category.name,
-new { disabled = "disabled", @class = "form-control" })
-                                @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
-
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Sub_Category: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(m => m.SubCategory.name,
-new { disabled = "disabled", @class = "form-control" })
-                                @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.priorityId,
-new SelectList(ViewBag.Priorities,
-"Id", "name"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
-                            </div>
-                        </div>
-
-
-
-
-                        <!-- col-4 -->
-                    </div>
-                    <!-- row -->
-                    <!-- form-layout-footer -->
-                </div>
-
-
-
-                <label class="section-title">@Resources.Resource.Attachment</label>
-
-
-                <div class="form-layout">
-                    <div class="row mg-b-25">
-                        @if (Model.attachment != null)
-                        {
+                        <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Download_Attachment</label>
-                                    @Html.HiddenFor(m => m.attachment)
-                                    <a href="@Url.Action("DownloadFile", "HR", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+                                    <label class="form-control-label">@Resources.Resource.Ticket_Id <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Badge_No <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.EmployeeId, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.bussinessPhoneNumber, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
+                                    @if (Model.user.CostCenterId != null)
+                                    {
+                                        @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
+                                        @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control" })
+                                        @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                    }
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+                                  @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+
+                                </div>
+                            </div>-->
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
 
                                 </div>
                             </div>
                             <!-- col-4 -->
-                        }
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
 
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
+                        <!-- row -->
+                        <!-- form-layout-footer -->
+
+                    </div>
+
+                    <label class="section-title">@Resources.Resource.Feedback_Complaint</label>
+
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Source<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                    @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Title <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
+                                    @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
+                                    @* @Html.TextBoxFor(model => model.closedDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("MM-dd-yyyy") })
+                                    *@
+                                    @if (Model.closedDate != null)
+                                    {
+                                        @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.closedDate.Value.ToString("dd-MM-yyyy") })
+                                        @Html.HiddenFor(model => model.closedDate)
+                                    }
+                                    @if (Model.resolvedDate != null)
+                                    {
+                                        @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.resolvedDate.Value.ToString("dd-MM-yyyy") })
+                                        @Html.HiddenFor(model => model.resolvedDate)
+                                    }
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.departmentID,
+    new SelectList(ViewBag.Departmn,
+    "Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.category.name,
+    new { disabled = "disabled", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Sub_Category: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.SubCategory.name,
+    new { disabled = "disabled", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.priorityId,
+    new SelectList(ViewBag.Priorities,
+    "Id", "name"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- col-4 -->
+                        </div>
+                        <!-- row -->
+                        <!-- form-layout-footer -->
                     </div>
 
 
 
+                    <label class="section-title">@Resources.Resource.Attachment</label>
 
-                
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+                            @if (Model.attachment != null)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Download_Attachment</label>
+                                        @Html.HiddenFor(m => m.attachment)
+                                        <a href="@Url.Action("DownloadFile", "HR", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                            }
+
+                        </div>
+
+
+
+
+
 
                         <div class="row mg-b-25">
-                            
+
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Satisfaction</label>
@@ -372,20 +380,20 @@ new SelectList(ViewBag.Priorities,
 
                         </div>
 
-                 
-                    <div class="form-layout-footer">
-                        <button class="btn btn-primary bd-0" value="Update" name="submitBtn" id="forward2">@Resources.Resource.Update </button>
 
-                        <!--   <input type="submit" value="Update" name="submitBtn" id="forward2" class="btn btn-primary bd-0" />-->
+                        <div class="form-layout-footer">
+                            <button class="btn btn-primary bd-0" value="Update" name="submitBtn" id="forward2">@Resources.Resource.Update </button>
 
+                            <!--   <input type="submit" value="Update" name="submitBtn" id="forward2" class="btn btn-primary bd-0" />-->
+
+                        </div>
                     </div>
+
+                    <!-- container -->
                 </div>
-                
-                <!-- container -->
-            </div>
             }
         </div>
-            
+
         <!-- slim-mainpanel -->
         <div class="slim-footer">
             <div class="container">
@@ -406,93 +414,93 @@ new SelectList(ViewBag.Priorities,
         <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
-<script>
-    if ($("#costcentrId").val() == "") {
-        $('#deptId option:contains("Operations")').remove();
+        <script>
+            if ($("#costcentrId").val() == "") {
+                $('#deptId option:contains("Operations")').remove();
 
-    }
-    $('#resolve').click(function () {
-        if ($('#statusfield').val() == "Resolved") {
+            }
+            $('#resolve').click(function () {
+                if ($('#statusfield').val() == "Resolved") {
 
-            return true;
-        }
+                    return true;
+                }
 
-        else {
-            $('#statuscheck').text("Set status Resolve");
-            return false;
+                else {
+                    $('#statuscheck').text("Set status Resolve");
+                    return false;
 
-        }
+                }
 
-    });
+            });
 
-    $(function () {
+            $(function () {
 
 
-        'use strict'
+                'use strict'
 
-        // Toggles
-        $('.toggle').toggles({
-            on: true,
-            height: 26
-        });
+                // Toggles
+                $('.toggle').toggles({
+                    on: true,
+                    height: 26
+                });
 
-        // Input Masks
-        $('#dateMask').mask('99/99/9999');
-        $('#phoneMask').mask('(999) 999-9999');
-        $('#ssnMask').mask('999-99-9999');
+                // Input Masks
+                $('#dateMask').mask('99/99/9999');
+                $('#phoneMask').mask('(999) 999-9999');
+                $('#ssnMask').mask('999-99-9999');
 
-        // Time Picker
-        $('#tpBasic').timepicker();
-        $('#tp2').timepicker({
-            'scrollDefault': 'now'
-        });
-        $('#tp3').timepicker();
+                // Time Picker
+                $('#tpBasic').timepicker();
+                $('#tp2').timepicker({
+                    'scrollDefault': 'now'
+                });
+                $('#tp3').timepicker();
 
-        $('#setTimeButton').on('click', function () {
-            $('#tp3').timepicker('setTime', new Date());
-        });
+                $('#setTimeButton').on('click', function () {
+                    $('#tp3').timepicker('setTime', new Date());
+                });
 
-        // Color picker
-        $('#colorpicker').spectrum({
-            color: '#17A2B8'
-        });
+                // Color picker
+                $('#colorpicker').spectrum({
+                    color: '#17A2B8'
+                });
 
-        $('#showAlpha').spectrum({
-            color: 'rgba(23,162,184,0.5)',
-            showAlpha: true
-        });
+                $('#showAlpha').spectrum({
+                    color: 'rgba(23,162,184,0.5)',
+                    showAlpha: true
+                });
 
-        $('#showPaletteOnly').spectrum({
-            showPaletteOnly: true,
-            showPalette: true,
-            color: '#DC3545',
-            palette: [
-                ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-            ]
-        });
+                $('#showPaletteOnly').spectrum({
+                    showPaletteOnly: true,
+                    showPalette: true,
+                    color: '#DC3545',
+                    palette: [
+                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                    ]
+                });
 
-    });
+            });
 
-    $(function () {
-        'use strict'
+            $(function () {
+                'use strict'
 
-        // Datepicker
-        $('.fc-datepicker').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'dd-mm-yy'
-        });
+                // Datepicker
+                $('.fc-datepicker').datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    dateFormat: 'dd-mm-yy'
+                });
 
-        $('#datepickerNoOfMonths').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            numberOfMonths: 2
-        });
+                $('#datepickerNoOfMonths').datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    numberOfMonths: 2
+                });
 
-    });
+            });
 
-</script>
-@Html.Partial("_HRFooter")
+        </script>
+        @Html.Partial("_HRFooter")
 </body>
 </html>

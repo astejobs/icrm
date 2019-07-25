@@ -482,7 +482,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Comments</label>
-                                    @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
+                                    @Html.TextArea("responsee", new { @class = "form-control", name = "responsee",id= "responsee" })
                                     <label class="text-danger" id="responsecheck"></label>
 
                                 </div>
@@ -668,12 +668,25 @@
 
             });
 
-            $('#resolve').click(function () {
+        $('#resolve').click(function () {
                 $('#statuscheck').text("");
+            $('#responsecheck').text("");
 
+
+                if (($('#statusfield').val() == "Closed" || $('#statusfield').val() == "Resolved")) {
+                
+
+                    $('#responsee').attr('required', true);
+            return true;
+                }
+
+
+
+                else
                 if (($('#statusfield').val() == "Open") && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
                     $("#typeofFeedback").find(":selected").text() == "Appreciation") && ($('#responsee').val() != "")) {
                     $('#responsecheck').text("Comment should be empty");
+                    $('#responsee').removeAttr('required');
                     return false;
                 } else
                 if (($('#statusfield').val() == "Open" ||  $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" ) && ($("#typeofFeedback").find(":selected").text() == "Inquiry" || $("#typeofFeedback").find(":selected").text() == "Suggestion" ||
@@ -683,12 +696,14 @@
                     $("#deptId").prop('required', false);
                     $("#category").prop('required', false);``
                     $("#subcategory").prop('required', false);
+                    $('#responsee').removeAttr('required');
                     return true;
                 }
                 else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeofFeedback").find(":selected").text() == "Complaint") {
                     $('#priordiv').show();
                     $("#priorty").prop('required', true);
                     $('#responsecheck').text("");
+                    $('#responsee').attr('required', true);
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false);
                     $("#category").prop('required', false);
@@ -697,7 +712,7 @@
                 }
 
                 else {
-
+                    $('#responsecheck').text("");
                     $('#statuscheck').text("Set status Resolved/Closed");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false);

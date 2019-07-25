@@ -35,7 +35,15 @@
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
 <body>
-    @Html.Partial("_HRMenu")
+
+    @if (@System.Web.HttpContext.Current.User.IsInRole("HR"))
+    {
+        @Html.Partial("_HRMenu")
+    }
+    @if (@System.Web.HttpContext.Current.User.IsInRole("Admin"))
+    {
+        @Html.Partial("_AdminMenu")
+    }
     <!-- slim-navbar -->
     <div class="slim-mainpanel">
         <div class="container">
@@ -45,7 +53,7 @@
                     <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.View_Ticket</li>
                 </ol>
                 <h6 class="slim-pagetitle">@Resources.Resource.View_Ticket</h6>
-                
+
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
@@ -177,8 +185,8 @@
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                       
-                       
+
+
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -224,13 +232,13 @@
                             </div>
                             <!-- col-4 -->
                             <!--  <div class="col-lg-4">
-            <div class="form-group">
-                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-               @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+                                <div class="form-group">
+                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+                                   @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
 
-            </div>
-        </div>
-          -->
+                                </div>
+                            </div>
+                              -->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">
@@ -300,8 +308,8 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
-                                    @Html.TextBox("da","", new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
-                                @Html.HiddenFor(model=>model.createDate)
+                                    @Html.TextBox("da", "", new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                    @Html.HiddenFor(model => model.createDate)
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -375,7 +383,7 @@
                                 <!-- col-4 -->
                             }
 
-                            </div>
+                        </div>
 
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
@@ -390,207 +398,207 @@
          }, new { @class = "form-control select2" })
                                 </div>
                             </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label">@Resources.Resource.Choose_Action</label>
-                                            <select name="status" id="statusfield" class="form-control select2">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Choose_Action</label>
+                                    <select name="status" id="statusfield" class="form-control select2">
 
-                                                @if (Model.status == "Open")
-                                                {
-                                                    <option selected value="Open">Open</option>
+                                        @if (Model.status == "Open")
+                                        {
+                                            <option selected value="Open">Open</option>
 
-                                                    <option value="Resolved">Resolved</option>
-                                                    <option value="Closed">Closed</option>
-
-
-                                                }
-                                                else if (Model.status == "Closed")
-                                                {
-                                                    <option value="Open">Open</option>
-                                                    <option value="Resolved">Resolved</option>
-
-                                                    <option selected value="Closed">Closed</option>
-
-                                                }
+                                            <option value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
 
 
+                                        }
+                                        else if (Model.status == "Closed")
+                                        {
+                                            <option value="Open">Open</option>
+                                            <option value="Resolved">Resolved</option>
 
+                                            <option selected value="Closed">Closed</option>
 
-                                            </select>
-                                        </div>
-                                        <label class="text-danger" id="statuscheck"></label>
-                                    </div>
-                                    <!-- col-4 -->
-                                    @foreach (var res in commentlist)
-                                    {
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-control-label">@Resources.Resource.Comments</label>
-
-
-                                                @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
+                                        }
 
 
 
 
+                                    </select>
+                                </div>
+                                <label class="text-danger" id="statuscheck"></label>
+                            </div>
+                            <!-- col-4 -->
+                            @foreach (var res in commentlist)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Comments</label>
 
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label">@Resources.Resource.Comments</label>
-                                            @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", id = "coment" })
+
+                                        @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
 
 
-                                        </div>
-                                        <label class="text-danger" id="comentlbl"></label>
+
+
+
                                     </div>
                                 </div>
+                            }
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Comments</label>
+                                    @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", id = "coment" })
 
 
-                                <!-- row -->
+                                </div>
+                                <label class="text-danger" id="comentlbl"></label>
+                            </div>
+                        </div>
+
+
+                        <!-- row -->
                         <div class="form-layout-footer">
                             <input type="hidden" value="Respondedtype" name="typeoflink" />
-                            <button class="btn btn-primary bd-0" value="Submit"  id="update">@Resources.Resource.Submit </button>
+                            <button class="btn btn-primary bd-0" value="Submit" id="update">@Resources.Resource.Submit </button>
 
                             <!--  <input type="submit" value="@Resources.Resource.Submit" id="update" class="btn btn-primary bd-0" />-->
-    </div>
-            <!-- form-layout-footer -->
                         </div>
+                        <!-- form-layout-footer -->
+                    </div>
 
-                        </div>
+                </div>
             }
             <!-- container -->
         </div>
+    </div>
+    <!-- slim-mainpanel -->
+    <div class="slim-footer">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved. </p>
         </div>
-        <!-- slim-mainpanel -->
-        <div class="slim-footer">
-            <div class="container">
-                <p>Copyright 2018 &copy; All Rights Reserved. </p>
-            </div>
-            <!-- container -->
-        </div>
-        <!-- slim-footer -->
-        <script src="~/Content/lib/jquery/js/jquery.js"></script>
-        <script src="~/Content/lib/popper.js/js/popper.js"></script>
-        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-        <script src="~/Content/lib/moment/js/moment.js"></script>
-        <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
-        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
-        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
-        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
-        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
-        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-        <script src="~/Content/js/slim.js"></script>
-<script>
-    if ($("#costcentrId").val() == "") {
-        $('#deptId option:contains("Operations")').remove();
+        <!-- container -->
+    </div>
+    <!-- slim-footer -->
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/moment/js/moment.js"></script>
+    <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
+    <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+    <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+    <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+    <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+    <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+    <script src="~/Content/js/slim.js"></script>
+    <script>
+        if ($("#costcentrId").val() == "") {
+            $('#deptId option:contains("Operations")').remove();
 
-    }
-    $('#update').click(function () { 
-        $('#comentlbl').text("");
-        if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
-            $('#coment').attr("required", true);
-            return true;
         }
-        else {
-            if ($('#coment').val() != "") {
-                $('#comentlbl').text("Status is Open,Comment Field Should be empty");
-                return false;
-            } else {
-                $('#coment').attr("required", false);
+        $('#update').click(function () {
+            $('#comentlbl').text("");
+            if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
+                $('#coment').attr("required", true);
                 return true;
             }
-            
-
-        }
-
-    });
-    
-    $('#resolve').click(function () {
-        if ($('#statusfield').val() == "Resolved") {
-
-            return true;
-        }
-
-        else {
-            $('#statuscheck').text("Set status Resolve");
-            return false;
-
-        }
-
-    });
-
-    $(function () {
+            else {
+                if ($('#coment').val() != "") {
+                    $('#comentlbl').text("Status is Open,Comment Field Should be empty");
+                    return false;
+                } else {
+                    $('#coment').attr("required", false);
+                    return true;
+                }
 
 
-        'use strict'
+            }
 
-        // Toggles
-        $('.toggle').toggles({
-            on: true,
-            height: 26
         });
 
-        // Input Masks
-        $('#dateMask').mask('99/99/9999');
-        $('#phoneMask').mask('(999) 999-9999');
-        $('#ssnMask').mask('999-99-9999');
+        $('#resolve').click(function () {
+            if ($('#statusfield').val() == "Resolved") {
 
-        // Time Picker
-        $('#tpBasic').timepicker();
-        $('#tp2').timepicker({
-            'scrollDefault': 'now'
-        });
-        $('#tp3').timepicker();
+                return true;
+            }
 
-        $('#setTimeButton').on('click', function () {
-            $('#tp3').timepicker('setTime', new Date());
+            else {
+                $('#statuscheck').text("Set status Resolve");
+                return false;
+
+            }
+
         });
 
-        // Color picker
-        $('#colorpicker').spectrum({
-            color: '#17A2B8'
+        $(function () {
+
+
+            'use strict'
+
+            // Toggles
+            $('.toggle').toggles({
+                on: true,
+                height: 26
+            });
+
+            // Input Masks
+            $('#dateMask').mask('99/99/9999');
+            $('#phoneMask').mask('(999) 999-9999');
+            $('#ssnMask').mask('999-99-9999');
+
+            // Time Picker
+            $('#tpBasic').timepicker();
+            $('#tp2').timepicker({
+                'scrollDefault': 'now'
+            });
+            $('#tp3').timepicker();
+
+            $('#setTimeButton').on('click', function () {
+                $('#tp3').timepicker('setTime', new Date());
+            });
+
+            // Color picker
+            $('#colorpicker').spectrum({
+                color: '#17A2B8'
+            });
+
+            $('#showAlpha').spectrum({
+                color: 'rgba(23,162,184,0.5)',
+                showAlpha: true
+            });
+
+            $('#showPaletteOnly').spectrum({
+                showPaletteOnly: true,
+                showPalette: true,
+                color: '#DC3545',
+                palette: [
+                    ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                    ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                ]
+            });
+
         });
 
-        $('#showAlpha').spectrum({
-            color: 'rgba(23,162,184,0.5)',
-            showAlpha: true
+        $(function () {
+            'use strict'
+
+            // Datepicker
+            $('.fc-datepicker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: 'dd-mm-yy'
+            });
+
+            $('#datepickerNoOfMonths').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                numberOfMonths: 2
+            });
+
         });
 
-        $('#showPaletteOnly').spectrum({
-            showPaletteOnly: true,
-            showPalette: true,
-            color: '#DC3545',
-            palette: [
-                ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-            ]
-        });
-
-    });
-
-    $(function () {
-        'use strict'
-
-        // Datepicker
-        $('.fc-datepicker').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'dd-mm-yy'
-        });
-
-        $('#datepickerNoOfMonths').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            numberOfMonths: 2
-        });
-
-    });
-
-</script>
-@Html.Partial("_HRFooter")
+    </script>
+    @Html.Partial("_HRFooter")
 </body>
 </html>

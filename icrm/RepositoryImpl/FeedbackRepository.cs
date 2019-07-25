@@ -809,7 +809,7 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.checkStatus == Constants.REJECTED).ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.checkStatus == Constants.REJECTED && m.type.name==Constants.Complaints).ToPagedList(pageIndex,pageSize);
 
         }
 

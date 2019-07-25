@@ -1,7 +1,21 @@
-﻿
+﻿@using icrm.Models;
+@using PagedList;
+
+@using PagedList.Mvc;
+@model PagedList.IPagedList<icrm.Models.Feedback>
+
+@{
+    ViewBag.Title = @Resources.Resource.Dashboard;
+}
+
 @{
     Layout = null;
 }
+@{
+    var data = (ApplicationUser)ViewData["user"];
+
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,106 +24,117 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
-
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-
     <link rel="shortcut icon" href="~/Content/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="~/Content/img/favicon.ico" type="image/x-icon">
 
-    <title>ICRM 2.0</title>
 
+    <title>ICRM 2.0</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     <link href="~/Content/lib/rickshaw/css/rickshaw.min.css" rel="stylesheet">
-
     <!-- Slim CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
-    <style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
 
-        .slim-footer {
-            position: fixed;
-            bottom: 0px;
-            width: 100%;
-        }
-    </style>
 </head>
 <body class="dashboard-3">
-    @Html.Partial("_AdminMenu")
-
+    @if (@System.Web.HttpContext.Current.User.IsInRole("HR"))
+    {
+        @Html.Partial("_HRMenu")
+    }
+    @if (@System.Web.HttpContext.Current.User.IsInRole("Admin"))
+    {
+        @Html.Partial("_AdminMenu")
+    }
+    <!-- slim-navbar -->
     <div class="slim-mainpanel">
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashBoard", "Admin")">@Resources.Resource.Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.Dashboard</li>
                 </ol>
-                <h6 class="slim-pagetitle">@Resources.Resource.Welcome_back, @Resources.Resource.Admin</h6>
-            </div><!-- slim-pageheader -->
-
+                <h6 class="slim-pagetitle">@Resources.Resource.Welcome_back,  @Resources.Resource.Admin</h6>
+            </div>
+            <!-- slim-pageheader -->
             <div class="row row-xs">
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-bullhorn tx-purple"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.TotalTickets</h1>
-                                <p>@Resources.Resource.All_Tickets</p>
+                    <a href="@Url.Action("AllTickets", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-bullhorn tx-purple"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.TotalTickets</h1>
+                                    <p>@Resources.Resource.All_Tickets</p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
+                            <!-- media -->
                         </div>
-                        <!-- media -->
-                    </div>
+                    </a>
                     <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-envelope-open tx-teal"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.OpenTickets</h1>
-                                <p>@Resources.Resource.Open_Tickets</p>
+                    <a href="@Url.Action("openAlltickets", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-envelope-open tx-teal"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.OpenTickets</h1>
+
+                                    <p>
+
+                                        @Resources.Resource.Open_Complaints
+                                    </p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
+                            <!-- media -->
                         </div>
-                        <!-- media -->
-                    </div>
+                    </a>
                     <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-envelope tx-pink"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.ClosedTickets</h1>
-                                <p>@Resources.Resource.Closed_Complaints</p>
+                    <a href="@Url.Action("Closed", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-envelope tx-pink"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.ClosedTickets</h1>
+                                    <p>@Resources.Resource.Closed_Complaints</p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
+                            <!-- media -->
                         </div>
-                        <!-- media -->
-                    </div>
+                    </a>
                     <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-question-circle tx-yellow"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.ResolvedTickets</h1>
-                                <p>@Resources.Resource.Resolved_Complaints</p>
+                    <a href="@Url.Action("resolved", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-question-circle tx-yellow"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.ResolvedTickets</h1>
+
+                                    <p>@Resources.Resource.Resolved_Complaints</p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
+                            <!-- media -->
                         </div>
-                        <!-- media -->
-                    </div>
-                    <!-- card -->
+                        <!-- card -->
+                    </a>
                 </div>
                 <!-- col-3 -->
 
@@ -117,12 +142,632 @@
             </div>
             <!-- row -->
 
+            <br><br>
+            <div class="section-wrapper">
+                @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Created Successfully")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @Resources.Resource.Ticket_has_been_created_Successfully</strong>
+                    </div>
+                }
 
-        </div><!-- container -->
-    </div><!-- slim-mainpanel -->
+                @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Updated Successfully")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
+                    </div>
+                }
+                @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Forwarded Successfully")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["MessageSuccess"] </strong>
+                    </div>
+                }
 
-    
-    @Html.Partial("_AdminFooter")
+
+
+                @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Closed Successfully")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @Resources.Resource.Ticket_has_been_Closed_Successfully</strong>
+                    </div>
+                }
+                @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Resolved Successfully")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @Resources.Resource.Ticket_has_been_Resolved_Successfully</strong>
+                    </div>
+                }
+                @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Rejected")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @Resources.Resource.Ticket_has_been_Rejected</strong>
+                    </div>
+                }
+
+
+                @if (@TempData["Message"] != null && @TempData["Message"] == "Department should be empty")
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@Resources.Resource.Department_should_be_Empty</strong>
+                    </div>
+                }
+
+                @if (@TempData["Message"] != null && @TempData["Message"] == "Comment Field should not be empty")
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@Resources.Resource.Comment_Field_Should_not_be_empty</strong>
+                    </div>
+                }
+                @if (@TempData["Message"] != null && @TempData["Message"] == "Please enter fields properly")
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                    </div>
+                }
+
+                @if (@TempData["Message"] != null && @TempData["Message"] == "Comment field should be empty")
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@Resources.Resource.Comment_field_Should_be_empty</strong>
+                    </div>
+                }
+
+                @if (@TempData["Message"] != null && @TempData["Message"] == "File Size Limit Exceeds")
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@TempData["Message"]</strong>
+                    </div>
+                }
+
+                @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket details are not valid,Fill details properly")
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                    </div>
+                }
+
+
+                @if (@TempData["displayMsg"] != null && @TempData["displayMsg"] == "Ticket has been Updated Successfully")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
+                    </div>
+                }
+
+                <label class="section-title">@Resources.Resource.Search_your_Tickets</label>
+                <p class="mg-b-20 mg-sm-b-40">@Resources.Resource.On_date_Criteria</p>
+                <div class="form-layout">
+                    @if (@TempData["DateMsg"] != null)
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Please_Select_StartDate_And_EndDate</strong>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("search", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Status: <span class="tx-danger">*</span></label>
+                                    @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="form-control-label">@Resources.Resource.From: <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-control-label">@Resources.Resource.To: <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                        </div>
+
+                        <!-- row -->
+                        <div class="form-layout-footer">
+                            <button class="btn btn-primary bd-0" name="export" value="search">@Resources.Resource.Submit </button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
+                            <button class="btn btn-secondary bd-0" name="export" value="excel">@Resources.Resource.Export_To_Excel</button>
+                        </div>
+                    }
+                    <!-- form-layout-footer -->
+                </div>
+
+            </div>
+
+
+            <div class="row row-xs mg-t-10">
+                <div class="col-lg-12">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h6 class="slim-card-title">@Resources.Resource.Ticket_List</h6>
+                        </div>
+                        <!-- card-header -->
+                        <div class="table-responsive">
+                            <table class="table mg-b-0 tx-13">
+                                <thead>
+                                    <tr class="tx-10">
+                                        <th class="wd-10p pd-y-5">@Resources.Resource.S_No</th>
+                                        <th class="pd-y-5">@Resources.Resource.Ticket_Id</th>
+                                        <th class="pd-y-5">@Resources.Resource.Type</th>
+                                        <th class="pd-y-5">@Resources.Resource.Action</th>
+                                        <th class="pd-y-5">@Resources.Resource.Title</th>
+                                        <th class="pd-y-5">@Resources.Resource.Status</th>
+                                        <th class="pd-y-5">@Resources.Resource.Description</th>
+                                        <th class="pd-y-5">@Resources.Resource.Name</th>
+                                        <th class="pd-y-5">@Resources.Resource.Email_Id</th>
+                                        <th class="pd-y-5">@Resources.Resource.Phone_No</th>
+                                        <th class="pd-y-5">@Resources.Resource.Date</th>
+                                        @if (ViewBag.linkName == "respondedticket")
+                                        {
+                                            <th class="pd-y-5">Response Time(Hrs)</th>
+                                        }
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
+                                    {
+
+                                        <tr>
+                                            <td class="pd-l-20">
+
+                                                @(item.Index + ((Model.PageNumber - 1) * Model.PageSize) + 1)
+
+
+                                            </td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.id)</td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.type.name)</td>
+
+                                            <td>
+                                                @if (ViewBag.linkName == "openticket" || ViewBag.linkName == "openAllticket")
+                                                {
+                                                    <a href="@Url.Action("openview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "resolvedticket")
+                                                {
+                                                    <a href="@Url.Action("resolvedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "respondedticket")
+                                                {
+                                                    <a href="@Url.Action("respondedview", "HR",new {id=item.Data.id })" class=" fa fa-edit"></a>
+                                                }
+
+                                                @if (ViewBag.linkName == "assignedticket")
+                                                {
+                                                    <a href="@Url.Action("assignedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "closedticket")
+                                                {
+
+                                                    <a href="@Url.Action("closedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "rejectedticket")
+                                                {
+                                                    <a href="@Url.Action("rejectedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "tickettype")
+                                                {
+                                                    <a href="@Url.Action("viewticket", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "Alltickets")
+                                                {
+                                                    <a href="@Url.Action("viewticket", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                            </td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelitem => item.Data.title)
+
+                                            </td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.status)</td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.description)</td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.user.FirstName)</td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.user.Email)</td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.user.PhoneNumber)</td>
+
+                                            @if (item.Data.status == "Closed" && ViewBag.linkName == "closedticket")
+                                            {
+
+                                                <td>@Html.DisplayFor(modelitem => item.Data.closedDate)</td>
+                                            }
+                                            else if (item.Data.status == "Resolved" && ViewBag.linkName == "resolvedticket")
+                                            {
+
+                                                <td>@Html.DisplayFor(modelitem => item.Data.resolvedDate)</td>
+                                            }
+                                            else
+                                            {
+
+                                                <td>@Html.DisplayFor(modelitem => item.Data.createDate)</td>
+                                            }
+
+
+                                            @if (ViewBag.linkName == "respondedticket")
+                                            {
+
+                                                var ticks = item.Data.timeHours;
+
+                                                var totalsecs = TimeSpan.FromTicks(item.Data.timeHours).TotalSeconds;
+                                                var sec = totalsecs % 60;
+
+                                                var totalminutes = totalsecs / 60;
+
+                                                var totalhours = totalminutes / 60;
+                                                var minutes = totalminutes % 60;
+
+                                                var days = totalhours / 24;
+                                                var hours = totalhours % 24;
+
+                                                <td>
+
+
+                                                    @String.Format("{0} days, {1} hrs, {2} mins,{3} secs",
+                 Math.Round(days), Math.Round(hours), Math.Round(minutes),Math.Round(sec) );
+
+                                                </td>
+                                            }
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- table-responsive -->
+
+
+                        @if (ViewBag.linkName == "Alltickets" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("alltickets", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.linkName == "openAllticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("openAlltickets", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (ViewBag.linkName == "openticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("open", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.linkName == "openticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+
+                        @if (ViewBag.linkName == "resolvedticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("resolved", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+                        @if (ViewBag.linkName == "resolvedticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+
+
+                        @if (ViewBag.linkName == "respondedticket")
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("responded", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (ViewBag.linkName == "assignedticket")
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("assigned", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+
+                        @if (ViewBag.linkName == "closedticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("Closed", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.linkName == "closedticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (ViewBag.linkName == "rejectedticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("rejected", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+                        @if (ViewBag.linkName == "rejectedticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+                        @if (ViewBag.linkName == "tickettype" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("tickets", new { page, typeId = ViewBag.type }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                        <!-- pagination-wrapper -->
+
+                    </div>
+                    <!-- card -->
+                </div>
+                <!-- col-6 -->
+            </div>
+            <!-- row -->
+            <br> <br> <br> <br>
+        </div>
+        <!-- container -->
+
+    </div>
+    <!-- mainpanel -->
+    <div class="slim-footer" style="position: fixed;bottom: 0;width: 100%;">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved.</p>
+        </div>
+        <!-- container -->
+    </div>
+    <!--footer -->
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/d3/js/d3.js"></script>
+    <script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
+    <script src="~/Content/lib/peity/js/jquery.peity.js"></script>
+    <script src="~/Content/js/slim.js"></script>
+    <script src="~/Content/js/ResizeSensor.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(function () {
+            'use strict'
+
+            // Datepicker
+
+            $(".date").flatpickr({
+                dateFormat: "d-m-Y"
+            });
+
+
+        });
+
+    </script>
+    @Html.Partial("_HRFooter")
 </body>
 </html>
-

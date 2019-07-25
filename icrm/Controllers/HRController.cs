@@ -35,7 +35,8 @@ using Font = System.Drawing.Font;
 
 namespace icrm.Controllers
 {
-    [Authorize(Roles = "HR")]
+    [Authorize(Roles = "HR,Admin")]
+   
     public class HRController : Controller
     {
         
@@ -137,8 +138,15 @@ namespace icrm.Controllers
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
-            string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
-            long index = Convert.ToInt64(lastId.Substring(2)) + 1;
+            string value = (db.Feedbacks
+                            .OrderByDescending(p => p.id)
+                            .Select(r => r.id)
+                            .First().ToString());
+            
+            long index = Convert.ToInt64(value.Substring(2)) + 1;
+
+            //string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
+            //long index = Convert.ToInt64(lastId.Substring(2)) + 1;
             feedback.id = string.Format("IR{0}", index.ToString().PadLeft(5, '0'));
             NotificationMessage notificationMessage = new NotificationMessage();
             TempData["userIdValue"] = feedback.userId;
@@ -342,7 +350,60 @@ namespace icrm.Controllers
                         {
                             if (feedback.departmentID != null)
                             {
-                                TempData["Message"] = "Department should be empty";
+                                
+                               
+                                if (db.FeedbackTypes.Find(feedback.typeId).name != Constants.Complaints)
+                                {
+
+                                    if (feedback.status == Constants.CLOSED)
+                                    {
+                                        notificationMessage.Title = "Ticket Closed";
+                                        feedback.closedDate = DateTime.Now;
+                                        feedback.checkStatus = Constants.CLOSED;
+                                    }
+                                    if (feedback.status == Constants.RESOLVED)
+                                    {
+                                        notificationMessage.Title = "Ticket Resolved";
+                                        feedback.resolvedDate = DateTime.Now;
+                                        feedback.checkStatus = Constants.RESOLVED;
+                                    }
+
+                                  
+
+
+
+                                        if (ModelState.IsValid)
+                                    {
+                                        feedback.submittedById = user.Id;
+                                        feedback.assignedBy = user.Id;
+                                        feedback.assignedDate = DateTime.Now;
+                                        feedback.checkStatus = feedback.status;
+                                        feedInterface.Save(feedback);
+                                        Comments c = new Comments();
+                                        c.text = Request.Form["responsee"];
+                                        c.commentedById = user.Id;
+                                        c.feedbackId = feedback.id;
+                                        c.commentFor = Constants.commentType[2];
+                                        db.comments.Add(c);
+                                        db.SaveChanges();
+
+                                        notificationMessage.Body = feedback.title;
+                                        notificationMessage.For = Constants.ROLE_USER;
+                                        notificationMessage.Status = feedback.status;
+                                        notificationMessage.FeedbackId = feedback.id;
+                                        notificationMessage.CreateDate = feedback.createDate;
+                                        notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                                        eventService.notifyFeedback(notificationMessage);
+                                        TempData["MessageSuccess"] = "Ticket has been Created Successfully";
+
+                                    }
+                                    return RedirectToAction("DashBoard");
+                                }
+                                else
+                                {
+                                    TempData["Message"] = "Department should be empty";
+                                }
+                                
                             }
                             else
                             {
@@ -702,7 +763,59 @@ namespace icrm.Controllers
 
                             if (feedback.departmentID != null)
                             {
-                                TempData["Message"] = "Department should be empty";
+
+                                if (db.FeedbackTypes.Find(feedback.typeId).name != Constants.Complaints)
+                                {
+
+                                    if (feedback.status == Constants.CLOSED)
+                                    {
+                                        notificationMessage.Title = "Ticket Closed";
+                                        feedback.closedDate = DateTime.Now;
+                                        feedback.checkStatus = Constants.CLOSED;
+                                    }
+                                    if (feedback.status == Constants.RESOLVED)
+                                    {
+                                        notificationMessage.Title = "Ticket Resolved";
+                                        feedback.resolvedDate = DateTime.Now;
+                                        feedback.checkStatus = Constants.RESOLVED;
+                                    }
+
+
+
+
+
+                                    if (ModelState.IsValid)
+                                    {
+                                        feedback.submittedById = user.Id;
+                                        feedback.assignedBy = user.Id;
+                                        feedback.assignedDate = DateTime.Now;
+                                        feedback.checkStatus = feedback.status;
+                                        db.Entry(feedback).State = EntityState.Modified;
+                                        db.SaveChanges();
+                                        Comments c = new Comments();
+                                        c.text = Request.Form["responsee"];
+                                        c.commentedById = user.Id;
+                                        c.feedbackId = feedback.id;
+                                        c.commentFor = Constants.commentType[2];
+                                        db.comments.Add(c);
+                                        db.SaveChanges();
+
+                                        notificationMessage.Body = feedback.title;
+                                        notificationMessage.For = Constants.ROLE_USER;
+                                        notificationMessage.Status = feedback.status;
+                                        notificationMessage.FeedbackId = feedback.id;
+                                        notificationMessage.CreateDate = feedback.createDate;
+                                        notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                                        eventService.notifyFeedback(notificationMessage);
+                                        TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
+
+                                    }
+                                    return RedirectToAction("DashBoard");
+                                }
+                                else
+                                {
+                                    TempData["Message"] = "Department should be empty";
+                                }
                             }
                             else
                             {
@@ -1215,7 +1328,7 @@ namespace icrm.Controllers
         public JsonResult getEmpDetails(int id)
         {
             ApplicationUser u = feedInterface.getEmpDetails(id);
-            System.Diagnostics.Debug.WriteLine(u.JobTitle.name+"lllllllllllllllllllllllll"+u.JobTitleId +"djdsj"+u.bussinessEmail);
+            //System.Diagnostics.Debug.WriteLine(u.JobTitle.name+"lllllllllllllllllllllllll"+u.JobTitleId +"djdsj"+u.bussinessEmail);
             return Json(feedInterface.getEmpDetails(id));
         }
 
@@ -10166,7 +10279,101 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 
             }
         }
-      [HttpPost]
+
+
+        /******** HR update status Open to Resolved/Closed on Assigned view ******/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult updateAssigned(Feedback feedback)
+        {
+            var ff = feedInterface.Find(feedback.id);
+            NotificationMessage notificationMessage = new NotificationMessage();
+            var feedbackUser = UserManager.FindById(feedback.userId);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            Feedback f = db.Feedbacks.Find(feedback.id);
+
+            f.satisfaction = feedback.satisfaction;
+            f.status = feedback.status;
+
+
+            f.submittedById = user.Id;
+
+
+
+            if (feedback.status == Constants.RESOLVED)
+            {
+
+                f.resolvedDate = DateTime.Now;
+
+                notificationMessage.Title = "Ticket Resolved";
+
+                f.closedDate = null;
+                f.checkStatus = Constants.RESOLVED;
+            }
+            else if (feedback.status == Constants.CLOSED)
+            {
+
+                f.closedDate = DateTime.Now;
+                f.resolvedDate = null;
+                notificationMessage.Title = "Ticket Closed";
+
+                f.checkStatus = Constants.CLOSED;
+            }
+            else {
+                notificationMessage.Title = "Ticket re-opened";
+                f.checkStatus = feedback.checkStatus;
+            }
+
+            if (Request.Form["responsee"] != "") {
+
+                Comments c = new Comments();
+                c.text = Request.Form["responsee"];
+                c.commentedById = user.Id;
+                c.feedbackId = feedback.id;
+                c.commentFor = Constants.commentType[2];
+                db.comments.Add(c);
+                db.SaveChanges();
+            }
+
+            if (feedback.status != null)
+            {
+
+                
+                if (ff.status != feedback.status)
+                {
+
+                    notificationMessage.Body = feedback.title;
+                    notificationMessage.For = Constants.ROLE_USER;
+                    notificationMessage.Status = feedback.status;
+                    notificationMessage.FeedbackId = feedback.id;
+                    notificationMessage.CreateDate = feedback.createDate;
+                    notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                    eventService.notifyFeedback(notificationMessage);
+
+                }
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+
+                TempData["displayMsg"] = "Ticket has been Updated Successfully";
+                ViewData["decide"] = feedInterface.getCOmments(feedback.id);
+                return RedirectToAction("DashBoard");
+            }
+            else
+            {
+                ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+                getAttributeList();
+                TempData["displayMsgErr"] = "Please enter fields properly";
+                
+
+                    return View("assignedview", feedback);
+                
+
+            }
+        }
+        [HttpPost]
         public JsonResult getCategories(int depId, int type)
         {
             List<Category> categories = feedInterface.getCategories(depId,type);               

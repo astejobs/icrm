@@ -23,10 +23,9 @@ namespace icrm.Controllers
         private GenericPagination<ApplicationUser> gp = new GenericPagination<ApplicationUser>();
         private ApplicationUserManager _userManager;
 
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(int? page)
         {
-            TicketCounts();
-            return View();
+            return RedirectToAction("Dashboard", "Hr");
         }
 
 
