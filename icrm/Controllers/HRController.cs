@@ -287,13 +287,16 @@ namespace icrm.Controllers
                             feedback.assignedDate = null;
                             feedback.checkStatus = feedback.status;
                             feedInterface.Save(feedback);
-                            Comments c = new Comments();
-                            c.text = Request.Form["responsee"];
-                            c.commentedById = user.Id;
-                            c.feedbackId = feedback.id;
-                            c.commentFor = Constants.commentType[2];
-                            db.comments.Add(c);
-                            db.SaveChanges();
+                            if (Request.Form["responsee"] != "")
+                            {
+                                Comments c = new Comments();
+                                c.text = Request.Form["responsee"];
+                                c.commentedById = user.Id;
+                                c.feedbackId = feedback.id;
+                                c.commentFor = Constants.commentType[2];
+                                db.comments.Add(c);
+                                db.SaveChanges();
+                            }
 
                             notificationMessage.Body = feedback.title;
                             notificationMessage.For = Constants.ROLE_USER;
@@ -379,13 +382,16 @@ namespace icrm.Controllers
                                         feedback.assignedDate = DateTime.Now;
                                         feedback.checkStatus = feedback.status;
                                         feedInterface.Save(feedback);
-                                        Comments c = new Comments();
-                                        c.text = Request.Form["responsee"];
-                                        c.commentedById = user.Id;
-                                        c.feedbackId = feedback.id;
-                                        c.commentFor = Constants.commentType[2];
-                                        db.comments.Add(c);
-                                        db.SaveChanges();
+                                        if (Request.Form["responsee"] != "")
+                                        {
+                                            Comments c = new Comments();
+                                            c.text = Request.Form["responsee"];
+                                            c.commentedById = user.Id;
+                                            c.feedbackId = feedback.id;
+                                            c.commentFor = Constants.commentType[2];
+                                            db.comments.Add(c);
+                                            db.SaveChanges();
+                                        }
 
                                         notificationMessage.Body = feedback.title;
                                         notificationMessage.For = Constants.ROLE_USER;
@@ -720,14 +726,16 @@ namespace icrm.Controllers
                         notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
-                        Comments c = new Comments();
-                        c.text = Request.Form["responsee"];
-                        c.commentedById = user.Id;
-                        c.feedbackId = feedback.id;
-                          c.commentFor = Constants.commentType[2];
-                        db.comments.Add(c);
-                        db.SaveChanges();
-
+                        if (Request.Form["responsee"] != "")
+                        {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            c.commentFor = Constants.commentType[2];
+                            db.comments.Add(c);
+                            db.SaveChanges();
+                        }
                         return RedirectToAction("DashBoard");                     
                     }
                     else
@@ -792,14 +800,16 @@ namespace icrm.Controllers
                                         feedback.checkStatus = feedback.status;
                                         db.Entry(feedback).State = EntityState.Modified;
                                         db.SaveChanges();
-                                        Comments c = new Comments();
-                                        c.text = Request.Form["responsee"];
-                                        c.commentedById = user.Id;
-                                        c.feedbackId = feedback.id;
-                                        c.commentFor = Constants.commentType[2];
-                                        db.comments.Add(c);
-                                        db.SaveChanges();
-
+                                        if (Request.Form["responsee"] != "")
+                                        {
+                                            Comments c = new Comments();
+                                            c.text = Request.Form["responsee"];
+                                            c.commentedById = user.Id;
+                                            c.feedbackId = feedback.id;
+                                            c.commentFor = Constants.commentType[2];
+                                            db.comments.Add(c);
+                                            db.SaveChanges();
+                                        }
                                         notificationMessage.Body = feedback.title;
                                         notificationMessage.For = Constants.ROLE_USER;
                                         notificationMessage.Status = feedback.status;
@@ -841,14 +851,16 @@ namespace icrm.Controllers
                         notificationMessage.CreateDate = feedback.createDate;
                         notificationMessage.DeviceId = feedbackUser.DeviceCode;
                         eventService.notifyFeedback(notificationMessage);
-                        Comments c = new Comments();
-                        c.text = Request.Form["responsee"];
-                        c.commentedById = user.Id;
-                        c.feedbackId = feedback.id;
-                          c.commentFor = Constants.commentType[2];
-                        db.comments.Add(c);
-                        db.SaveChanges();
-
+                        if (Request.Form["responsee"] != "")
+                        {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            c.commentFor = Constants.commentType[2];
+                            db.comments.Add(c);
+                            db.SaveChanges();
+                        }
                         TempData["MessageSuccess"] = "Ticket has been Rejected";
                             return RedirectToAction("DashBoard");
                     }
@@ -10021,14 +10033,16 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                         feedback.submittedById = user.Id;
                         db.Entry(feedback).State = EntityState.Modified;
                         db.SaveChanges();
-                        Comments c = new Comments();
-                        c.text = Request.Form["responsee"];
-                        c.commentedById = user.Id;
-                        c.feedbackId = feedback.id;
-                        c.commentFor = Constants.commentType[2];
-                        db.comments.Add(c);
-                        db.SaveChanges();
-
+                        if (Request.Form["responsee"] != "")
+                        {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            c.commentFor = Constants.commentType[2];
+                            db.comments.Add(c);
+                            db.SaveChanges();
+                        }
                         notificationMessage.Body = feedback.title;
                         notificationMessage.For = Constants.ROLE_USER;
                         notificationMessage.Status = feedback.status;
