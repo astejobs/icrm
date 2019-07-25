@@ -342,32 +342,38 @@
                                     @**  @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
                                     *@
 
-                                   @Model.status
-                                    <select name="status" id="statusfield" class="form-control select2">
-                                        @if (Model.status == "Open")
-                                        {
-                                            <option selected value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
-                                        else if (Model.status == "Closed")
-                                        {
-                                            <option value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option selected value="Closed">Closed</option>
-                                        }
-                                        else if(Model.status == "Resolved")
-                                        {
+                                    @if (ViewBag.checkGeneralList != "General")
+                                    {
+                                        <select name="status" id="statusfield" class="form-control select2">
+                                            @if (Model.status == "Open")
+                                            {
+                                                <option selected value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Closed")
+                                            {
+                                                <option value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option selected value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Resolved")
+                                            {
 
-                                            <option value="Open">Open</option>
-                                            <option selected value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
-                                       
+                                                <option value="Open">Open</option>
+                                                <option selected value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                            }
 
 
-                                    </select>
-                                    </div>
+
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.status, new { @class = "form-control", @readonly = "readonly" })
+                                    }
+                                </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
                             <!-- col-4 -->
@@ -386,22 +392,27 @@
                                     </div>
                                 </div>
                             }
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Comments</label>
-                                    @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
-                                    <label class="text-danger" id="responsecheck"></label>
+                            @if (ViewBag.checkGeneralList != "General")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Comments</label>
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
+                                        <label class="text-danger" id="responsecheck"></label>
 
+                                    </div>
                                 </div>
+                            }
                             </div>
-                        </div>
 
-
+                        @if (ViewBag.checkGeneralList != "General")
+                        {
                         <!-- row -->
                         <div class="form-layout-footer">
                             <input type="hidden" value="Assignedtype" name="typeoflink" />
                             <input type="submit" value="submit" class="btn btn-primary bd-0" id="submitBtn" />
                         </div>
+                        }
                         <!-- form-layout-footer -->
                     </div>
 

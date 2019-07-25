@@ -1228,6 +1228,7 @@ namespace icrm.Controllers
             {
                 getAttributeList();
                 Feedback f = feedInterface.Find(id);
+                ViewBag.checkGeneralList= "General";
                 return View("assignedview",f);
             }
         }
