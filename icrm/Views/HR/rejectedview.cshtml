@@ -94,6 +94,16 @@
                                 <strong> @TempData["MessageSuccess"] </strong>
                             </div>
                         }
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket cannot be forwarded,Escalation User is not assigned")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned</strong>
+                            </div>
+                        }
                         @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Closed Successfully")
                         {
                             <div class="alert alert-success" role="alert">
@@ -181,15 +191,7 @@
                             </div>
                         }
 
-                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket cannot be forwarded,Escalation User is not assigned")
-                        {
-                            <div class="alert alert-danger mg-b-0" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <strong>@Resources.Resource.Ticket_cannot_be_forwarded_Escalation_User_is_not_assigned</strong>
-                            </div>
-                        }
+
                         @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
@@ -203,7 +205,7 @@
 
                         @Html.HiddenFor(model => model.submittedById, new { @class = "form-control" })
 
-
+                     
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -600,6 +602,8 @@
     <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
     <script src="~/Content/js/slim.js"></script>
     <script>
+
+
         if ($("#costcentrId").val() == "") {
             $('#deptId option:contains("Operations")').remove();
 
@@ -655,22 +659,49 @@
 
         $('#resolve').click(function () {
             $("#dep").prop('required', false);
+            $("#deptId").prop('required', false);
+            $("#category").prop('required', false);
+            $("#subcategory").prop('required', false);
+            if (($('#statusfield').val() == "Closed" || $('#statusfield').val() == "Resolved")) {
 
+
+                $('#responsee').attr('required', true);
+                return true;
+            }else
             if (($('#statusfield').val() == "Open" || $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") && ($('#typeoffeedbacktext').val() == "Inquiry" || $("#typeoffeedbacktext").val() == "Suggestion" ||
-                $("#typeoffeedbacktext").val() == "Appreciation")) {
+                $("#typeoffeedbacktext").val() == "Appreciation") && ($('#responsee').val() != "")) {
 
                 $("#emailsss").prop('required', false);
                 $("#deptId").prop('required', false);
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
 
+
+                $('#responsecheck').text("Comment should be empty");
+                $('#responsee').removeAttr('required');
+               // return true;
+                return false;
+            }
+            if (($('#statusfield').val() == "Open" || $('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") && ($('#typeoffeedbacktext').val() == "Inquiry" || $("#typeoffeedbacktext").val() == "Suggestion" ||
+                $("#typeoffeedbacktext").val() == "Appreciation")) {
+                $('#responsecheck').text("");
+                $("#emailsss").prop('required', false);
+                $("#deptId").prop('required', false);
+                $("#category").prop('required', false);
+                $("#subcategory").prop('required', false);
+                $('#responsee').removeAttr('required');
+
                 return true;
             }
-
             else if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" && $("#typeoffeedbacktext").val() == "Complaint" ) {
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#emailsss").prop('required', false);
+
+                $("#deptId").prop('required', false);
+                $('#responsecheck').text("");
+                $('#responsee').attr('required', true);
+
                 return true;
             }
 
@@ -679,6 +710,9 @@
                 $("#subcategory").prop('required', false);
                 $("#category").prop('required', false);
                 $("#emailsss").prop('required', false);
+                $("#deptId").prop('required', false);
+                $("#category").prop('required', false);
+
                 return false;
 
             }

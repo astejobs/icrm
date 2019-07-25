@@ -9950,6 +9950,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                                 deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
                             }
                             catch (Exception e) {
+                                ViewData["iram"] = "isidiid";
                                 TempData["Message"] = "Ticket cannot be forwarded, Escalation User is not asssigned";
                                 return RedirectToAction("rejectedview", new { id = feedback.id });
                             }
@@ -9964,6 +9965,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                             }
                             catch (Exception e)
                             {
+                                ViewData["iram"] = "isidiid";
                                 TempData["Message"] = "Ticket cannot be forwarded, Escalation User is not asssigned";
                                 return RedirectToAction("rejectedview", new { id = feedback.id });
                             }
@@ -10105,14 +10107,68 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                                 notificationMessage.DeviceId = feedbackUser.DeviceCode;
                                 eventService.notifyFeedback(notificationMessage);
                             }
-                            TempData["MessageSuccess"] = "Ticket has been Created Successfully";
+                            TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
                             return RedirectToAction("DashBoard");
                         }
                         else
                         {
                             if (feedback.departmentID != null)
                             {
-                                TempData["Message"] = "Department should be empty";
+
+                                if (db.FeedbackTypes.Find(feedback.typeId).name != Constants.Complaints)
+                                {
+
+                                    if (feedback.status == Constants.CLOSED)
+                                    {
+                                        notificationMessage.Title = "Ticket Closed";
+                                        feedback.closedDate = DateTime.Now;
+                                        feedback.checkStatus = Constants.CLOSED;
+                                    }
+                                    if (feedback.status == Constants.RESOLVED)
+                                    {
+                                        notificationMessage.Title = "Ticket Resolved";
+                                        feedback.resolvedDate = DateTime.Now;
+                                        feedback.checkStatus = Constants.RESOLVED;
+                                    }
+
+
+
+
+
+                                    if (ModelState.IsValid)
+                                    {
+                                        feedback.submittedById = user.Id;
+                                        feedback.assignedBy = user.Id;
+                                        feedback.assignedDate = DateTime.Now;
+                                        feedback.checkStatus = feedback.status;
+                                        feedInterface.Save(feedback);
+                                        if (Request.Form["responsee"] != "")
+                                        {
+                                            Comments c = new Comments();
+                                            c.text = Request.Form["responsee"];
+                                            c.commentedById = user.Id;
+                                            c.feedbackId = feedback.id;
+                                            c.commentFor = Constants.commentType[2];
+                                            db.comments.Add(c);
+                                            db.SaveChanges();
+                                        }
+
+                                        notificationMessage.Body = feedback.title;
+                                        notificationMessage.For = Constants.ROLE_USER;
+                                        notificationMessage.Status = feedback.status;
+                                        notificationMessage.FeedbackId = feedback.id;
+                                        notificationMessage.CreateDate = feedback.createDate;
+                                        notificationMessage.DeviceId = feedbackUser.DeviceCode;
+                                        eventService.notifyFeedback(notificationMessage);
+                                        TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
+
+                                    }
+                                    return RedirectToAction("DashBoard");
+                                }
+                                else
+                                {
+                                    TempData["Message"] = "Department should be empty";
+                                }
                             }
                             else
                             {
