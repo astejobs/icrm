@@ -13,7 +13,8 @@ namespace icrm.Models
         public string priorityId { get; set; }
         public string departmentID { get; set; }
         public string comment { get; set; }
-        
+        public string Status { get; set; }
+
 
 
     }

@@ -1,28 +1,22 @@
-﻿using System;
+﻿using icrm.Controllers;
+using icrm.Events;
+using icrm.Models;
+using icrm.RepositoryImpl;
+using icrm.RepositoryInterface;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.ComponentModel;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using icrm.Models;
-using icrm.RepositoryInterface;
-using icrm.RepositoryImpl;
-using System.Net.Http.Headers;
-using System.Data.Entity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity;
-using System.Diagnostics;
 using Constants = icrm.Models.Constants;
-using System.Net.Mail;
-using System.Net.Mime;
-using icrm.Controllers;
-using Microsoft.AspNet.Identity.EntityFramework;
-using icrm.Events;
 
 namespace icrm.WebApi
 {
@@ -65,10 +59,237 @@ namespace icrm.WebApi
             feedInterface = new FeedbackRepository();
             eventService = new EventService();
         }
+        //1/ <summary>
+        /// //////////////************* Submitting Inquiry **********//////////////
+        /// </summary>
+        /// 
+        [HttpPost]
+        [Route("api/HR/SubmitInquiry/{ticketId}")]
+        public IHttpActionResult SubmitInquiry(string ticketId, Forwardmodel forward)
+        {
+            Feedback feedback = db.Feedbacks.FirstOrDefault(x => x.id == ticketId);
+            if (feedback == null)
+            {
+                return BadRequest();
+            }
+            bool isNotify = false;
 
+            if (forward.Status != feedback.status)
+            {
+                if (forward.Status == Constants.CLOSED)
+                {
+                    feedback.closedDate = DateTime.Now;
+                    isNotify = true;
+                }
+                else if (forward.Status == Constants.RESOLVED)
+                {
+                    feedback.resolvedDate = DateTime.Now;
+                    isNotify = true;
+                }
+            }
+            feedback.checkStatus = forward.Status;
+            feedback.status = forward.Status;
+            feedback.subcategoryId = Convert.ToInt32(forward.subcategoryId);
+            if (Convert.ToInt32(forward.priorityId) != -1)
+            {
+                feedback.priorityId = Convert.ToInt32(forward.priorityId);
+
+            }
+
+            feedback.categoryId = Convert.ToInt32(forward.categoryId);
+            feedback.departmentID = Convert.ToInt32(forward.departmentID);
+
+            db.Entry(feedback).State = EntityState.Modified;
+            db.SaveChanges();
+
+
+            if (!string.IsNullOrEmpty(forward.comment))
+            {
+                var empCode = User.Identity.Name;
+                string hrId = UserManager.FindByNameAsync(empCode).Result.Id;
+                Comments comment = new Comments()
+                {
+                    feedbackId = ticketId,
+                    commentedById = hrId,
+                    commentFor = Constants.commentType[2],
+                    text = forward.comment
+                };
+                db.comments.Add(comment);
+                db.SaveChanges();
+
+
+            }
+            if (isNotify)
+            {
+                NotificationMessage notificationMessage = new NotificationMessage()
+                {
+                    Title = "Ticket " + forward.Status,
+                    Body = feedback.title,
+                    For = Constants.ROLE_USER,
+                    Status = feedback.checkStatus,
+                    DeviceId = feedback.user.DeviceCode,
+                    FeedbackId = feedback.id,
+                    CreateDate = feedback.createDate
+                };
+                eventService.notifyFeedback(notificationMessage);
+
+            }
+
+            return Ok();
+
+        }
+        //1/ <summary>
+        /// //////////////************* Updating Assigned Ticket's Status from Assigned to Closed or Resolved **********//////////////
+        /// </summary>
+        /// 
+        [HttpPost]
+        [Route("api/HR/UpdateAssigned/{ticketId}")]
+        public IHttpActionResult UpdateAssigned(string ticketId, FeedbackAssignedVM feedback)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Feedback feedback1 = db.Feedbacks.FirstOrDefault(x => x.id == ticketId);
+            bool isNotify = true;
+            if (feedback1.status == feedback.Status)
+            {
+                isNotify = false;
+            }
+            if (feedback.Status == Constants.RESOLVED)
+            {
+                feedback1.resolvedDate = DateTime.Now;
+            }
+            else if (feedback.Status == Constants.CLOSED)
+            {
+                feedback1.closedDate = DateTime.Now;
+            }
+            feedback1.status = feedback.Status;
+            feedback1.checkStatus = feedback.Status;
+            if (!string.IsNullOrEmpty(feedback.Satisfaction))
+            {
+                feedback1.satisfaction = feedback.Satisfaction;
+            }
+            db.SaveChanges();
+            if (!string.IsNullOrEmpty(feedback.Response))
+            {
+                var empCode = User.Identity.Name;
+                string hrId = UserManager.FindByNameAsync(empCode).Result.Id;
+
+                Comments comment = new Comments
+                {
+                    text = feedback.Response,
+                    commentedById = hrId,
+                    feedbackId = ticketId,
+                    commentFor = Constants.commentType[2]
+
+                };
+                db.comments.Add(comment);
+                db.SaveChanges();
+            }
+            if (isNotify)
+            {
+                NotificationMessage notificationMessage = new NotificationMessage()
+                {
+                    Title = "Ticket " + feedback.Status,
+                    Body = feedback1.title,
+                    For = Constants.ROLE_USER,
+                    DeviceId = feedback1.user.DeviceCode,
+                    Status = feedback1.checkStatus,
+                    CreateDate = feedback1.createDate,
+                    FeedbackId = feedback1.id
+                };
+                eventService.notifyFeedback(notificationMessage);
+            }
+
+            return Ok();
+        }
+        //1/ <summary>
+        /// //////////////************* Seaching Employee For Ticket Creation **********//////////////
+        /// </summary>
+        /// 
+        [HttpGet]
+
+        [Route("api/HR/GetEmployees/{search}")]
+        public IHttpActionResult GetEmployees(string search)
+        {
+            string newString = search.Replace('@', ' ');
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                dynamic users = db.Users.Where(x => x.EmployeeId.ToString().StartsWith(newString) || (x.FirstName + " " + x.MiddleName + " " + x.LastName).Replace("  ", " ").StartsWith(newString)).Select(x => new
+                {
+                    id = x.Id,
+                    name = x.FirstName + " " + x.MiddleName + " " + x.LastName,
+                    employeeId = x.EmployeeId
+
+
+
+                }).ToList();
+                if (Enumerable.Count(users) == 0)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(users);
+                }
+            }
+        }
+        //1/ <summary>
+        /// //////////////************* Getting Mediums for Drop Down **********//////////////
+        /// </summary>
+        /// 
+        [HttpGet, Route("api/HR/getmediums")]
+
+        public IHttpActionResult GetMediums()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                dynamic mediums = db.medium.Select(x => new
+                {
+                    id = x.Id,
+                    mediumName = x.name
+                }).ToList();
+                if (Enumerable.Count(mediums) == 0)
+                {
+                    return BadRequest("No Mediums Found");
+
+                }
+                return Ok(mediums);
+            }
+        }
+        //1/ <summary>
+        /// //////////////************* Ticket Creation By HR on Behalf of User **********//////////////
+        /// </summary>
+        /// 
+
+        [HttpPost]
+        [Route("api/HR/createticket")]
+        public IHttpActionResult CreateTicket(FeedBackViewModel feedBackmodel)
+        {
+
+            if (!ModelState.IsValid || feedBackmodel.UserId == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            var empCode = User.Identity.Name;
+            string hrId = UserManager.FindByNameAsync(empCode).Result.Id;
+
+            string lastId = db.Feedbacks.OrderByDescending(x => x.createDate).FirstOrDefault().id;
+            long index = Convert.ToInt64(lastId.Substring(2)) + 1;
+            string feedbackId = string.Format("IR{0}", index.ToString().PadLeft(5, '0'));
+            Feedback feedBack = new Feedback { id = feedbackId, submittedById = hrId, title = feedBackmodel.Title, description = feedBackmodel.Description, userId = feedBackmodel.UserId, typeId = feedBackmodel.Typeid, mediumId = feedBackmodel.MediumId };
+            feedBack.checkStatus = Models.Constants.OPEN;
+            feedInterface.Save(feedBack);
+            return Ok(feedBack.id);
+
+        }
         //1/ <summary>
         /// //////////////************* (Hr Tickets list)---->>>HR Sees all The Tickets here in this api **********//////////////
         /// </summary>
+        /// 
         [HttpGet]
         [Route("api/HR/HrTicketslist")]
         public IHttpActionResult HrTicketslist()
@@ -161,11 +382,13 @@ namespace icrm.WebApi
             else
             {
 
-                var Name1 = User.Identity.Name;
-                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+                var empCode = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(empCode);
                 f.checkStatus = feedback.status;
                 f.status = feedback.status;
                 f.response = feedback.response;
+                f.resolvedDate = DateTime.Now;
+
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 /////////////////////// new changes (hr comments for user)//////////////////////////////////////
@@ -177,9 +400,9 @@ namespace icrm.WebApi
                 c.text = feedback.response;
                 db.comments.Add(c);
                 db.SaveChanges();
-               
+
                 ////////////////////  new changes (Add Notification) /////////////////////////////////////////
-                if(feedback.status== "Resolved")
+                if (feedback.status == "Resolved")
                 {
                     NotificationMessage notificationMessage = new NotificationMessage();
                     notificationMessage.Title = "Ticket Resolved";
@@ -201,11 +424,11 @@ namespace icrm.WebApi
                     notificationMessage.Status = f.checkStatus;
                     notificationMessage.CreateDate = f.createDate;
                     notificationMessage.FeedbackId = f.id;
-                
+
                     eventService.notifyFeedback(notificationMessage);
 
                 }
-               
+
 
 
                 return Ok();
@@ -313,7 +536,8 @@ namespace icrm.WebApi
                         f.departUserId = user1.Id;
                         string email = user1.bussinessEmail;
                     }
-                    catch (Exception e) {
+                    catch (Exception e)
+                    {
 
                         return BadRequest();
                     }
@@ -323,7 +547,7 @@ namespace icrm.WebApi
                 {
                     return BadRequest("");
                 }
-               
+
 
             }
 
@@ -363,7 +587,7 @@ namespace icrm.WebApi
                 c.text = forward.comment;
                 db.comments.Add(c);
                 db.SaveChanges();
-               
+
 
             }
 
@@ -589,7 +813,7 @@ namespace icrm.WebApi
                     feedback.timeHours = 0;
                     feedback.assignedBy = null;
                     feedback.assignedDate = null;
-                   
+
 
 
                     //////////////////////////new changes (Add notifiactions )///////////////////////////////////
@@ -1206,6 +1430,8 @@ namespace icrm.WebApi
         /// </summary>
         /// <returns></returns>
         /// 
+        /// 
+
         [HttpPost]
         [Route("api/HR/imageSave")]
         public IHttpActionResult imageSave([FromBody]SaveFile file)
@@ -1219,6 +1445,11 @@ namespace icrm.WebApi
                 string ext = GetFileExtension(file.ImageSave);
                 feedBack.attachment = feedBack.id + "." + ext;
                 string path = Models.Constants.PATH + feedBack.attachment;
+                if (!Directory.Exists(Models.Constants.PATH))
+                {
+                    Directory.CreateDirectory(Models.Constants.PATH);
+
+                }
                 File.WriteAllBytes(path, getfile(file.ImageSave));
                 db.Entry(feedBack).State = EntityState.Modified;
                 db.SaveChanges();
@@ -1567,7 +1798,7 @@ namespace icrm.WebApi
             }
 
             var f = db.Feedbacks.Find(id);
-                                                                                                                                                           
+
 
             if (f != null)
             {
@@ -1701,7 +1932,7 @@ namespace icrm.WebApi
 
             if (feedbacks != null)
             {
-             var respondedlist = feedbacks.Select(f=>new
+                var respondedlist = feedbacks.Select(f => new
                 {
                     f.id,
                     f.title,

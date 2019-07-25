@@ -11,7 +11,8 @@ namespace icrm.Models
         public string Description { get; set; }
         public string Attachment { get; set; }
         public int Typeid { get; set; }
-
+        public string UserId{ get; set; }
+        public int MediumId { get; set; }
 
     }
 }
