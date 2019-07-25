@@ -658,9 +658,9 @@ namespace icrm.Controllers
                             }
                             catch (Exception e)
                             {
-                                ViewData["user"] = user;
+                               
                                 TempData["Message"] = "Ticket cannot be forwarded,Escalation User is not assigned";
-                                return View("Create", feedback);
+                                return RedirectToAction("view", new { id = feedback.id });
                             }
                         }
                         deptUser=  db.Users.Find(deptUser.Id);
