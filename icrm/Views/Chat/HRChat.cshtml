@@ -28,6 +28,13 @@
          .dontshow{
              display: none !important;
         }
+         .text-ellipse {
+             display: block;
+             white-space: nowrap;
+             overflow: hidden;
+             text-overflow: ellipsis;
+             width: 160px;
+         }
     </style>
 </head>
 <body>
@@ -47,7 +54,7 @@
                         {
                             if (item != null)
                             {
-                                <a href="#" class="media" id="chatlist@(item.Chat.Id)">
+                                <a href="#" class="media chat" id="chatlist@(item.Chat.Id)">
                                     <div class="media-left">
                                         <img src="/Content/img/avatar.jpg" alt="">
                                         <span class="square-10 bg-success"></span>
@@ -55,7 +62,7 @@
                                     <div class="media-body">
                                         <div>
                                             <h6>@item.Chat.UserOne.FirstName @item.Chat.UserOne.LastName</h6>
-                                            <p id="latestmsg@(item.Chat.Id)">@item.Text</p>
+                                            <p id="latestmsg@(item.Chat.Id)" class="text-ellipse">@item.Text</p>
                                             <input type="hidden" class="chatId" value="@(item.Chat.Id)" />
                                         </div>
                                         <div id="msgCount@(item.Chat.Id)">
@@ -210,22 +217,38 @@
             </div>
         </div><!-- modal-dialog -->
     </div>
-    <div id="userclosechat" class="modal fade">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content bd-0 tx-14">
-                <div class="modal-header pd-x-20">
-                    <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">User Closed Chat</h6>
+<div id="userclosechat" class="modal fade">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bd-0 tx-14">
+            <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">User Closed Chat</h6>
 
-                </div>
-                <div class="modal-body pd-20">
-                    <p class="mg-b-5">User has closed the current chat</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="userCloseChatBtn">OK</button>
-                </div>
             </div>
-        </div><!-- modal-dialog -->
-    </div>
+            <div class="modal-body pd-20">
+                <p class="mg-b-5">User has closed the current chat</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="userCloseChatBtn">OK</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div>
+<div id="errormodal" class="modal fade">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bd-0 tx-14">
+            <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Error!</h6>
+
+            </div>
+            <div class="modal-body pd-20">
+                <p class="mg-b-5">Something went wrong.Please try again or reload page</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div>
     <div id="userinqueue" class="modal fade">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content bd-0 tx-14">
@@ -259,7 +282,7 @@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="/signalr/hubs"></script>
-<script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+    <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
 
     <script>
         $(function () {
@@ -288,11 +311,11 @@
                     $('.messages-right').removeClass('d-none');
                 });
 
-            $('.message-back').on('click',
+            /*$('.message-back').on('click',
                 function (e) {
                     e.preventDefault();
                     $('.messages-right').addClass('d-none');
-                });
+                });*/
         });
 
 
@@ -358,9 +381,8 @@
                         '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
                         response.Text +
                         '</p></div></div>');
-                $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                $('.message-body').scrollTop($(".media-list").prop("scrollHeight"));
                 $('#latestmsg' + $('#chatId').val()).text(response.Text);
-                console.log(parseJsonDate(response.RecieveTime)+"---parsing date")
                 $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
             } else {
                 /*console.log('sender is here ' + $('#chatlist' + sender + '.media').length >
@@ -388,11 +410,15 @@
 
                         }
                     } else {
-                        console.log('sender is not null so pushing messages')
+                        console.log('sender is not null so pushing messages');
                         //msgStore[response.ChatId].push(response.Text);
-                        msgStore[response.ChatId].push(response.Text)
+                        msgStore[response.ChatId].push(response.Text);
+                        console.log('msgstore length  ' + msgStore[response.ChatId].length);
                         $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
-                        $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
+                        if ($('#msgCount' + response.ChatId).children().length>1)
+                            $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
+                        else
+                            $('#msgCount' + response.ChatId).append("<span>" + msgStore[response.ChatId].length+"</span>");
                         $('#latestmsg' + response.ChatId).text(response.Text);
 
                     }
@@ -406,7 +432,7 @@
                         response.Sender.FirstName + " " + response.Sender.LastName +
                         '</h6><p id="latestmsg' +
                         response.ChatId +
-                        '">' +
+                        '"  class="text-ellipse">' +
                         response.Text +
                         '</p> <input type="hidden" class="chatId" value="' + response.ChatId + '" /></div><div id="msgCount' +
                         response.ChatId +
@@ -445,7 +471,7 @@
                 message +
                 '</p></div></div>'
             $('.media-list').append(newmsg);
-            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+            $('.message-body').scrollTop($(".media-list").prop("scrollHeight"));
             newmsg = false;
             $("#txtmsg").val("");
             $('#latestmsg' + $('#chatId').val()).text(message);
@@ -467,10 +493,13 @@
 
 
         $(document).on('click',
-            '.media',
-            function(e) {
-                $('#chatId').val($(this).find('.chatId').val());
-                $(this).find('#msgCount' + $(this).find('.chatId').val()).children('span').eq(1).remove();
+            '.chat',
+            function (e) {
+                page = 1;
+                var chatId = $(this).find('.chatId').val();
+                $('#chatId').val(chatId);
+                console.log($(this).find('#msgCount' + chatId).children('span').eq(1).remove());
+                msgStore[chatId] = [];  //set lcocal msg store to empty;
                 console.log('in event ');
                 e.preventDefault();
                 console.log($(this).find('h6').text());
@@ -482,22 +511,32 @@
                 console.log('here is message pages----' +page);
                 $('.media-list').empty();
                 var url = "/chat/" + $('#chatId').val() + "/messages/" +1;
-                $.get(url, function(response) {
-                    for (var i = 0; i < response.length; i++) {
-                        if (response[i].Sender.UserName == $('#username').val()) {
-                            var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
-                                response[i].Text +
-                                '</p></div></div>';
-                            $('.media-list').prepend(mymsg);
-                        } else {
-                            var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
-                                response[i].Text +
-                                '</p></div></div>';
-                            $('.media-list').prepend(othersmsg);
+                $.ajax({
+                    url: url,
+                    timeout: 1000,
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (response) {
+                        for (var i = 0; i < response.length; i++) {
+                            if (response[i].Sender.UserName == $('#username').val()) {
+                                var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
+                                    response[i].Text +
+                                    '</p></div></div>';
+                                $('.media-list').prepend(mymsg);
+                            } else {
+                                var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                                    response[i].Text +
+                                    '</p></div></div>';
+                                $('.media-list').prepend(othersmsg);
+                            }
                         }
+                        $('.message-body').scrollTop(1000);//$(".media-list").prop("scrollHeight")
+                        page = page + 1;
+                    },
+                    error: function() {
+                        $('#errormodal').modal('show');
                     }
-                    $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
-                    page = page + 1;
+
                 });
 
             });
@@ -516,26 +555,40 @@
         });
         const container = document.querySelector('.message-body');
         container.addEventListener('ps-y-reach-start', (event) => {
+            var oldHeight =container.scrollHeight;
             var url = "/chat/" + $('#chatId').val() + "/messages/" +page;
-            $.get(url, function(response) {
-                for (var i = 0; i < response.length; i++) {
-                    if (response[i].Sender.UserName == $('#username').val()) {
-                        var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
-                            response[i].Text +
-                            '</p></div></div>';
-                        $('.media-list').prepend(mymsg);
-                    } else {
-                        var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
-                            response[i].Text +
-                            '</p></div></div>';
-                        $('.media-list').prepend(othersmsg);
+            $.ajax({
+                url: url,
+                timeout: 1000,
+                type: 'GET',
+                dataType: "json",
+                success: function(response) {
+                    for (var i = 0; i < response.length; i++) {
+                        if (response[i].Sender.UserName == $('#username').val()) {
+                            var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
+                                response[i].Text +
+                                '</p></div></div>';
+                            $('.media-list').prepend(mymsg);
+                        } else {
+                            var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                                response[i].Text +
+                                '</p></div></div>';
+                            $('.media-list').prepend(othersmsg);
+                        }
+                        console.log('---it shudnt be here');
+
+
                     }
-                    console.log('---it shudnt be here');
-                    $('.message-body').scrollTop(100);
+                    var newHeight = container.scrollHeight;
+                    $('.message-body').scrollTop(newHeight - oldHeight);
+                    page = page + 1;
+                },
+                error: function() {
+                    $('#errormodal').modal('show');
                 }
 
-                page = page + 1;
             });
+
         });
 
         function closeChat() {
@@ -554,7 +607,6 @@
         }
 
         $('#getNextRequest').click(function () {
-            console.log('--get nexy req-----');
             getNextUser();
 
         });
@@ -568,9 +620,7 @@
 
         $(window).on('unload', function () {
             console.log('in beacon');
-      
-                var url = "/chat/window/close";
-
+            var url = "/chat/window/close";
             $.ajax({
                 type: "GET",
                 url: url,
@@ -626,7 +676,6 @@
         $('.toggle').on('click', function (e, active) {
             var status = $('.toggle').data('toggles');
             var url = '/chat/hr/available/';
-            console.log(status.active+"----current status")
 
             if (status.active) {
                 url = url + "true";
