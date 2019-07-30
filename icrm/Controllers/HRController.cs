@@ -10141,8 +10141,7 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                                         feedback.assignedBy = user.Id;
                                         feedback.assignedDate = DateTime.Now;
                                         feedback.checkStatus = feedback.status;
-                                        db.Entry(feedback).State = EntityState.Modified;
-                                        db.SaveChanges();
+                                        feedInterface.Save(feedback);
                                         if (Request.Form["responsee"] != "")
                                         {
                                             Comments c = new Comments();

@@ -95,7 +95,7 @@
                             </div>
                         }
 
-                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket cannot be forwarded, Escalation User is not asssigned")
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket cannot be forwarded,Escalation User is not assigned")
                         {
                             <div class="alert alert-danger mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -205,7 +205,7 @@
 
                         @Html.HiddenFor(model => model.submittedById, new { @class = "form-control" })
 
-                        
+                     
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -545,7 +545,6 @@
                                         <label class="form-control-label">@Resources.Resource.Comments</label>
                                         @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
 
-                                        <label class="text-danger" id="responsecheck"></label>
 
                                     </div>
                                 </div>
@@ -570,8 +569,6 @@
                             <!-- row -->
                             <div class="form-layout-footer">
                                 <button class="btn btn-primary bd-0" value="Forward" name="submitButton" id="forward2">@Resources.Resource.Forward </button>
-                                <button class="btn btn-primary bd-0" value="Submit" name="submitButton" id="resolve">@Resources.Resource.Submit </button>
-                                <button value="Reject" name="submitButton" id="rejected" class="btn btn-secondary bd-0">@Resources.Resource.Reject </button>
 
 
                             </div>
@@ -606,10 +603,7 @@
     <script src="~/Content/js/slim.js"></script>
     <script>
 
-        if ($("#typeoffeedbacktext").val() != "Complaint") {
-            $("#forward").attr("disabled", true);
-            $("#forward2").attr("disabled", true);
-        }
+
         if ($("#costcentrId").val() == "") {
             $('#deptId option:contains("Operations")').remove();
 
@@ -636,8 +630,6 @@
             $('#statusfield').attr("disabled", true);
         }
         $('#forward2').click(function () {
-            $('#responsecheck').text("");
-            $('#statuscheck').text("");
             $("#dep").prop('required', true);
             $("#emailsss").prop('required', true);
             $("#category").prop('required', true);
@@ -652,8 +644,6 @@
         });
 
         $('#forward').click(function () {
-            $('#responsecheck').text("");
-            $('#statuscheck').text("");
             $("#emailsss").prop('required', true);
             $("#dep").prop('required', true);
             $("#category").prop('required', true);
@@ -668,22 +658,10 @@
         });
 
         $('#resolve').click(function () {
-            $('#responsecheck').text("");
-            $('#statuscheck').text("");
             $("#dep").prop('required', false);
             $("#deptId").prop('required', false);
             $("#category").prop('required', false);
             $("#subcategory").prop('required', false);
-            if ($("#typeoffeedbacktext").val() != "Complaint" && $('#statusfield').val() == "Rejected" ) {
-                $('#statuscheck').text("Set status Resolved/Closed/Open");
-                $("#subcategory").prop('required', false);
-                $("#category").prop('required', false);
-                $("#emailsss").prop('required', false);
-                $("#deptId").prop('required', false);
-                $("#category").prop('required', false);
-
-                return false;
-            }else
             if (($('#statusfield').val() == "Closed" || $('#statusfield').val() == "Resolved")) {
 
 
@@ -697,7 +675,8 @@
                 $("#deptId").prop('required', false);
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
-       
+
+
                 $('#responsecheck').text("Comment should be empty");
                 $('#responsee').removeAttr('required');
                // return true;
@@ -739,8 +718,6 @@
             }
         });
         $('#rejected').click(function () {
-            $('#responsecheck').text("");
-            $('#statuscheck').text("");
             $("#dep").prop('required', false);
            // $("#priorty").prop('required', false);
             $("#emailsss").prop('required', false);
