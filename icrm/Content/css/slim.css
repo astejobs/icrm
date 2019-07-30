@@ -21141,8 +21141,9 @@ textarea.parsley-success:focus {
     }
 
 .message-body .media-list .msg {
-    max-width: 80%;
-    font-size: 16px;
+    max-width: 70%;
+    font-size: 13px;
+    word-break: break-all;
 }
 
     .message-body .media-list .msg + .msg {
