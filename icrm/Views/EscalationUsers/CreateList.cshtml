@@ -73,6 +73,16 @@
                         <strong> @TempData["SuccessMsg"]</strong>
                     </div>
                 }
+
+                @if (TempData["FailMsg"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["FailMsg"]</strong>
+                    </div>
+                }
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -97,7 +107,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-4" id="categorydiv">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Category <span class="tx-danger">*</span></label>
                                     @*@Html.DropDownListFor(m => m.EscalationUser.CategoriesIds,
@@ -130,8 +140,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
+                            <div class="col-lg-4" id="divCostcenter">
+                                <div class="form-group" >
                                     <label class="form-control-label">Store Name<span class="tx-danger"></span></label>
 
 
@@ -196,18 +206,31 @@
                         <!-- row -->
 
                         <div class="form-layout-footer">
+
+                            @if (ViewBag.Status == "Add")
+                            {
                             <button class="btn btn-primary bd-0">
-                                @if (ViewBag.Status == "Add")
-                                {
-                                    @Resources.Resource.Add
+
+                                @Resources.Resource.Add
+                            </button>
                                 }
                                 @if (ViewBag.Status == "Update")
+
                                 {
+                                <button class="btn btn-primary bd-0">
                                     @Resources.Resource.Update
+                               
+                                </button>
                                 }
-                            </button>
-                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
-                        </div>
+                                @if (ViewBag.Status == "Delete")
+                                {
+                                    <button class="btn btn-primary bd-0" >
+                                        Delete
+                                    </button>
+                                        }
+                                   
+                                    <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
+</div>
                         <!-- form-layout-footer -->
                     </div>
 
@@ -314,18 +337,39 @@
 
       @Html.Partial("_AdminFooter")
         <script>
+          
             $('.user').selectize({
                
                 sortField: 'text'
             });
+          
+            if ($("#department :selected").val() != "") {
+                if ($("#department :selected").text() == "Operations") {
+                    $("#divCostcenter").css('display', 'block');
+                    $("#categorydiv").css('display', 'none');
+                } else {
+                    $("#divCostcenter").css('display', 'none');
+                    $("#categorydiv").css('display', 'block');
+                }
+            } else {
+                $("#divCostcenter").css('display', 'block');
+                $("#categorydiv").css('display', 'block');
+            }
+
 
 
             $("#department").change(function () {
-               
+
+                $("#divCostcenter").css('display', 'block');
+                $("#categorydiv").css('display', 'block');
+              
+                
+             
                     $("#category option").remove();
 
-                  
-                if ($("#department").val() != "") {
+                if ($("#department").val() != "" && $("#department :selected").text()!= "Operations") {
+                   $("#divCostcenter").css('display', 'none');
+                    $("#categorydiv").css('display', 'block');
                     $.ajax({
                         type: "POST",
                         url: "@Url.Action("getCategories", "EscalationUsers")",
@@ -343,6 +387,10 @@
                             alert("error" + r.responseText);
                         }
                     });
+                } else {
+                   $("#divCostcenter").css('display', 'block');
+                    $("#categorydiv").css('display', 'none');
+
                 }
                 
             });

@@ -9,5 +9,6 @@ namespace icrm.RepositoryInterface
         ApplicationUser findUserOnId(string id);
         bool Update(ApplicationUser user);
         List<string> DeviceIds();
+        int getEscalationUserCostCentr(EscalationUser escalationUser);
     }
 }
