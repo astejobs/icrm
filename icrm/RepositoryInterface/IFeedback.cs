@@ -52,7 +52,7 @@ namespace icrm.RepositoryInterface
 
         List<Category> getCategories(Int32 deptId,Int32 type);
         List<SubCategory> getSubCategories(Int32 categoryId, Int32 typeId);
-
+      
         List<string> getEmails();
         IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize, string type);
         List<Department> getDepartmentsOnType(string fORWARD);
@@ -94,6 +94,12 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> chartsFeedbackSalaryIssuesReasons(string d1, string d2, string salaryissuesreasons);
         string[] chartsFeedbackMostFrequentLocations(string d1, string d2);
         IEnumerable<Feedback> chartsFeedbackRegion(string d1, string d2, string region);
-        
+        bool findByCostCentr(int? costCentrId);
+        bool getTicketsOnCategory(int id);
+
+        //new changes
+        IPagedList<Feedback> getOpenAssignedToDpt(string id, int pageIndex, int pageSize);
+        IPagedList<Feedback> getRespondedTicketsbyDpt(string id, int pageIndex, int pageSize);
+
     }
 }
