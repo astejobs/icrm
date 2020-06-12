@@ -190,7 +190,7 @@ namespace icrm.RepositoryImpl
             param3.SqlValue = Constants.RESPONDED;
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("getAllRespondedWithDepart @depID,@CommentedByID,@status", param1,param2,param3).ToList();
+            var result = db.Feedbacks.SqlQuery("getAllRespondedWithDepart @depID,@CommentedByID", param1,param2).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
@@ -1087,6 +1087,65 @@ namespace icrm.RepositoryImpl
             string deptComment = Constants.commentType[1];
             string hrComment = Constants.commentType[0];
             return db.comments.Where(m => m.feedbackId == id &&  (m.commentFor== deptComment || m.commentFor== hrComment)).ToList();
+        }
+
+        public bool findByCostCentr(int? costCentrId)
+        {
+
+            if (db.Feedbacks.Where(m => m.user.CostCenterId == costCentrId).ToList().Count() > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public bool getTicketsOnCategory(int id)
+        {
+            EscalationUser escUser = db.EscalationUsers.Find(id);
+           
+            var categories =db.Categories.Where(c => c.EscalationUserId == (db.EscalationUsers.FirstOrDefault(e => e.firstEscalationUserId == escUser.firstEscalationUserId)).Id).Select(c=>c.Id).ToList(); ;
+            int tickets=db.Feedbacks.Where(f=>f.categoryId!=null).Where(f => categories.Contains(f.categoryId.Value)).ToList().Count();
+            if (tickets > 0)           
+                return true;
+            else
+         return false;
+            }
+
+        public IPagedList<Feedback> getOpenAssignedToDpt(string id, int pageIndex, int pageSize)
+        {
+            //select* from Feedbacks f where f.userId in(select  Id from AspNetUsers where CostCenterId in (select CostCenterId from EscalationUsers where
+            // firstEscalationUserId = 'a5f947e5-5876-4eee-9c39-55eac39c8795')) and f.typeId = 1 and f.departmentID = 1 and checkStatus = 'Assigned'
+
+            int type_Id = db.FeedbackTypes.Where(t => t.name == Constants.Complaints).Select(m=>m.Id).FirstOrDefault();
+            int? dept_Id = db.Users.Find(id).DepartmentId;
+           
+           
+            List<int?> costcentr_ids = (db.EscalationUsers.Where(m =>m.firstEscalationUserId == id)).Select(m => m.CostCenterId).ToList();
+            List<int> esc_user_ids = (db.EscalationUsers.Where(m => m.firstEscalationUserId == id)).Select(m => m.Id).ToList();
+            List<int> category_ids= (db.Categories.Where(m => m.EscalationUserId != null).Where(m=> esc_user_ids.Contains(m.EscalationUserId.Value))).Select(m => m.Id).ToList();
+
+
+            //List<string> userIds = db.Users.Where(m => ids.Contains(m.CostCenterId)).Select(m => m.Id).ToList();
+
+            return db.Feedbacks.OrderByDescending(f=>f.createDate)
+                            .Where(f => (costcentr_ids.Contains(f.user.CostCenterId) || category_ids.Contains(f.categoryId.Value)) && f.typeId == type_Id && f.departmentID == dept_Id && f.checkStatus == Constants.ASSIGNED)
+                            .ToPagedList(pageIndex,pageSize);
+       }
+
+        public IPagedList<Feedback> getRespondedTicketsbyDpt(string id, int pageIndex, int pageSize)
+        {
+           
+             int type_Id = db.FeedbackTypes.Where(t => t.name == Constants.Complaints).Select(m => m.Id).FirstOrDefault();
+            int? dept_Id = db.Users.Find(id).DepartmentId;
+
+
+            List<int?> costctr_ids = (db.EscalationUsers.Where(m => m.firstEscalationUserId == id)).Select(m => m.CostCenterId).ToList();
+            List<int> esc_user_ids = (db.EscalationUsers.Where(m => m.firstEscalationUserId == id)).Select(m => m.Id).ToList();
+            List<int> category_ids = (db.Categories.Where(m => m.EscalationUserId != null).Where(m => esc_user_ids.Contains(m.EscalationUserId.Value))).Select(m => m.Id).ToList();
+
+            return db.Feedbacks.OrderByDescending(f => f.createDate)
+                             .Where(f => (costctr_ids.Contains(f.user.CostCenterId) || category_ids.Contains(f.categoryId.Value)) && f.typeId == type_Id && f.departmentID == dept_Id && f.checkStatus!= Constants.ASSIGNED)
+                             .ToPagedList(pageIndex, pageSize);
+
         }
     }
 }

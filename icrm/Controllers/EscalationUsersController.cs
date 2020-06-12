@@ -8,12 +8,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using icrm.Models;
+using icrm.RepositoryImpl;
+using icrm.RepositoryInterface;
 
 namespace icrm.Controllers
 {
     public class EscalationUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserInterface userInterface;
+        private IFeedback feedInterface;
+        public EscalationUsersController()
+        {
+            userInterface = new UserRepository();
+            feedInterface = new FeedbackRepository();
+        }
+
 
         // GET: EscalationUsers
         public ActionResult Index()
@@ -62,25 +72,37 @@ namespace icrm.Controllers
             Debug.WriteLine(ModelState.IsValid + "0-----------------------");
             if (ModelState.IsValid)
             {
-                db.EscalationUsers.Add(escalationUser);
-                db.SaveChanges();
-
                 if (!db.Departments.Find(escalationUser.DepartmentId).name.Equals(Constants.OPERATIONS))
                 {
+                    db.EscalationUsers.Add(escalationUser);
+                    db.SaveChanges();
                     foreach (int cid in escalationUser.CategoriesIds)
                     {
                         Category c = db.Categories.Find(cid);
                         c.EscalationUserId = escalationUser.Id;
                         db.Entry(c).State = EntityState.Modified;
                         db.SaveChanges();
-                        
 
+                        TempData["SuccessMsg"] = "Escalation User Added";
+                        return RedirectToAction("Create");
                     }
 
                 }
+                else {
+                    if (userInterface.getEscalationUserCostCentr(escalationUser) <= 0)
+                    {
+                        db.EscalationUsers.Add(escalationUser);
+                        db.SaveChanges();
+                        TempData["SuccessMsg"] = "Escalation User Added";
+                        return RedirectToAction("Create");
 
-                TempData["SuccessMsg"] = "Escalation User Added";
-                return RedirectToAction("Create");
+                    }
+                    else
+                    {
+                        TempData["FailMsg"] = "Cost Center is already assigned to Escalation User";
+                    }
+                }
+               
             }
             ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
@@ -137,16 +159,17 @@ namespace icrm.Controllers
             {
 
                 List<Category> categories = db.Categories.Where(c => c.EscalationUserId == escalationUser.Id).ToList();
-                foreach (Category i in categories)
-                {
-                    i.EscalationUserId = null;
-                    db.Entry(i).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                db.Entry(escalationUser).State = EntityState.Modified;
-                db.SaveChanges();
+              
                 if (!db.Departments.Find(escalationUser.DepartmentId).name.Equals(Constants.OPERATIONS))
                 {
+                    foreach (Category i in categories)
+                    {
+                        i.EscalationUserId = null;
+                        db.Entry(i).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    db.Entry(escalationUser).State = EntityState.Modified;
+                    db.SaveChanges();
                     foreach (int cid in escalationUser.CategoriesIds)
                     {
                         Category c = db.Categories.Find(cid);
@@ -156,17 +179,35 @@ namespace icrm.Controllers
                        
 
                     }
+                    TempData["SuccessMsg"] = "Escalation User has been Updated";
+                    return RedirectToAction("Create");
                 }
-                TempData["SuccessMsg"] = "Escalation User has been Updated";
-                return RedirectToAction("Create");
+                else
+                {
+                    if (userInterface.getEscalationUserCostCentr(escalationUser) <= 0)
+                    {
+                        db.Entry(escalationUser).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["SuccessMsg"] = "Escalation User has been Updated";
+                        return RedirectToAction("Create");
+
+                    }
+                    else
+                    {
+                        TempData["FailMsg"] = "Cost Center is already assigned to Escalation User";
+                    }
+                }
+
             }
 
             ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
+
             //ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Update";
-            return View("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
+            // return RedirectToAction("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
+            return RedirectToAction("Edit", new { id = escalationUser.Id });
         }
 
         // GET: EscalationUsers/Delete/5
@@ -203,6 +244,36 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (db.EscalationUsers.Find(id).CostCenterId != null)
+            {
+                if (feedInterface.findByCostCentr(db.EscalationUsers.Find(id).CostCenterId))
+                {
+
+                    TempData["FailMsg"] = "Escalation User cannot be deleted,as it is assigned to a ticket";
+                    return RedirectToAction("Delete", new { id = id });
+                }
+                else
+                {
+                    deleteEscalationUser(id);
+                    return RedirectToAction("Create");
+                }
+            }
+            else 
+            {
+                if (feedInterface.getTicketsOnCategory(id))
+                {
+                    TempData["FailMsg"] = "Escalation User cannot be deleted,as it is assigned to a ticket";
+                    return RedirectToAction("Delete", new { id = id });
+                }
+                else {
+                    deleteEscalationUser(id);
+                    return RedirectToAction("Create");
+                }
+            }
+           
+        }
+
+        public void deleteEscalationUser(int id) {
             List<Category> categories = db.Categories.Where(c => c.EscalationUserId == id).ToList();
             foreach (Category i in categories)
             {
@@ -214,9 +285,9 @@ namespace icrm.Controllers
             db.EscalationUsers.Remove(escalationUser);
             db.SaveChanges();
             TempData["SuccessMsg"] = "Escalation User is deleted Successfully";
-            return RedirectToAction("Create");
-        }
+          
 
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

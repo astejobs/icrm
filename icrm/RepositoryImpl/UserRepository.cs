@@ -62,6 +62,21 @@ namespace icrm.RepositoryImpl
             var roleId = roleManager.FindByName("User").Id;
            return  db.Users.Where(u => u.Roles.Any(r => r.RoleId == roleId)).Select(u=>u.DeviceCode).ToList();
         }
+
+        public int getEscalationUserCostCentr(EscalationUser escalationUser)
+        {
+            if (escalationUser.Id > 0)
+            {
+                return db.EscalationUsers.OrderByDescending(m => m.Id).Where(m => m.CostCenterId == escalationUser.CostCenterId && m.Id != escalationUser.Id).ToList().Count();
+        }
+            else
+            {
+
+                return db.EscalationUsers.OrderByDescending(m => m.Id).Where(m => m.CostCenterId == escalationUser.CostCenterId).ToList().Count();
+
+            }
+
+        }
     }
 
 }
